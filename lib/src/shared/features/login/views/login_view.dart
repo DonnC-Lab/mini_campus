@@ -73,7 +73,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Sign in Open accounts',
+                'MiniCampus - students at heart',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
@@ -84,7 +84,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
               const Divider(color: greyTextShade),
               const SizedBox(height: 30),
               Text(
-                'Or continue with email address',
+                'Continue with your student email',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
@@ -108,8 +108,10 @@ class _LogInViewState extends ConsumerState<LogInView> {
                   decoration: InputDecoration(
                     hintText: 'Your email',
                     hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-                    prefixIcon: const Icon(Icons.email_outlined),
-                    prefixIconColor: greyTextShade,
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      color: greyTextShade,
+                    ),
                     suffix: isEmailValid
                         ? const Icon(Icons.done, color: greenishColor)
                         : const SizedBox.shrink(),
@@ -125,14 +127,8 @@ class _LogInViewState extends ConsumerState<LogInView> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: themeMode == ThemeMode.light
-                            ? !fillField
-                                ? greyTextShade
-                                : mainWhite
-                            : fieldDMFillText,
-                      ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: greyTextShade),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -152,8 +148,10 @@ class _LogInViewState extends ConsumerState<LogInView> {
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    prefixIconColor: greyTextShade,
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: greyTextShade,
+                    ),
                     filled: fillField,
                     fillColor: themeMode == ThemeMode.light
                         ? bgColor
@@ -166,20 +164,14 @@ class _LogInViewState extends ConsumerState<LogInView> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: themeMode == ThemeMode.light
-                            ? !fillField
-                                ? greyTextShade
-                                : mainWhite
-                            : fieldDMFillText,
-                      ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: greyTextShade),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: fillField ? bluishColorShade : bluishColor,
@@ -204,7 +196,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
               //   style: Theme.of(context).textTheme.bodyText1?.copyWith(
               //       fontWeight: FontWeight.w500, color: greyTextShade),
               // ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 45),
               RichText(
                 text: TextSpan(
                     text: 'Don\'t have an account?',
