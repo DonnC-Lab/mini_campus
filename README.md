@@ -7,7 +7,7 @@ MiniCampus, **MC** - thrives to be the go to student app for both freshers and e
 - It comprises of `modules` that each act as a standalone application serving a single purpose
 
 ## Modules
-### 1. Campus Trading Market
+### 1. Campus Market
 A mini e-commerce like market for students, features
 - Easily reach potential clients for your products from a pool of other students
 - Sell your products to other students
@@ -30,4 +30,42 @@ Has a theft happened in your area? Have you experienced abuse of any kind? Is th
 This section is for you
 - Report theft in your area or resident
 - Report abuse from other individuals or personnel and let others be aware and remain on alert
+
+### 5. Notifications
+Don't miss campus notifications, get notified of campus notifications
  
+<br>
+
+## Microservices
+### 0. Student Profile
+- `profile` - firestore
+- `tokens` - firestore
+- `profile pictures` - cloud storage
+
+### 1. Campus Market
+- `products` - rtdb
+- `images` - deta drive
+
+### 2. Learning
+- `data` - deta base
+- `papers` - deta drive
+
+### 3. L&F
+- `data` - deta base
+- `files` - deta drive
+
+### 4. Report
+- `data` - rtdb
+
+### 5. Notifications
+- `data` - rtdb
+
+
+## Getting Started
+
+terminal model build command
+```bash
+$ flutter clean
+$ flutter pub get
+$ flutter pub run build_runner build --delete-conflicting-outputs
+```

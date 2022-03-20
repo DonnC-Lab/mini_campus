@@ -32,3 +32,5 @@ const lighterGreenColor = Color(0xFFB5E4CA);
 const faintOrangeColor = Color(0xFFFFD88D);
 
 const faintBlueColor = Color(0xFFCABDFF);
+
+const Color fieldFillColor = Color.fromARGB(255, 239, 239, 241);
