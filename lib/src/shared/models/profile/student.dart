@@ -27,8 +27,8 @@ class Student with _$Student {
     /// to use for targeted notification
     String? gender,
 
-    /// student enrollment year, 1st, 2nd..
-    String? year,
+    /// will automatically be picked on the fly from student email using extension
+    //int? year,
 
     /// student resident during campus
     @Default('') String campusLocation,

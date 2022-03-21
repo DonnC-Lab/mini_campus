@@ -693,6 +693,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  localregex:
+    dependency: "direct main"
+    description:
+      name: localregex
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
   logging:
     dependency: transitive
     description:

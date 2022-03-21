@@ -62,6 +62,7 @@ dependencies:
   google_fonts: ^2.3.1
   pin_code_fields: ^7.3.0
   relative_scale: ^2.0.0
+  localregex: ^3.0.3
   timer_button:
   intl:
   

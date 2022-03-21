@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mini_campus/src/modules/learning/views/learning_view.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 //final currentModuleIndexProvider = StateProvider((_) => 0);
@@ -25,7 +26,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   final List<Widget> _appModules = [
     const Center(child: Text('Mini Campus 1')),
-    const Center(child: Text('Mini Campus 2')),
+    const LearningHomeView(),
     const Center(child: Text('Mini Campus 3')),
     const Center(child: Text('Mini Campus 4')),
   ];
@@ -120,8 +121,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
             ),
           ),
         ),
-        // body: _appModules[_currentModuleIndex],
-        body: const DetaView(),
+        body: _appModules[_currentModuleIndex],
+        //body: const DetaView(),
       ),
     );
   }
