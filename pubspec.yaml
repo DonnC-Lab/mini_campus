@@ -49,6 +49,9 @@ dependencies:
   fluttertoast: ^8.0.9
   flash: ^2.0.3+2
 
+  # deta
+  deta: ^0.0.3+1
+  dio_client_deta_api: ^0.0.1
 
   # utilities
   dio: ^4.0.4

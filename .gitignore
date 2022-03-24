@@ -47,3 +47,5 @@ app.*.map.json
 
 
 /assets/demo/
+
+scratch.json
