@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'shared/features/admin/pages/home.dart';
 import 'shared/index.dart';
 
 class MainAppEntry extends StatelessWidget {
@@ -21,7 +22,8 @@ class MainAppEntry extends StatelessWidget {
               theme: AppTheme.light(),
               darkTheme: AppTheme.dark(),
               themeMode: mode,
-              home: const SplashView(),
+              //home: const SplashView(),
+              home: const AdminHomeView(),
             );
           },
         );

@@ -7,3 +7,4 @@ export 'deta_keys.dart';
 export 'uni_email_domains.dart';
 export 'resource_categories.dart';
 export 'uni_part.dart';
+export 'faculties.dart';

@@ -9,13 +9,3 @@ const List<String> uniParts = [
   'part 8',
   'part 9',
 ];
-
-const List<String> faculties = [
-  'Engineering',
-  'Applied Science',
-  'Built Environment',
-  'Commerce',
-  'Comm & Information Science',
-  'Medicine',
-  'Science & Tech Education',
-];

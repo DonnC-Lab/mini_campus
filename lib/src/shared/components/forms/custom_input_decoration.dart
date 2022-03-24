@@ -14,7 +14,7 @@ InputDecoration CustomInputDecoration({
   ThemeMode themeMode = ThemeMode.system,
 }) {
   return InputDecoration(
-    filled: true,
+    // filled: true,
     labelText: labelText,
     fillColor: themeMode == ThemeMode.light
         ? bgColor
