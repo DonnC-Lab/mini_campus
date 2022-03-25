@@ -21,8 +21,13 @@ class DetaStorageRepository {
   final _deta =
       Deta(projectId: donDetaProjectId, projectKey: donDetaProjectKey);
 
+  final String driveName;
+
+  // TODO make to pass current driveName here e.g learning, lostFound, Market etc
+  DetaStorageRepository({this.driveName='learning'});
+
   Future getAllFiles() async {
-    final drive = DetaDrive(drive: 'donn', deta: _deta);
+    final drive = DetaDrive(drive: driveName, deta: _deta);
 
     final files = await drive.listFiles();
 
@@ -34,7 +39,7 @@ class DetaStorageRepository {
   }
 
   Future download(String filename) async {
-    final drive = DetaDrive(drive: 'donn', deta: _deta);
+    final drive = DetaDrive(drive: driveName, deta: _deta);
 
     final fileByte = await drive.downloadFile(filename);
 
@@ -46,7 +51,7 @@ class DetaStorageRepository {
   }
 
   Future delete(List<String> files) async {
-    final drive = DetaDrive(drive: 'donn', deta: _deta);
+    final drive = DetaDrive(drive: driveName, deta: _deta);
 
     final resp = await drive.deleteFiles(files);
 
@@ -57,9 +62,13 @@ class DetaStorageRepository {
     return resp;
   }
 
-  Future upload(String file, Uint8List bytes,
-      {String? directory, String? filename}) async {
-    final drive = DetaDrive(drive: 'donn', deta: _deta);
+  Future upload(
+    String file,
+    Uint8List bytes, {
+    String? directory,
+    String? filename,
+  }) async {
+    final drive = DetaDrive(drive: driveName, deta: _deta);
 
     final resp = await drive.uploadFile(file, bytes,
         directory: directory, filename: filename);

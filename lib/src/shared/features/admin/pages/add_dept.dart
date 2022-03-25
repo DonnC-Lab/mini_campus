@@ -38,7 +38,6 @@ class _AdminAddDptState extends ConsumerState<AdminAddDpt> {
                   context: context,
                   formName: 'faculty',
                   title: 'Faculty',
-                  keyboardType: TextInputType.emailAddress,
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(context),
                   ]),

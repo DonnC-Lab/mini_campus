@@ -4,6 +4,7 @@ import 'package:mini_campus/src/shared/features/admin/pages/add_course.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 import 'add_dept.dart';
+import 'add_file.dart';
 
 final adminLoaderProvider = StateProvider((_) => false);
 
@@ -35,7 +36,9 @@ class AdminHomeView extends StatelessWidget {
                 child: const Text('Add Course'),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  routeTo(context, const AdminAddFile());
+                },
                 child: const Text('Add Resource File'),
               ),
             ],

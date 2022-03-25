@@ -37,6 +37,14 @@ class _AdminAddCourseState extends ConsumerState<AdminAddCourse> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Add Course'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: depts.when(
@@ -116,7 +124,7 @@ class _AdminAddCourseState extends ConsumerState<AdminAddCourse> {
                                 part: _data['part'],
                               );
 
-                              final res = await api.addCourse(facultyDpt);
+                              await api.addCourse(facultyDpt);
 
                               ref.read(loaderProvider.notifier).state = false;
 
