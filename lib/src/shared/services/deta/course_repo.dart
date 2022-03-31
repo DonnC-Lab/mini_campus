@@ -28,6 +28,7 @@ class CourseRepository {
       return res;
     }
 
+    //
     // er
     catch (e) {
       log('err ' + e.toString());
@@ -41,6 +42,24 @@ class CourseRepository {
           DetaQuery('dpt').equalTo(dptCode).and('part').equalTo(part),
         ],
       );
+
+      List items = res['items'];
+
+      var i = items.map((e) => Course.fromJson(e)).toList();
+      log(i.toString());
+      return i;
+    }
+
+    // er
+    catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<Course>?> getAllCourses() async {
+    try {
+      final res = await _courseBase.fetch();
 
       List items = res['items'];
 

@@ -15,9 +15,6 @@ class AdminHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('MC Admin'),
-        ),
         body: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

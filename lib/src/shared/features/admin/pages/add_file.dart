@@ -51,6 +51,9 @@ class _AdminAddFileState extends ConsumerState<AdminAddFile> {
   Widget build(BuildContext context) {
     final loader = ref.watch(adminLoaderProvider);
 
+    final cosRep = ref.read(courseRepProvider);
+    final deptFs = ref.read(fDptRepProvider);
+
     final api = ref.read(courseRepProvider);
 
     final resApi = ref.read(resRepProvider);
@@ -67,292 +70,300 @@ class _AdminAddFileState extends ConsumerState<AdminAddFile> {
     final faculty = ref.watch(_selectedFacultyProvider);
 
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Add File'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {});
-              },
-              icon: const Icon(Icons.refresh),
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+              bottom: const TabBar(tabs: [
+            Tab(
+              icon: Icon(Icons.add),
+              text: 'Add',
             ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: FormBuilder(
-            key: formKey,
-            child: Column(
-              children: [
-                CustomDDField(
-                  context: context,
-                  formName: 'faculty',
-                  title: 'Faculty',
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                  ]),
-                  items: faculties
-                      .map(
-                        (e) => DropdownMenuItem(
-                          child: Text(e.name),
-                          value: e,
-                          onTap: () {
-                            ref.watch(_selectedFacultyProvider.notifier).state =
-                                e;
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-                CustomDDField(
-                  context: context,
-                  formName: 'part',
-                  title: 'Part',
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                  ]),
-                  items: uniParts
-                      .map(
-                        (e) => DropdownMenuItem(
-                          child: Text(e),
-                          value: e,
-                          onTap: () {
-                            ref.watch(_selectedPartProvider.notifier).state = e;
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-                CustomDDField(
-                  context: context,
-                  formName: 'category',
-                  title: 'Category',
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                  ]),
-                  items: resourceCategories
-                      .map((e) => DropdownMenuItem(child: Text(e), value: e))
-                      .toList(),
-                ),
-                faculty != null
-                    ? ref.read(dptsProvider(faculty)).when(
-                        data: (data) {
-                          // ============
-                          setState(() {});
-                          // ============
+            Tab(
+              icon: Icon(Icons.list),
+              text: 'View',
+            ),
+          ])),
+          body: TabBarView(
+            children: [
+              SingleChildScrollView(
+                child: FormBuilder(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CustomDDField(
+                        context: context,
+                        formName: 'faculty',
+                        title: 'Faculty',
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                        items: faculties
+                            .map(
+                              (e) => DropdownMenuItem(
+                                child: Text(e.name),
+                                value: e,
+                                onTap: () {
+                                  ref
+                                      .watch(_selectedFacultyProvider.notifier)
+                                      .state = e;
+                                },
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      CustomDDField(
+                        context: context,
+                        formName: 'part',
+                        title: 'Part',
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                        items: uniParts
+                            .map(
+                              (e) => DropdownMenuItem(
+                                child: Text(e),
+                                value: e,
+                                onTap: () {
+                                  ref
+                                      .watch(_selectedPartProvider.notifier)
+                                      .state = e;
+                                },
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      CustomDDField(
+                        context: context,
+                        formName: 'category',
+                        title: 'Category',
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                        items: resourceCategories
+                            .map((e) =>
+                                DropdownMenuItem(child: Text(e), value: e))
+                            .toList(),
+                      ),
+                      faculty != null
+                          ? FutureBuilder<List<FacultyDpt>?>(
+                              future: deptFs.getFacultyDptByFaculty(faculty),
+                              builder: (context, snapshot) {
+                                return snapshot.hasData
+                                    ? CustomDDField(
+                                        context: context,
+                                        formName: 'dpt',
+                                        title: 'Department',
+                                        validator:
+                                            FormBuilderValidators.compose([
+                                          FormBuilderValidators.required(
+                                              context),
+                                        ]),
+                                        items: snapshot.data!
+                                            .map(
+                                              (e) => DropdownMenuItem(
+                                                child: Text(e.dptName),
+                                                value: e,
+                                                onTap: () {
+                                                  ref
+                                                      .watch(
+                                                          _selectedDptProvider
+                                                              .notifier)
+                                                      .state = e;
+                                                },
+                                              ),
+                                            )
+                                            .toList(),
+                                      )
+                                    : const CircularProgressIndicator();
+                              })
+                          : const SizedBox.shrink(),
+                      dpt != null
+                          ? FutureBuilder<List<Course>?>(
+                              future: api.getAllCoursesByDpt(
+                                dpt.dptCode,
+                                part!,
+                              ),
+                              builder: ((context, snapshot) {
+                                if (snapshot.hasData) {
+                                  final data = snapshot.data;
 
-                          return CustomDDField(
-                            context: context,
-                            formName: 'dpt',
-                            title: 'Department',
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
-                            ]),
-                            items: data!
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    child: Text(e.dptName),
-                                    value: e,
-                                    onTap: () {
-                                      ref
-                                          .watch(_selectedDptProvider.notifier)
-                                          .state = e;
-                                    },
-                                  ),
-                                )
-                                .toList(),
-                          );
-                        },
-                        loading: () => const CircularProgressIndicator(),
-                        error: (e, st) {
-                          return const Text(' dept error ');
-                        })
-                    : const SizedBox.shrink(),
-                dpt != null
-                    ? FutureBuilder<List<Course>?>(
-                        future: api.getAllCoursesByDpt(
-                          dpt.dptCode,
-                          part!,
-                        ),
-                        builder: ((context, snapshot) {
-                          if (snapshot.hasData) {
-                            final data = snapshot.data;
-
-                            return CustomDDField(
-                              context: context,
-                              formName: 'course',
-                              title: 'Course',
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(context),
-                              ]),
-                              items: data!
-                                  .map(
-                                    (e) => DropdownMenuItem(
-                                      child: Text(e.name),
-                                      value: e,
-                                      onTap: () {
-                                        ref
-                                            .watch(_selectedCourseProvider
-                                                .notifier)
-                                            .state = e;
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
-                            );
-                          } else {
-                            return const CircularProgressIndicator();
-                          }
-                        }),
-                      )
-                    : const SizedBox.shrink(),
-                CustomFormField(
-                  unfocus: true,
-                  context: context,
-                  formName: 'year',
-                  title: 'Course Material Year',
-                  hintText: 'e.g 2021 for a 2021 paper',
-                  keyboardType: TextInputType.number,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                    FormBuilderValidators.integer(context),
-                  ]),
-                ),
-                // file uploader tab
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: loader
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-                              final _data = formKey.currentState!.value;
-
-                              var courseCode = course?.code;
-
-                              log(_data.toString());
-
-                              // ? create Resource model
-
-                              ref.watch(adminLoaderProvider.notifier).state =
-                                  false;
-
-                              var fp = await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: ['pdf'],
-                              );
-
-                              if (fp != null) {
-                                ref.watch(adminLoaderProvider.notifier).state =
-                                    true;
-
-                                var bytes = await File(fp.files.first.path!)
-                                    .readAsBytes();
-
-                                ref.watch(adminLoaderProvider.notifier).state =
-                                    true;
-
-                                final uploadRes = await driveRepo.upload(
-                                  fp.files.first.path!,
-                                  bytes,
-                                  directory:
-                                      '${dpt?.dptCode}/$part/${_data['category']}/${_data['year']}/$courseCode/',
-                                  filename: '$courseCode.pdf',
-                                );
-
-                                log(uploadRes.toString());
-
-                                Fluttertoast.showToast(msg: 'file uploaded');
-
-                                Fluttertoast.showToast(
-                                    msg: 'saving resource..');
-
-                                // ? now add deta base data
-                                // ? make filename to be key and enforce uniqueness
-                                final res = FileResource(
-                                  dpt: dpt!.dptCode,
-                                  uploadedBy: "admin",
-                                  createdOn: DateTime.now(),
-                                  courseCode: courseCode!,
-                                  part: part,
-                                  approvalStatus: 'approved', // for admin only
-                                  year: int.parse(_data['year']),
-                                  category: _data['category'],
-                                  resource: Resource(
-                                    filename: '$courseCode.pdf',
-                                    filepath: uploadRes.toString(),
-                                    prefix:
-                                        '${dpt.dptCode}/$part/${_data['category']}/${_data['year']}',
-                                  ),
-                                );
-
-                                final result = resApi.addFileResource(res);
-
-                                if (result != null) {
-                                  Fluttertoast.showToast(
-                                      msg: 'resource added!');
+                                  return CustomDDField(
+                                    context: context,
+                                    formName: 'course',
+                                    title: 'Course',
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(context),
+                                    ]),
+                                    items: data!
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            child: Text(e.name),
+                                            value: e,
+                                            onTap: () {
+                                              ref
+                                                  .watch(_selectedCourseProvider
+                                                      .notifier)
+                                                  .state = e;
+                                            },
+                                          ),
+                                        )
+                                        .toList(),
+                                  );
                                 }
 
-                                //
+                                // loader
                                 else {
-                                  Fluttertoast.showToast(
-                                      msg: 'failed to add resource');
+                                  return const CircularProgressIndicator();
                                 }
+                              }),
+                            )
+                          : const SizedBox.shrink(),
+                      CustomFormField(
+                        unfocus: true,
+                        context: context,
+                        formName: 'year',
+                        title: 'Course Material Year',
+                        hintText: 'e.g 2021 for a 2021 paper',
+                        keyboardType: TextInputType.number,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                          FormBuilderValidators.integer(context),
+                        ]),
+                      ),
+                      // file uploader tab
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: loader
+                            ? const CircularProgressIndicator()
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    formKey.currentState!.save();
+                                    final _data = formKey.currentState!.value;
 
-                                ref.watch(adminLoaderProvider.notifier).state =
-                                    false;
-                              }
+                                    var courseCode = course?.code;
 
-                              //e
-                              else {
-                                Fluttertoast.showToast(msg: 'file is required');
-                              }
-                            }
-                          },
-                          child: const Text('Save'),
-                        ),
+                                    log(_data.toString());
+
+                                    modalLoader(context);
+
+                                    var fp =
+                                        await FilePicker.platform.pickFiles(
+                                      type: FileType.custom,
+                                      allowedExtensions: ['pdf'],
+                                    );
+
+                                    if (fp != null) {
+                                      var bytes =
+                                          await File(fp.files.first.path!)
+                                              .readAsBytes();
+
+                                      final uploadRes = await driveRepo.upload(
+                                        fp.files.first.path!,
+                                        bytes,
+                                        directory:
+                                            '${dpt?.dptCode}/$part/${_data['category']}/${_data['year']}/$courseCode/',
+                                        filename: '$courseCode.pdf',
+                                      );
+
+                                      log(uploadRes.toString());
+
+                                      Fluttertoast.showToast(
+                                          msg: 'file uploaded');
+
+                                      Fluttertoast.showToast(
+                                          msg: 'saving resource..');
+
+                                      final res = FileResource(
+                                        dpt: dpt!.dptCode,
+                                        uploadedBy: "admin",
+                                        createdOn: DateTime.now(),
+                                        courseCode: courseCode!,
+                                        part: part,
+                                        approvalStatus:
+                                            'approved', // for admin only
+                                        year: int.parse(_data['year']),
+                                        category: _data['category'],
+                                        resource: Resource(
+                                          filename: '$courseCode.pdf',
+                                          filepath: uploadRes.toString(),
+                                          prefix:
+                                              '${dpt.dptCode}/$part/${_data['category']}/${_data['year']}',
+                                        ),
+                                      );
+
+                                      final result =
+                                          await resApi.addFileResource(res);
+
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+
+                                      if (result != null) {
+                                        formKey.currentState?.reset();
+
+                                        Fluttertoast.showToast(
+                                            msg: 'resource added!');
+                                      }
+
+                                      //
+                                      else {
+                                        Fluttertoast.showToast(
+                                            msg: 'failed to add resource');
+                                      }
+                                    }
+
+                                    //e
+                                    else {
+                                      Fluttertoast.showToast(
+                                          msg: 'file is required');
+                                    }
+                                  }
+                                },
+                                child: const Text('Upload & Save'),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Column(
+                children: [
+                  Expanded(
+                    child: FutureBuilder<List<FileResource>?>(
+                      future: resApi.getAllFileResources(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final data = snapshot.data!;
+
+                          return data.isEmpty
+                              ? const Center(child: Text('no results'))
+                              : ListView.separated(
+                                  itemBuilder: (_, index) {
+                                    return ListTile(
+                                      leading: const CircleAvatar(),
+                                      title:
+                                          Text(data[index].resource.filename),
+                                      subtitle: Text(
+                                          '${data[index].year.toString()} | ${data[index].part}'),
+                                    );
+                                  },
+                                  separatorBuilder: (_, x) =>
+                                      const SizedBox(height: 10),
+                                  itemCount: data.length,
+                                );
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
-
-// ref
-//     .read(coursesProvider({
-//       'code': dpt.dptCode,
-//       'part': part,
-//     }))
-//     .when(
-//         data: (data) {
-//           return CustomDDField(
-//             context: context,
-//             formName: 'course',
-//             title: 'Course',
-//             validator: FormBuilderValidators.compose([
-//               FormBuilderValidators.required(context),
-//             ]),
-//             items: data!
-//                 .map(
-//                   (e) => DropdownMenuItem(
-//                     child: Text(e.name),
-//                     value: e,
-//                     onTap: () {
-//                       ref
-//                           .watch(_selectedCourseProvider
-//                               .notifier)
-//                           .state = e;
-//                     },
-//                   ),
-//                 )
-//                 .toList(),
-//           );
-//         },
-//         loading: () => const CircularProgressIndicator(),
-//         error: (e, st) {
-//           return const Text(' course error ');
-//         })

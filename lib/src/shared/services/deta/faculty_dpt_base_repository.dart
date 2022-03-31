@@ -17,7 +17,8 @@ class FacultyDptBaseRepository {
 
   Future addFacultyDepartment(FacultyDpt facultyDpt) async {
     try {
-      final res = await _fDeptBase.put(facultyDpt.toJson());
+      final res =
+          await _fDeptBase.put(facultyDpt.toJson(), key: facultyDpt.dptCode);
 
       log(res.toString());
 
@@ -37,6 +38,24 @@ class FacultyDptBaseRepository {
           DetaQuery('faculty').equalTo(faculty.name),
         ],
       );
+
+      log(res.toString());
+
+      List items = res['items'];
+
+      return items.map((e) => FacultyDpt.fromJson(e)).toList();
+    }
+
+    // er
+    catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<FacultyDpt>?> getAllFacultyDpt() async {
+    try {
+      final res = await _fDeptBase.fetch();
 
       log(res.toString());
 

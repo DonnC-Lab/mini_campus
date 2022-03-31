@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mini_campus/src/modules/learning/views/learning_view.dart';
+import 'package:mini_campus/src/shared/features/admin/pages/home.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 //final currentModuleIndexProvider = StateProvider((_) => 0);
@@ -29,6 +30,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
     const LearningHomeView(),
     const Center(child: Text('Mini Campus 3')),
     const Center(child: Text('Mini Campus 4')),
+
+    // ? TODO remove from production
+    const AdminHomeView(),
   ];
 
   /// side bar modules list, should match the above [_appModules] index
@@ -50,6 +54,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
     const DrawerItem(
       icon: Entypo.hand,
       name: 'Report',
+    ),
+
+    // ? TODO remove from production
+    const DrawerItem(
+      icon: Entypo.shield,
+      name: 'Admin',
     ),
   ];
 
