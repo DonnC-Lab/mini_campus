@@ -76,6 +76,7 @@ class AppTheme {
         textTheme: lightTextTheme,
         primaryIconTheme: const IconThemeData(color: greyTextShade),
         buttonTheme: const ButtonThemeData(buttonColor: bluishColor),
+        appBarTheme: const AppBarTheme(color: bluishColor),
       );
 
   static ThemeData dark() => ThemeData(
@@ -84,5 +85,6 @@ class AppTheme {
         scaffoldBackgroundColor: darkModeMainColor,
         primaryIconTheme: const IconThemeData(color: greyTextShade),
         buttonTheme: const ButtonThemeData(buttonColor: bluishColor),
+        appBarTheme: const AppBarTheme(color: bluishColor),
       );
 }

@@ -12,7 +12,6 @@ Widget CustomDDField({
   required BuildContext context,
   required String? formName,
   TextEditingController? controller,
-  String validateError = '',
   required List<DropdownMenuItem<Object?>> items,
   FormFieldValidator<Object>? validator,
   String hintText = '',
@@ -55,7 +54,6 @@ Widget CustomDDField({
               autoFocus: autoFocus,
               obscureText: obscureText,
               readOnly: readOnly,
-              errorString: validateError,
               validator: validator,
               labelText: labelText,
               enforceLength: enforceLength,
@@ -90,7 +88,6 @@ Widget customDropDownField({
   required List<DropdownMenuItem<Object?>> items,
   var customOnChangeCallback,
   FormFieldValidator<Object>? validator,
-  String errorString = 'this field is required',
   Widget suffixIcon = const SizedBox.shrink(),
   Widget hint = const Text('-- select --'),
 }) {

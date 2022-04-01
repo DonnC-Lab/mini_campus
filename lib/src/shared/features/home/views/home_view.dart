@@ -8,10 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mini_campus/src/modules/learning/views/learning_view.dart';
+import 'package:mini_campus/src/modules/lost_and_found/views/lf_view.dart';
 import 'package:mini_campus/src/shared/features/admin/pages/home.dart';
 import 'package:mini_campus/src/shared/index.dart';
-
-//final currentModuleIndexProvider = StateProvider((_) => 0);
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -25,49 +24,34 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   int _currentModuleIndex = 0;
 
-  final List<Widget> _appModules = [
-    const Center(child: Text('Mini Campus 1')),
-    const LearningHomeView(),
-    const Center(child: Text('Mini Campus 3')),
-    const Center(child: Text('Mini Campus 4')),
-
+  final List<DrawerPage> _drawerPages = [
+    DrawerPage(
+      drawerItem: const DrawerItem(icon: AntDesign.isv, name: 'Campus Market'),
+      page: const Center(child: Text('Campus Market')),
+    ),
+    DrawerPage(
+      drawerItem:
+          const DrawerItem(icon: Icons.cast_for_education, name: 'Learning'),
+      page: const LearningHomeView(),
+    ),
+    DrawerPage(
+      drawerItem: const DrawerItem(icon: Entypo.flag, name: 'Lost & Found'),
+      page: const LostFoundView(),
+    ),
+    DrawerPage(
+      drawerItem: const DrawerItem(icon: Entypo.hand, name: 'Report'),
+      page: const Center(child: Text('Report')),
+    ),
     // ? TODO remove from production
-    const AdminHomeView(),
-  ];
-
-  /// side bar modules list, should match the above [_appModules] index
-  ///
-  /// each module matches its sideBar Item on drawer
-  final _sideBarModules = [
-    const DrawerItem(
-      icon: AntDesign.isv,
-      name: 'Campus Market',
-    ),
-    const DrawerItem(
-      icon: Icons.cast_for_education,
-      name: 'Learning',
-    ),
-    const DrawerItem(
-      icon: Entypo.flag,
-      name: 'Lost & Found',
-    ),
-    const DrawerItem(
-      icon: Entypo.hand,
-      name: 'Report',
-    ),
-
-    // ? TODO remove from production
-    const DrawerItem(
-      icon: Entypo.shield,
-      name: 'Admin',
+    DrawerPage(
+      drawerItem: const DrawerItem(icon: Entypo.shield, name: 'Admin'),
+      page: const AdminHomeView(),
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeNotifierProvider).value;
-
-    // final _currentModule = ref.watch(currentModuleIndexProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -116,8 +100,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           });
                           Navigator.pop(context);
                         },
-                        child: _sideBarModules[index]),
-                    itemCount: _sideBarModules.length,
+                        child: _drawerPages[index].drawerItem),
+                    itemCount: _drawerPages.length,
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                   ),
@@ -131,7 +115,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
             ),
           ),
         ),
-        body: _appModules[_currentModuleIndex],
+        body: _drawerPages[_currentModuleIndex].page,
         //body: const DetaView(),
       ),
     );

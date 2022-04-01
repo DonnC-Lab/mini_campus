@@ -14,6 +14,71 @@ InputDecoration CustomInputDecoration({
   ThemeMode themeMode = ThemeMode.system,
 }) {
   return InputDecoration(
+    hintText: hintText,
+    labelText: labelText,
+    labelStyle: textStyle,
+    hintStyle: const TextStyle(fontWeight: FontWeight.w400),
+    prefixIcon: prefixIcon,
+    suffix: suffixIcon,
+    filled: filled,
+    fillColor: greyTextShade.withOpacity(0.1),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: themeMode == ThemeMode.light
+            ? greyTextShade.withOpacity(0.1)
+            : fieldDMFillText,
+      ),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.transparent),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.red.withOpacity(0.6)),
+      borderRadius: BorderRadius.circular(8),
+    ),
+  );
+}
+
+/*
+InputDecoration(
+                    hintText: 'Your email',
+                    hintStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      color: greyTextShade,
+                    ),
+                    suffix: isEmailValid
+                        ? const Icon(Icons.done, color: greenishColor)
+                        : const SizedBox.shrink(),
+                    filled: fillField,
+                    fillColor: greyTextShade.withOpacity(0.1),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: themeMode == ThemeMode.light
+                            ? greyTextShade.withOpacity(0.1)
+                            : fieldDMFillText,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+
+
+
+
+
+
+
+
+
+
+=========== old ===============
+InputDecoration(
     // filled: true,
     labelText: labelText,
     fillColor: themeMode == ThemeMode.light
@@ -39,4 +104,4 @@ InputDecoration CustomInputDecoration({
       borderSide: const BorderSide(color: Colors.red),
     ),
   );
-}
+*/

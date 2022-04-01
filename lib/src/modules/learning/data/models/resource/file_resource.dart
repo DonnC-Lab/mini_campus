@@ -22,7 +22,7 @@ part 'file_resource.g.dart';
         required String courseCode,
 
         /// part5, part2
-        required String? part,
+        required String part,
 
         /// resource year e.g 2017 for 2017 exam paper
         required int year,

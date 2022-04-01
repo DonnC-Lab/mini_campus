@@ -14,7 +14,6 @@ Widget CustomDateField({
   required BuildContext context,
   required String? formName,
   TextEditingController? controller,
-  String validateError = '',
   FormFieldValidator<DateTime?>? validator,
   DateFormat? format,
   String hintText = '',
@@ -52,7 +51,6 @@ Widget CustomDateField({
               format: format,
               obscureText: obscureText,
               readOnly: readOnly,
-              errorString: validateError,
               validator: validator,
               labelText: labelText,
               enforceLength: enforceLength,
@@ -85,7 +83,6 @@ Widget customDateField({
   bool autoFocus = false,
   var customOnChangeCallback,
   FormFieldValidator<DateTime?>? validator,
-  String errorString = 'this field is required',
   Widget suffixIcon = const SizedBox.shrink(),
   DateFormat? format,
 }) {

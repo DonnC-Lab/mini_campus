@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:mini_campus/src/shared/components/index.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 class LogInView extends ConsumerStatefulWidget {
@@ -90,87 +92,107 @@ class _LogInViewState extends ConsumerState<LogInView> {
                     .bodyText1
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 15),
-              Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme:
-                      ThemeData().colorScheme.copyWith(primary: greyTextShade),
-                ),
-                child: TextField(
-                  controller: emailCtlr,
-                  onChanged: (_) {
-                    if (fillField) {
-                      setState(() {
-                        fillField = false;
-                      });
-                    }
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Your email',
-                    hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-                    prefixIcon: const Icon(
-                      Icons.email_outlined,
-                      color: greyTextShade,
-                    ),
-                    suffix: isEmailValid
-                        ? const Icon(Icons.done, color: greenishColor)
-                        : const SizedBox.shrink(),
-                    filled: fillField,
-                    fillColor: themeMode == ThemeMode.light
-                        ? bgColor
-                        : darkModeMainColor,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: themeMode == ThemeMode.light
-                            ? mainWhite
-                            : fieldDMFillText,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: greyTextShade),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(height: 30),
-              Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ThemeData().colorScheme.copyWith(
-                        primary: greyTextShade,
-                      ),
+              CustomFormField(
+                context: context,
+                formName: 'email',
+                hintText: 'Your email',
+                title: 'Email',
+                prefixIcon: const Icon(
+                  Icons.email_outlined,
+                  color: greyTextShade,
                 ),
-                child: TextField(
-                  controller: pwdCtlr,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-                    prefixIcon: const Icon(
-                      Icons.lock_outline,
-                      color: greyTextShade,
-                    ),
-                    filled: fillField,
-                    fillColor: themeMode == ThemeMode.light
-                        ? bgColor
-                        : darkModeMainColor,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: themeMode == ThemeMode.light
-                            ? mainWhite
-                            : fieldDMFillText,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: greyTextShade),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
+                suffixIcon: isEmailValid
+                    ? const Icon(Icons.done, color: greenishColor)
+                    : const SizedBox.shrink(),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context),
+                ]),
               ),
+              CustomFormField(
+                context: context,
+                formName: 'password',
+                hintText: 'Your password',
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+                title: 'Password',
+                prefixIcon: const Icon(
+                  Icons.lock_outline,
+                  color: greyTextShade,
+                ),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context),
+                ]),
+              ),
+              // Theme(
+              //   data: Theme.of(context).copyWith(
+              //     colorScheme:
+              //         ThemeData().colorScheme.copyWith(primary: greyTextShade),
+              //   ),
+              //   child: TextField(
+              //     controller: emailCtlr,
+              //     decoration: InputDecoration(
+              //       hintText: 'Your email',
+              //       hintStyle: const TextStyle(fontWeight: FontWeight.bold),
+              //       prefixIcon: const Icon(
+              //         Icons.email_outlined,
+              //         color: greyTextShade,
+              //       ),
+              //       suffix: isEmailValid
+              //           ? const Icon(Icons.done, color: greenishColor)
+              //           : const SizedBox.shrink(),
+              //       filled: fillField,
+              //       fillColor: greyTextShade.withOpacity(0.1),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: themeMode == ThemeMode.light
+              //               ? greyTextShade.withOpacity(0.1)
+              //               : fieldDMFillText,
+              //         ),
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: const BorderSide(color: Colors.transparent),
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 30),
+              // Theme(
+              //   data: Theme.of(context).copyWith(
+              //     colorScheme: ThemeData().colorScheme.copyWith(
+              //           primary: greyTextShade,
+              //         ),
+              //   ),
+              //   child: TextField(
+              //     controller: pwdCtlr,
+              //     keyboardType: TextInputType.visiblePassword,
+              //     obscureText: true,
+              //     decoration: InputDecoration(
+              //       hintText: 'Password',
+              //       hintStyle: const TextStyle(fontWeight: FontWeight.bold),
+              //       prefixIcon: const Icon(
+              //         Icons.lock_outline,
+              //         color: greyTextShade,
+              //       ),
+              //       filled: fillField,
+              //       fillColor: greyTextShade.withOpacity(0.1),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: themeMode == ThemeMode.light
+              //               ? greyTextShade.withOpacity(0.1)
+              //               : fieldDMFillText,
+              //         ),
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: const BorderSide(color: Colors.transparent),
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 40),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
