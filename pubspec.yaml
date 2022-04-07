@@ -71,6 +71,9 @@ dependencies:
   localregex: ^3.0.3
   timer_button:
   intl:
+
+  # misc
+  faker: ^2.0.0
   
 
 dev_dependencies:

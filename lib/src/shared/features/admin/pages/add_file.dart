@@ -280,7 +280,7 @@ class _AdminAddFileState extends ConsumerState<AdminAddFile> {
                                         uploadedBy: "admin",
                                         createdOn: DateTime.now(),
                                         courseCode: courseCode!,
-                                        part: part,
+                                        part: part!,
                                         approvalStatus:
                                             'approved', // for admin only
                                         year: int.parse(_data['year']),

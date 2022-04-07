@@ -73,7 +73,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                     .headline1
                     ?.copyWith(fontSize: 42),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Text(
                 'MiniCampus - with students at heart',
                 style: Theme.of(context)
@@ -81,10 +81,8 @@ class _LogInViewState extends ConsumerState<LogInView> {
                     .bodyText1
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 15),
-              const SizedBox(height: 20),
               const Divider(color: greyTextShade),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               Text(
                 'Continue with your student email',
                 style: Theme.of(context)
@@ -92,7 +90,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                     .bodyText1
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               CustomFormField(
                 context: context,
                 formName: 'email',
@@ -193,7 +191,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
               //     ),
               //   ),
               // ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: fillField ? bluishColorShade : bluishColor,

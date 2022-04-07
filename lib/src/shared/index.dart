@@ -6,3 +6,4 @@ export 'services/index.dart';
 export 'features/index.dart';
 export 'providers/shared_providers.dart';
 export 'widgets/index.dart';
+export 'providers/fake_data.dart';

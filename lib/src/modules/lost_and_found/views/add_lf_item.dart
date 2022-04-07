@@ -186,6 +186,10 @@ class _AddLFItemViewState extends ConsumerState<AddLFItemView> {
 
                           final DateTime _date = _data['date'];
 
+                          if (itemImg != null) {
+                            // upload img first
+                          }
+
                           // add item to db
                           final item = LostFoundItem(
                             name: _data['name'],
