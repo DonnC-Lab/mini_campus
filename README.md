@@ -33,10 +33,18 @@ This section is for you
 
 ### 5. Notifications
 Don't miss campus notifications, get notified of campus notifications
+#### 5.1 General push notifications
+These are sent per channel, general channel are based on | include:
+1. all - for all push notifications
+2. gender - based on student gender males | females
+3. department - based on student department, using dept-code
+4. faculty - based per faculty
+5. year - based on enrollment year e.g part 1, part 4
+
  
 <br>
 
-## Microservices
+## Microservices*
 ### 0. Student Profile
 - `profile` - firestore
 - `tokens` - firestore
@@ -44,7 +52,7 @@ Don't miss campus notifications, get notified of campus notifications
 
 ### 1. Campus Market
 - `products` - rtdb
-- `images` - deta drive
+- `images` - cloud storage | deta drive
 
 ### 2. Learning
 - `data` - deta base
@@ -69,3 +77,5 @@ $ flutter clean
 $ flutter pub get
 $ flutter pub run build_runner build --delete-conflicting-outputs
 ```
+
+* flutter_notification_channel

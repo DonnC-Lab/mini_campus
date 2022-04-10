@@ -17,7 +17,7 @@ class Student with _$Student {
     String? id,
 
     /// student institution email
-    String? email,
+    required String email,
     String? name,
     String? alias,
     String? profilePicture,
@@ -34,14 +34,11 @@ class Student with _$Student {
     @Default('') String campusLocation,
 
     /// full department name, Electronic Engineering
-    @Default('') String department,
-    @Default('') String faculty,
+    required String department,
+    required String faculty,
 
     /// tee, tcw ...
-    @Default('') String departmentCode,
-
-    /// topics to register, for notifications
-    @Default([]) List topics,
+    required String departmentCode,
 
     /// fetched from student org email
     String? studentNumber,

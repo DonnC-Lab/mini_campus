@@ -26,7 +26,7 @@ extension GetStudentNumberFromEmail on String {
   StudentNumber get studentNumber {
     final studentNum = replaceAll(nustEmailDomain, '').trim();
 
-    return _computeSn(studentNum);
+    return _computeSn(studentNum.toUpperCase());
   }
 }
 
@@ -46,43 +46,43 @@ StudentNumber _computeSn(String studentNumber) {
 
     switch (diff) {
       case 0:
-        _studentY = '1st Year';
+        _studentY = 'Part 1';
         break;
 
       case 1:
-        _studentY = '1st Year';
+        _studentY = 'Part 1';
         break;
 
       case 2:
-        _studentY = '2nd Year';
+        _studentY = 'Part 2';
         break;
 
       case 3:
-        _studentY = '3rd Year';
+        _studentY = 'Part 3';
         break;
 
       case 4:
-        _studentY = '4th Year';
+        _studentY = 'Part 4';
         break;
 
       case 5:
-        _studentY = '5th Year';
+        _studentY = 'Part 5';
         break;
 
       case 6:
-        _studentY = '6th Year';
+        _studentY = 'Part 6';
         break;
 
       case 7:
-        _studentY = '7th Year';
+        _studentY = 'Part 7';
         break;
 
       case 8:
-        _studentY = '8th Year';
+        _studentY = 'Part 8';
         break;
 
       case 9:
-        _studentY = '9th Year';
+        _studentY = 'Part 9';
         break;
 
       default:

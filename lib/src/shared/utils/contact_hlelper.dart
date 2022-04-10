@@ -3,6 +3,8 @@ import 'package:localregex/localregex.dart';
 import 'package:phone_number/phone_number.dart';
 
 /// helper to try validate contact passed and return formatted international number
+/// 
+/// return formatted number or null if invalid
 Future<String?> contactHelper(String? number) async {
   if (number != null) {
     if (number.isNotEmpty) {
@@ -17,7 +19,7 @@ Future<String?> contactHelper(String? number) async {
           return phoneNumber.nationalNumber;
         } catch (e) {
           // not a valid #
-          return number;
+          return null;
         }
       } else {
         // format the zim number

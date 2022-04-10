@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 ///
 /// Navigator.of(context, rootNavigator: true).pop();
 modalLoader(BuildContext context) {
+  // ? add a loader message
   showDialog(
       context: context,
       builder: (_) {

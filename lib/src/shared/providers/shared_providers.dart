@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../index.dart';
 
@@ -24,7 +23,11 @@ final themeNotifierProvider = StateProvider<ValueNotifier<ThemeMode>>((ref) {
 /// dio instance provider
 final dioProvider = StateProvider<Dio>((ref) => dioInstance(null));
 
-final imgPickerProvider = Provider((_) => ImagePicker());
+/// general app user
+final fbAppUserProvider = StateProvider<AppFbUser?>((ref) => null);
+
+/// currently logged in student
+final studentProvider = StateProvider<Student?>((ref) => null);
 
 Dio dioInstance(String? authKey, {bool isJsonHeader = true}) {
   return Dio(

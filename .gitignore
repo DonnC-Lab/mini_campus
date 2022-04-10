@@ -49,3 +49,4 @@ app.*.map.json
 /assets/demo/
 
 scratch.json
+scratch.dart
