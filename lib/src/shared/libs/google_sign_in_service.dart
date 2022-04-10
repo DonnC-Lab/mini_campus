@@ -1,10 +1,14 @@
 library google_sign_in_service;
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mini_campus/debug_settings.dart';
 import 'package:mini_campus/src/shared/extensions/index.dart';
 
 import '../index.dart';
+
+final googleAuthProvider = Provider((_) => GoogleSignInService());
 
 class GoogleSignInService {
   /// returns [AppFbUser] on success, else [CustomException]
@@ -29,7 +33,30 @@ class GoogleSignInService {
               idToken: googleAuth.idToken,
               accessToken: googleAuth.accessToken,
             ));
-            return AppFbUser.fromFirebaseUser(userCredential.user!);
+
+            if (BYPASS_EMAIL_VALIDATION_CHECK) {
+              return AppFbUser.fromFirebaseUser(userCredential.user!);
+            }
+
+            await userCredential.user?.reload();
+
+            final currentUser =
+                await FirebaseAuth.instance.authStateChanges().first;
+
+            // check if email is verified
+            if (currentUser!.emailVerified) {
+              return AppFbUser.fromFirebaseUser(userCredential.user!);
+            }
+
+            //
+            else {
+              await currentUser.sendEmailVerification();
+
+              return CustomException(
+                message:
+                    'Email provided not verified. A verification link has been sent to your email, check your email to complete process',
+              );
+            }
           }
 
           //

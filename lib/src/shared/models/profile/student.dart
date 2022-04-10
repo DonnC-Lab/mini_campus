@@ -46,9 +46,9 @@ class Student with _$Student {
         required DateTime createdOn,
   }) = _Student;
 
-  factory Student.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> json = doc.data as Map<String, dynamic>;
-    Student st = Student.fromJson(json);
+  factory Student.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    //Map<String, dynamic>? json = doc.data;
+    Student st = Student.fromJson(doc.data()!);
     return st.copyWith(id: doc.id);
   }
 

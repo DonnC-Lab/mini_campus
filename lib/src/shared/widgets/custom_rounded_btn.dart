@@ -6,7 +6,7 @@ class CustomRoundedButton extends StatelessWidget {
     Key? key,
     required this.text,
     this.onTap,
-    this.widthRatio = 0.8,
+    this.widthRatio = 1.0,
     this.height = 52,
     this.isOutlined = false,
     this.radius = 12,

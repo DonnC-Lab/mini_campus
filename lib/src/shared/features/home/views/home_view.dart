@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,6 +24,8 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends ConsumerState<HomeView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  late final FirebaseMessaging _messaging;
 
   int _currentModuleIndex = 0;
 
@@ -48,6 +53,104 @@ class _HomeViewState extends ConsumerState<HomeView> {
       page: const AdminHomeView(),
     ),
   ];
+
+  Future<void> initializeFirebaseService() async {
+    _messaging = FirebaseMessaging.instance;
+
+    await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      // print('Message data: ${message.data}');
+
+      AwesomeNotifications().createNotificationFromJsonData(message.data);
+    });
+  }
+
+  // For handling notification when the app is in terminated state
+  checkForInitialMessage() async {
+    await Firebase.initializeApp();
+    RemoteMessage? message = await _messaging.getInitialMessage();
+
+    if (message != null) {
+      AwesomeNotifications().createNotificationFromJsonData(message.data);
+    }
+  }
+
+  Future<void> setupInteractedMessage() async {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground opened app!');
+      // print('Message data: ${message.data}');
+
+      AwesomeNotifications().createNotificationFromJsonData(message.data);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    initializeFirebaseService();
+    checkForInitialMessage();
+    setupInteractedMessage();
+
+    AwesomeNotifications().createdStream.listen((receivedNotification) {
+      // String? createdSourceText =
+      //     AssertUtils.toSimpleEnumString(receivedNotification.createdSource);
+      // print('=== createdStream ===');
+      // print(createdSourceText);
+      // nothing happens when created
+    });
+
+    AwesomeNotifications().displayedStream.listen((receivedNotification) {
+      // String? createdSourceText = AssertUtils.toSimpleEnumString(
+      //     receivedNotification.displayedLifeCycle);
+      // print('=== displayedStream ===');
+      // print(createdSourceText);
+      // nothing happens when displayed
+    });
+
+    AwesomeNotifications().dismissedStream.listen((receivedNotification) {
+      // nothing happens when dismissed
+    });
+
+    AwesomeNotifications().actionStream.listen((receivedNotification) {
+      // print('=== actionStream ===');
+      // print(receivedNotification.toMap());
+      // perform action here when button is pressed
+      if (receivedNotification.buttonKeyPressed == 'VIEW') {
+        // goto profile page
+        // take interested buyer id from payload
+        // final String? _uid = receivedNotification.payload!['buyerId'];
+        // final String? _name = receivedNotification.payload!['buyerName'];
+
+        // routeTo(
+        //   context,
+        //   StudentProfileView(interestedBuyerId: _uid!),
+        // );
+      }
+
+      // e
+      else {
+        try {
+          // goto profile page
+          // take interested buyer id from payload
+          // final String? _uid = receivedNotification.payload!['buyerId'];
+          // final String? _name = receivedNotification.payload!['buyerName'];
+
+          // routeTo(
+          //   context,
+          //   StudentProfileView(interestedBuyerId: _uid!),
+          // );
+        } catch (e) {}
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

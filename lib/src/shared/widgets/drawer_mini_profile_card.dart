@@ -10,6 +10,10 @@ class DrawerMiniProfileCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeNotifierProvider).value;
 
+    final studentProfile = ref.watch(studentProvider);
+
+    debugLogger(studentProfile, name: 'DrawerMiniProfileCard');
+
     return Container(
       height: 80,
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -33,14 +37,14 @@ class DrawerMiniProfileCard extends ConsumerWidget {
             Column(
               children: [
                 Text(
-                  'Donald Chinhuru',
+                  studentProfile?.name ?? 'Student',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Electronic Engineering',
+                  studentProfile?.department ?? 'department',
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: greyTextShade,
                         fontStyle: FontStyle.italic,

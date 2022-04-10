@@ -3,4 +3,4 @@ export 'timer_service.dart';
 export 'exception_handler.dart';
 export 'deta/index.dart';
 export 'log_console.dart';
-export 'firebase/firestore_student_service.dart';
+export 'firebase/index.dart';
