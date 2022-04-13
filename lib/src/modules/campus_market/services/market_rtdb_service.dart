@@ -11,9 +11,7 @@ final marketDbProvider = Provider((ref) => MarketRtdbService(read: ref.read));
 class MarketRtdbService {
   final Reader read;
 
-  MarketRtdbService({
-    required this.read,
-  });
+  MarketRtdbService({required this.read});
 
   final _service = FirebaseRtdbService.instance;
 

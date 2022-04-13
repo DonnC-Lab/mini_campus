@@ -52,8 +52,10 @@ class AdService with _$AdService {
         required DateTime createdOn,
   }) = _AdService;
 
-  factory AdService.fromFirestore(DataSnapshot doc) {
-    final _map = doc.value as Map<String, dynamic>;
+  factory AdService.fromFbRtdb(DataSnapshot doc) {
+    final adMap = doc.value as Map;
+
+    final Map<String, dynamic> _map = Map.from(adMap);
 
     final _ad = AdService.fromJson(_map);
 

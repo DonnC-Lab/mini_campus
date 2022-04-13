@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:relative_scale/relative_scale.dart';
@@ -9,23 +8,20 @@ import '../../../constants/market_enums.dart';
 import 'add_product.dart';
 import 'add_service.dart';
 
-class AddView extends ConsumerStatefulWidget {
+class AddView extends StatefulWidget {
   const AddView({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddViewState();
+  State<StatefulWidget> createState() => _AddViewState();
 }
 
-class _AddViewState extends ConsumerState<AddView> {
+class _AddViewState extends State<AddView> {
   AdType _adType = AdType.Ad;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Add Your Ad'),
-      ),
+      appBar: AppBar(centerTitle: true, title: const Text('Add Your Ad')),
       body: RelativeBuilder(builder: (context, height, width, sy, sx) {
         return SingleChildScrollView(
           padding: EdgeInsets.all(sx(20)),

@@ -10,6 +10,8 @@ Future<void> customImgPicker(WidgetRef ref, bool isCamera) async {
 
   String error = 'No Error Detected';
 
+  // todo consider picking multiple images too
+
   try {
     final resultImg = await _picker.pickImage(
       source: isCamera ? ImageSource.camera : ImageSource.gallery,

@@ -21,9 +21,11 @@ class CloudStorageDatabase {
     try {
       final String fname = basename(image);
 
-      String _fullCloudFilePath = path + '/$fname';
+      String _fullCloudFilePath = path + fname;
 
-      var imageUrl = await _service.uploadFileCompleter(
+      debugLogger(_fullCloudFilePath);
+
+      var imageUrl = await _service.uploadFile(
           file: File(image), path: _fullCloudFilePath);
 
       debugLogger(imageUrl, name: 'uploadMediaFile');
@@ -59,7 +61,7 @@ class CloudStorageDatabase {
 
         String _fullCloudFilePath = path + '/$fname';
 
-        return _service.uploadFileCompleter(
+        return _service.uploadFile(
             file: File(_image), path: _fullCloudFilePath);
       }));
 
