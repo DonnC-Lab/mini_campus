@@ -12,6 +12,7 @@ Widget CustomFormField({
   String? title,
   required BuildContext context,
   required String? formName,
+   FocusNode? focusNode,
   TextEditingController? controller,
   String validateError = '',
   FormFieldValidator<String>? validator,
@@ -60,6 +61,7 @@ Widget CustomFormField({
               labelText: labelText,
               enforceLength: enforceLength,
               unfocus: unfocus,
+              focusNode: focusNode,
               suffixIcon: suffixIcon,
               keyboardType: keyboardType,
               initialText: initialText,
@@ -77,6 +79,7 @@ Widget CustomFormField({
 Widget customTextField({
   TextEditingController? controller,
   required BuildContext context,
+     FocusNode? focusNode,
   TextInputType? keyboardType,
   String? initialText,
   String hintText = '',
@@ -109,6 +112,7 @@ Widget customTextField({
         child: FormBuilderTextField(
           name: formName!,
           readOnly: readOnly,
+          focusNode: focusNode,
           initialValue: initialText,
           controller: controller,
           autofocus: autoFocus,

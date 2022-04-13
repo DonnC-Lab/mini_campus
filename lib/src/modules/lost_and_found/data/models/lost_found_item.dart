@@ -9,7 +9,8 @@ class LostFoundItem with _$LostFoundItem {
   factory LostFoundItem({
     required String name,
     required String location,
-    @JsonKey(name: 'date', fromJson: detaDateOnFromJson, toJson: detaDateOnToJson)
+    @JsonKey(name: 'date', fromJson: generalDateOnFromJson,
+      toJson: generalDateOnToJson,)
         required DateTime date,
 
     /// lost | found

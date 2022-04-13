@@ -14,8 +14,19 @@ class FbMsgService {
   FbMsgService(this.read);
 
   Future<String?> getToken() async {
+    final sharedPref = read(sharedPreferencesServiceProvider);
+
     try {
+      String cachedToken = sharedPref.userCachedToken();
+
       var t = await _service.getUserToken();
+
+      if (t == cachedToken) {
+        return cachedToken;
+      }
+
+      // set new
+      await sharedPref.setUserFcmToken(t ?? '');
 
       return t;
     } catch (e) {
@@ -24,10 +35,14 @@ class FbMsgService {
   }
 
   Future<void> subscribe() async {
-    try {
-      final student = read(studentProvider);
+    final sharedPref = read(sharedPreferencesServiceProvider);
 
-      await _service.subscribeTopics(student!);
+    try {
+      if (!sharedPref.isUserSubToTopics()) {
+        final student = read(studentProvider);
+
+        await _service.subscribeTopics(student!);
+      }
     } catch (e) {
       debugLogger(e, name: 'FbMsgService-subscribe');
       return;

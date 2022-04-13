@@ -26,7 +26,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  //print('Handling a background message: ${message.messageId}');
+  debugLogger('Handling a background message: ${message.messageId}');
 
   AwesomeNotifications().createNotificationFromJsonData(message.data);
 }
@@ -41,7 +41,7 @@ void main() async {
     [
       NotificationChannel(
         channelGroupKey: 'basic_channel_group',
-        channelKey: 'basic_channel',
+        channelKey: 'mini_campus_channel',
         channelName: 'MiniCampus',
         channelDescription: 'Notification channel for MiniCampus',
         enableVibration: true,

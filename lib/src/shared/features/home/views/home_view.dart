@@ -10,9 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mini_campus/src/modules/learning/views/learning_view.dart';
-import 'package:mini_campus/src/modules/lost_and_found/views/lf_view.dart';
-import 'package:mini_campus/src/shared/features/admin/pages/home.dart';
+import 'package:mini_campus/src/drawer_module_pages.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -29,31 +27,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   int _currentModuleIndex = 0;
 
-  final List<DrawerPage> _drawerPages = [
-    DrawerPage(
-      drawerItem: const DrawerItem(icon: AntDesign.isv, name: 'Campus Market'),
-      page: const Center(child: Text('Campus Market')),
-    ),
-    DrawerPage(
-      drawerItem:
-          const DrawerItem(icon: Icons.cast_for_education, name: 'Learning'),
-      page: const LearningHomeView(),
-    ),
-    DrawerPage(
-      drawerItem: const DrawerItem(icon: Entypo.flag, name: 'Lost & Found'),
-      page: const LostFoundView(),
-    ),
-    DrawerPage(
-      drawerItem: const DrawerItem(icon: Entypo.hand, name: 'Report'),
-      page: const Center(child: Text('Report')),
-    ),
-    // ? TODO remove from production
-    DrawerPage(
-      drawerItem: const DrawerItem(icon: Entypo.shield, name: 'Admin'),
-      page: const AdminHomeView(),
-    ),
-  ];
-
   Future<void> initializeFirebaseService() async {
     _messaging = FirebaseMessaging.instance;
 
@@ -61,12 +34,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
       alert: true,
       badge: true,
       provisional: false,
+      announcement: true,
       sound: true,
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      // print('Message data: ${message.data}');
+      debugLogger('== Got a message whilst in the foreground ==');
+      debugLogger('Message data: ${message.data}', name: 'onMsgListener');
 
       AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
@@ -84,8 +58,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Future<void> setupInteractedMessage() async {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground opened app!');
-      // print('Message data: ${message.data}');
+      debugLogger('Got a message whilst in the foreground opened app!');
+      // debugLogger('Message data: ${message.data}');
 
       AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
@@ -102,16 +76,16 @@ class _HomeViewState extends ConsumerState<HomeView> {
     AwesomeNotifications().createdStream.listen((receivedNotification) {
       // String? createdSourceText =
       //     AssertUtils.toSimpleEnumString(receivedNotification.createdSource);
-      // print('=== createdStream ===');
-      // print(createdSourceText);
+      // debugLogger('=== createdStream ===');
+      // debugLogger(createdSourceText);
       // nothing happens when created
     });
 
     AwesomeNotifications().displayedStream.listen((receivedNotification) {
       // String? createdSourceText = AssertUtils.toSimpleEnumString(
       //     receivedNotification.displayedLifeCycle);
-      // print('=== displayedStream ===');
-      // print(createdSourceText);
+      // debugLogger('=== displayedStream ===');
+      // debugLogger(createdSourceText);
       // nothing happens when displayed
     });
 
@@ -120,8 +94,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
     });
 
     AwesomeNotifications().actionStream.listen((receivedNotification) {
-      // print('=== actionStream ===');
-      // print(receivedNotification.toMap());
+      // debugLogger('=== actionStream ===');
+      // debugLogger(receivedNotification.toMap());
       // perform action here when button is pressed
       if (receivedNotification.buttonKeyPressed == 'VIEW') {
         // goto profile page
@@ -203,8 +177,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           });
                           Navigator.pop(context);
                         },
-                        child: _drawerPages[index].drawerItem),
-                    itemCount: _drawerPages.length,
+                        child: drawerModulePages[index].drawerItem),
+                    itemCount: drawerModulePages.length,
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                   ),
@@ -218,7 +192,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
             ),
           ),
         ),
-        body: _drawerPages[_currentModuleIndex].page,
+        body: drawerModulePages[_currentModuleIndex].page,
         //body: const DetaView(),
       ),
     );

@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-import 'package:mini_campus/src/shared/components/index.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 import '../data/models/lost_found_item.dart';
@@ -110,75 +107,12 @@ class _AddLFItemViewState extends ConsumerState<AddLFItemView> {
                       FormBuilderValidators.required(context, errorText: ''),
                     ]),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('Item Image', style: titleTextStyle(context)),
-                            const Spacer(),
-                            IconButton(
-                              icon: const Icon(Icons.no_photography),
-                              onPressed: () {
-                                ref.read(pickedImgProvider.notifier).state =
-                                    null;
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.add_a_photo),
-                              onPressed: () async {
-                                final imgSource =
-                                    await ImageSourceSelector(context);
-
-                                if (imgSource != null) {
-                                  await customImgPicker(ref, imgSource);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: itemImg == null
-                                  ? greyTextShade.withOpacity(0.1)
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(borderRadius),
-                            ),
-                            child: itemImg == null
-                                ? Center(
-                                    child: IconButton(
-                                      icon: const Icon(Icons.photo,
-                                          color: Colors.grey),
-                                      onPressed: () async {
-                                        final imgSource =
-                                            await ImageSourceSelector(context);
-
-                                        if (imgSource != null) {
-                                          await customImgPicker(ref, imgSource);
-                                        }
-                                      },
-                                    ),
-                                  )
-                                : Center(
-                                    child: Image.file(
-                                      File(itemImg.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const ImageAddPreviewPad(title: 'Item Image'),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
+                    child: CustomRoundedButton(
+                      text: 'Submit',
+                      onTap: () async {
                         if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
 
@@ -208,7 +142,6 @@ class _AddLFItemViewState extends ConsumerState<AddLFItemView> {
                           ref.read(pickedImgProvider.notifier).state = null;
                         }
                       },
-                      child: const Text('Submit'),
                     ),
                   ),
                 ],

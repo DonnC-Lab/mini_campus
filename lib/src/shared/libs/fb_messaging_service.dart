@@ -85,7 +85,7 @@ class FbMessagingService {
         "click_action": notificationPayload.clickAction,
         "content": {
           "id": Random().nextInt(99999),
-          "channelKey": "basic_channel",
+          "channelKey": "mini_campus_channel",
           "title": notificationPayload.title,
           "body": notificationPayload.body,
           "notificationLayout": "BigPicture",

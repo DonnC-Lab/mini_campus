@@ -12,7 +12,7 @@ class DrawerMiniProfileCard extends ConsumerWidget {
 
     final studentProfile = ref.watch(studentProvider);
 
-    debugLogger(studentProfile, name: 'DrawerMiniProfileCard');
+    // debugLogger(studentProfile, name: 'DrawerMiniProfileCard');
 
     return Container(
       height: 80,

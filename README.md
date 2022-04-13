@@ -79,3 +79,7 @@ $ flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 * flutter_notification_channel
+
+### Test User
+- n0173320w@students.nust.ac.zw
+-  donald@123

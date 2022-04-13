@@ -76,6 +76,9 @@ dependencies:
 
   # misc
   faker: ^2.0.0
+  intro_slider: ^3.0.4
+  cloud_firestore_odm: ^1.0.0-dev.11
+  json_annotation: ^4.4.0
   
 
 dev_dependencies:
@@ -84,8 +87,10 @@ dev_dependencies:
   change_app_package_name: ^1.0.0
   flutter_test:
     sdk: flutter
-  freezed: ^1.1.1
+  cloud_firestore_odm_generator: ^1.0.0-dev.10
+  freezed:
   json_serializable: ^6.1.4
+  
 
 flutter:
   uses-material-design: true

@@ -15,7 +15,8 @@ part 'file_resource.g.dart';
         /// admin | student id
         required String uploadedBy,
 
-        @JsonKey(name: 'createdOn', fromJson: detaDateOnFromJson, toJson: detaDateOnToJson)
+        @JsonKey(name: 'createdOn', fromJson: generalDateOnFromJson,
+      toJson: generalDateOnToJson,)
         required DateTime createdOn,
 
         /// tee5122

@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 // firebase date converter
 DateTime firestoreDateOnFromJson(Timestamp timestamp) => timestamp.toDate();
 
 Timestamp firestoreDateOnToJson(DateTime date) => Timestamp.fromDate(date);
 
-// deta date converter
-DateTime detaDateOnFromJson(String stringDate) => DateTime.parse(stringDate);
+// general date converter
+DateTime generalDateOnFromJson(String stringDate) => DateTime.parse(stringDate);
 
-String detaDateOnToJson(DateTime date) => date.toIso8601String();
+String generalDateOnToJson(DateTime date) => date.toIso8601String();
+
+String elapsedTimeAgo(DateTime? date) => timeago.format(date!);

@@ -34,12 +34,10 @@ class FlashDialog {
     showFlash(
       context: context,
       duration: const Duration(seconds: 5),
-      persistent: false,
       builder: (_, controller) {
         return Flash(
           controller: controller,
           brightness: Theme.of(context).brightness,
-          backgroundColor: Theme.of(context).backgroundColor,
           boxShadows: const [BoxShadow(blurRadius: 4)],
           barrierBlur: 3.0,
           barrierColor: Colors.black38,
@@ -52,12 +50,12 @@ class FlashDialog {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
-                  ?.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             content: Text(
               mesg,
               style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 12),
+                  Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 12),
             ),
             //showProgressIndicator: true,
             primaryAction: TextButton(
@@ -70,34 +68,34 @@ class FlashDialog {
     );
   }
 
-  void showDialogFlash(
+  Future<bool?> showDialogFlash(
     BuildContext context, {
     required String title,
     required String mesg,
     String okButtonText = 'OK',
     String cancelButtonText = 'CANCEL',
     bool persistent = true,
-  }) {
-    context.showFlashDialog(
+  }) async {
+    return await context.showFlashDialog<bool?>(
         constraints: const BoxConstraints(maxWidth: 300),
         persistent: persistent,
         brightness: Theme.of(context).brightness,
-        backgroundColor: Theme.of(context).backgroundColor,
+        //backgroundColor: Theme.of(context).backgroundColor,
         title: Text(
           title,
           style: Theme.of(context)
               .textTheme
               .bodyText1
-              ?.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
         ),
         content: Text(
           mesg,
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 12),
+          style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 13),
         ),
         negativeActionBuilder: (context, controller, _) {
           return TextButton(
             onPressed: () {
-              controller.dismiss();
+              controller.dismiss(false);
             },
             child: Text(cancelButtonText),
           );
@@ -105,7 +103,7 @@ class FlashDialog {
         positiveActionBuilder: (context, controller, _) {
           return TextButton(
             onPressed: () {
-              controller.dismiss();
+              controller.dismiss(true);
             },
             child: Text(okButtonText),
           );
