@@ -1,7 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutterfire_ui/database.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 import '../../../constants/fb_paths.dart';
 import '../../../constants/market_enums.dart';
@@ -44,7 +45,7 @@ class TabContentView extends StatelessWidget {
                 child: Text(
                     'no Ads found matching `${marketCategory.name}`\n\nAdd your Ads to share with friends'),
               )
-            : MasonryGridView.count(
+            : StaggeredGridView.countBuilder(
                 crossAxisCount: 2,
                 mainAxisSpacing: 35,
                 crossAxisSpacing: 20,
@@ -57,8 +58,10 @@ class TabContentView extends StatelessWidget {
 
                   final ad = AdService.fromFbRtdb(snapshot.docs[index]);
 
-                  return CustomHomeCard(ad: ad);
+                  return CustomHomeCard(ad: ad, isEven: index.isEven);
                 },
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(1, index.isEven ? 1.4 : 1.5),
               );
       },
     );

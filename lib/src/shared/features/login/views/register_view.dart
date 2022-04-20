@@ -5,7 +5,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mini_campus/src/shared/components/index.dart';
 import 'package:mini_campus/src/shared/extensions/index.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/libs/index.dart';
@@ -238,8 +237,10 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
                         Navigator.of(context, rootNavigator: true).pop();
 
-                        _dialog.showToast(
-                            'Your Mini Campus account have been created successfully, sign in to continue');
+                        _dialog.showTopFlash(context,
+                            title: "Account",
+                            mesg:
+                                'Your MiniCampus account have been created successfully, sign in to continue');
 
                         routeToWithClear(context, const LogInView());
                       }

@@ -18,7 +18,19 @@ final List<MarketCategory> marketCategories = [
 ];
 
 /// used when adding an Ad
-List<MarketCategory> selectableMarketCategories() {
+final List<MarketCategory> selectableMarketCategories = [
+  MarketCategory.Clothing,
+  MarketCategory.Grocery,
+  MarketCategory.Electronics,
+  MarketCategory.Beverages,
+  MarketCategory.Stationery,
+  MarketCategory.PrintingDesign,
+  MarketCategory.Other,
+  MarketCategory.Requests,
+];
+
+// fixme disturbing tabbar items by retaining state with filtered data
+List<MarketCategory> _selectableMarketCategories() {
   var _copy = marketCategories;
 
   _copy.remove(MarketCategory.All);

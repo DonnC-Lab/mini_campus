@@ -9,9 +9,11 @@ class CustomInnerCard extends StatelessWidget {
     Key? key,
     required this.ad,
     this.chipRadius = 10.0,
+    this.isEven = false,
   }) : super(key: key);
 
   final double chipRadius;
+  final bool isEven;
   final AdService ad;
 
   @override
@@ -25,7 +27,7 @@ class CustomInnerCard extends StatelessWidget {
             topRight: Radius.circular(chipRadius),
           ),
           child: SizedBox(
-            height: 130,
+            height: isEven ? 130 : 150,
             width: double.infinity,
             child: ad.images.isEmpty
                 ? Image.asset('assets/images/market_ad.png')

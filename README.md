@@ -7,6 +7,11 @@ MiniCampus, **MC** - thrives to be the go to student app for both freshers and e
 - It comprises of `modules` that each act as a standalone application serving a single purpose
 
 ## Modules
+
+Follow unfollow - students can follow and unfollow each other*
+- send notification to each other when a follow is made
+- send notification when followed student ads something on the platform
+
 ### 1. Campus Market
 A mini e-commerce like market for students, features
 - Easily reach potential clients for your products from a pool of other students
@@ -82,4 +87,4 @@ $ flutter pub run build_runner build --delete-conflicting-outputs
 
 ### Test User
 - n0173320w@students.nust.ac.zw
--  donald@123
+- donald@123

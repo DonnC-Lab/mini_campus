@@ -7,6 +7,7 @@ import 'package:mini_campus/src/modules/campus_market/models/ad_service.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../constants/fb_paths.dart';
 import '../../../constants/general_consts.dart';
 import '../../../constants/market_enums.dart';
 import '../../../services/market_rtdb_service.dart';
@@ -49,10 +50,8 @@ class _AddProductState extends ConsumerState<AddProduct> {
                 ),
                 title: 'Product Category',
                 formName: 'category',
-                items: selectableMarketCategories()
-                    .map(
-                      (e) => DropdownMenuItem(child: Text(e.name), value: e),
-                    )
+                items: selectableMarketCategories
+                    .map((e) => DropdownMenuItem(child: Text(e.name), value: e))
                     .toList(),
               ),
               CustomFormField(
@@ -123,8 +122,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
                         // upload img to cloud
                         final String? img = await storageApi.uploadMediaFile(
                           image: adImg.path,
-                          path: '',
-                          // path: FirebasePaths.adStorageUserFolder(appUser!.uid),
+                          path: FirebasePaths.adStorageUserFolder(appUser!.uid),
                         );
 
                         if (img != null) {

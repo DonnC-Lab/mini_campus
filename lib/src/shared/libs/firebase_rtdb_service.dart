@@ -18,6 +18,13 @@ class FirebaseRtdbService {
     await ref.set(data);
   }
 
+  /// get data: path e.g: "users/123"
+  Future<DataSnapshot> getData({required String path}) async {
+    final ref = _dbInstance.ref(path);
+
+    return await ref.get();
+  }
+
   /// set data: path e.g: "users" with unique auto gen id
   ///
   ///

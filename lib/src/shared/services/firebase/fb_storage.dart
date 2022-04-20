@@ -21,7 +21,7 @@ class CloudStorageDatabase {
     try {
       final String fname = basename(image);
 
-      String _fullCloudFilePath = path + fname;
+      String _fullCloudFilePath = path + '/' + fname;
 
       debugLogger(_fullCloudFilePath);
 

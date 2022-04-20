@@ -12,6 +12,13 @@ final studentStoreProvider = Provider((ref) {
   return FirestoreStudentService(uid: appUser?.uid ?? '', read: ref.read);
 });
 
+final studentProfileProvider =
+    FutureProviderFamily<Student?, String>((ref, uid) {
+  final api = ref.watch(studentStoreProvider);
+
+  return api.getStudentProfile(studentId: uid);
+});
+
 class FirestoreStudentService {
   FirestoreStudentService({
     required this.uid,

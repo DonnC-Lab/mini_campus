@@ -13,23 +13,30 @@ class FbMsgService {
 
   FbMsgService(this.read);
 
-  Future<String?> getToken() async {
+  Future getToken() async {
     final sharedPref = read(sharedPreferencesServiceProvider);
 
     try {
       String cachedToken = sharedPref.userCachedToken();
 
-      var t = await _service.getUserToken();
+      if (cachedToken.isEmpty) {
+        var t = await _service.getUserToken();
 
-      if (t == cachedToken) {
-        return cachedToken;
+        if (t == cachedToken) {
+          return;
+        }
+
+        // add token
+        await read(studentStoreProvider).addNotificationToken(t!);
+
+        // set new
+        await sharedPref.setUserFcmToken(t);
+
+        // subscribe to topics also
+        await subscribe();
       }
-
-      // set new
-      await sharedPref.setUserFcmToken(t ?? '');
-
-      return t;
     } catch (e) {
+      debugLogger(e, error: e, name: 'getToken');
       return null;
     }
   }

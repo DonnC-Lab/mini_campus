@@ -4,7 +4,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mini_campus/src/shared/components/index.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
 final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
@@ -41,7 +40,7 @@ class _BasicProfileUpdateViewState
 
     final themeMode = ref.watch(themeNotifierProvider.notifier).state.value;
 
-    debugLogger(studentProfile, name: 'basic-profile-update');
+   // debugLogger(studentProfile, name: 'basic-profile-update');
 
     return SafeArea(
       child: Scaffold(

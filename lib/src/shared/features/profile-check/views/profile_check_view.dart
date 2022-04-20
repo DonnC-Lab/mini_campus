@@ -26,15 +26,7 @@ class _ProfileCheckViewState extends ConsumerState<ProfileCheckView> {
   }
 
   Future<void> _handler() async {
-    String? token = await ref.read(fbMsgProvider).getToken();
-
-    // update user token
-    if (token != null) {
-      await ref.watch(studentStoreProvider).addNotificationToken(token);
-    }
-
-    // subscribe to topics
-    await ref.watch(fbMsgProvider).subscribe();
+    await ref.read(fbMsgProvider).getToken();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       routeToWithClear(context, const HomeView());

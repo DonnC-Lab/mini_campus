@@ -9,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'debug_settings.dart';
+import 'fb_emulator.dart';
 import 'firebase_options.dart';
 import 'src/app.dart';
 
@@ -58,31 +60,29 @@ void main() async {
         channelGroupName: 'MiniCampus group',
       )
     ],
-    debug: true,
+    debug: USE_EMULATOR,
   );
 
   AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     if (!isAllowed) {
-      // This is just a basic example. For real apps, you must show some
-      // friendly dialog box before call the request method.
-      // This is very important to not harm the user experience
-      AwesomeNotifications().requestPermissionToSendNotifications();
+      AwesomeNotifications().requestPermissionToSendNotifications(
+          channelKey: 'mini_campus_channel');
     }
   });
 
   HttpOverrides.global = MyHttpOverrides();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  //  bool isAndroid = defaultTargetPlatform == TargetPlatform.android && !kIsWeb;
-  // // Ideal time to initialize
-  // FirebaseDatabase.instance.useDatabaseEmulator(isAndroid ? '10.0.2.2' : 'localhost', 9000);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  if (USE_EMULATOR) {
+    await connectToFirebaseEmulator();
+  }
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
     ProviderScope(

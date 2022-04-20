@@ -41,6 +41,5 @@ String? whatsappLink(String? number, String body) {
 
   final _encodedBody = Uri.encodeComponent(body);
   final _url = 'https://wa.me/$_num?text=$_encodedBody';
-  // print(_url);
   return _url;
 }

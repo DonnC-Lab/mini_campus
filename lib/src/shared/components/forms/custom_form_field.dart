@@ -5,14 +5,11 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import 'custom_input_decoration.dart';
-import 'form_constants.dart';
-
 Widget CustomFormField({
   String? title,
   required BuildContext context,
   required String? formName,
-   FocusNode? focusNode,
+  FocusNode? focusNode,
   TextEditingController? controller,
   String validateError = '',
   FormFieldValidator<String>? validator,
@@ -79,7 +76,7 @@ Widget CustomFormField({
 Widget customTextField({
   TextEditingController? controller,
   required BuildContext context,
-     FocusNode? focusNode,
+  FocusNode? focusNode,
   TextInputType? keyboardType,
   String? initialText,
   String hintText = '',
