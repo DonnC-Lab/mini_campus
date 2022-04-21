@@ -73,6 +73,7 @@ dependencies:
   timer_button:
   intl:
   flutter_advanced_avatar: ^1.0.0+1
+  numeral: ^2.0.1
 
   # misc
   faker: ^2.0.0

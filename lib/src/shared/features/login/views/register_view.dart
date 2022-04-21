@@ -227,6 +227,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                           email: result.email,
                           department: '',
                           faculty: '',
+                          about: 'Hey 👋 I\'m using MiniCampus',
                           departmentCode: '',
                           createdOn: DateTime.now(),
                           studentNumber:

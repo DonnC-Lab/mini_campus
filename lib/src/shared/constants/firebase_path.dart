@@ -5,7 +5,9 @@ class FirestorePath {
   // tokens
   static String get tokens => 'tokens';
   static String token(String uid) => '$tokens/$uid';
+}
 
+class CloudStoragePath {
   /// path to user profile pic
   ///
   /// stored per User id folder, leave file name as it will be pre-appended automatically

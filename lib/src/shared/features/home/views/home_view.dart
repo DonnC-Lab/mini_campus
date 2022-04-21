@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -184,6 +183,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   ),
                 ),
                 const SizedBox(height: 30),
+
                 const DrawerMiniProfileCard(),
                 const Divider(height: 30),
                 //const DrawerHelpStarted(),
@@ -215,8 +215,6 @@ class DetaView extends ConsumerWidget {
         Expanded(
           child: deta.when(
             data: (data) {
-              log(data.toString());
-
               var fnames = data['names'] as List;
 
               return RefreshIndicator(

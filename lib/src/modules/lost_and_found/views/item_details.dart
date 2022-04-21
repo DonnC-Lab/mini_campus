@@ -67,10 +67,10 @@ void ItemDetails(BuildContext context, LostFoundItem item) {
                     const Spacer(),
                     Text(
                       DateFormat.yMMMMd().format(item.date),
-                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                            fontSize: 11,
-                            color: greyTextShade,
-                          ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(fontSize: 11, color: greyTextShade),
                     ),
                   ],
                 ),

@@ -1,13 +1,15 @@
 // get student number from passed email
 
 import 'package:mini_campus/src/shared/constants/index.dart';
+import 'package:mini_campus/src/shared/services/log_console.dart';
 
 class StudentNumber {
   final String stringYear;
   final int intYear;
   final String studentNumber;
 
-  StudentNumber(this.stringYear, this.intYear, this.studentNumber);
+  StudentNumber(
+      {this.stringYear = '', this.intYear = 0, this.studentNumber = ''});
 
   StudentNumber copyWith({
     String? stringYear,
@@ -15,11 +17,15 @@ class StudentNumber {
     String? studentNumber,
   }) {
     return StudentNumber(
-      stringYear ?? this.stringYear,
-      intYear ?? this.intYear,
-      studentNumber ?? this.studentNumber,
+      stringYear: stringYear ?? this.stringYear,
+      intYear: intYear ?? this.intYear,
+      studentNumber: studentNumber ?? this.studentNumber,
     );
   }
+
+  @override
+  String toString() =>
+      'StudentNumber(stringYear: $stringYear, intYear: $intYear, studentNumber: $studentNumber)';
 }
 
 extension GetStudentNumberFromEmail on String {
@@ -31,7 +37,7 @@ extension GetStudentNumberFromEmail on String {
 }
 
 StudentNumber _computeSn(String studentNumber) {
-  StudentNumber sn = StudentNumber('undefined', -1, studentNumber);
+  StudentNumber sn = StudentNumber(studentNumber: studentNumber);
 
   try {
     String _year = studentNumber.substring(2, 4).trim();
@@ -89,7 +95,7 @@ StudentNumber _computeSn(String studentNumber) {
         _studentY = 'undefined';
     }
 
-    sn.copyWith(stringYear: _studentY, intYear: diff);
+    sn = sn.copyWith(stringYear: _studentY, intYear: diff);
   }
 
   // error

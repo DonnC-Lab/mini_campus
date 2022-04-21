@@ -19,11 +19,15 @@ final singleAdFutureProvider =
 });
 
 class FavView extends ConsumerWidget {
-  const FavView({Key? key}) : super(key: key);
+  const FavView({Key? key, this.extStudent}) : super(key: key);
+
+  final Student? extStudent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final student = ref.watch(studentProvider);
+    final currentStudent = ref.watch(studentProvider);
+
+    var student = extStudent ?? currentStudent;
 
     return Scaffold(
       body: FirebaseDatabaseQueryBuilder(

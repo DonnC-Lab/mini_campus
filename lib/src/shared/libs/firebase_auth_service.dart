@@ -23,6 +23,8 @@ class FirebaseAuthService {
   AppFbUser get currentUser =>
       AppFbUser.fromFirebaseUser(_firebaseAuth.currentUser!);
 
+  User? get checkCurrentUser => _firebaseAuth.currentUser;
+
   Stream<AppFbUser?> authStateChanges() {
     return _firebaseAuth
         .authStateChanges()

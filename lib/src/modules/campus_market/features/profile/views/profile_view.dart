@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mini_campus/src/shared/features/profile/views/detailed_profile_update.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
+import '../../../widgets/market_stats.dart';
+
 class MarketProfileView extends ConsumerWidget {
-  const MarketProfileView({Key? key}) : super(key: key);
+  const MarketProfileView({Key? key, this.extStudent}) : super(key: key);
+
+  final Student? extStudent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final student = ref.watch(studentProvider);
+    final currentStudent = ref.watch(studentProvider);
+
+    var student = extStudent ?? currentStudent;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -34,6 +41,16 @@ class MarketProfileView extends ConsumerWidget {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ),
+            const SizedBox(height: 20),
+            Center(
+              child: Text(
+                student!.faculty,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(color: greyTextShade),
+              ),
+            ),
             const SizedBox(height: 30),
             Card(
               child: SizedBox(
@@ -49,7 +66,9 @@ class MarketProfileView extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Cruising beyond imagination',
+                        student.about.isEmpty
+                            ? 'Hey 👋 I\'m using MiniCampus'
+                            : student.about,
                         style: Theme.of(context)
                             .textTheme
                             .subtitle2
@@ -59,6 +78,18 @@ class MarketProfileView extends ConsumerWidget {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(height: 30),
+            MarketStatsCard(extStudent: extStudent),
+            const SizedBox(height: 30),
+            CustomRoundedButton(
+              text: 'View Full Profile',
+              onTap: () {
+                routeTo(
+                  context,
+                  DetailedProfileView(extStudent: extStudent),
+                );
+              },
             ),
           ],
         ),

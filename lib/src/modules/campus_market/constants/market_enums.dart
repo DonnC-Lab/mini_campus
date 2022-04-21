@@ -15,6 +15,7 @@ enum MarketCategory {
 }
 
 enum AdType {
+  None,
   Ad,
   Service,
 }

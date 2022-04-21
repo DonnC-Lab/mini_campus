@@ -136,7 +136,7 @@ class FirestoreStudentService {
         else {
           final _profile = await getStudentProfile();
 
-          debugLogger(_profile, name: 'isStudentProfileComplete');
+         // debugLogger(_profile, name: 'isStudentProfileComplete');
 
           if (_profile != null) {
             bool isComplete = _profile.name!.isNotEmpty &&
