@@ -1,16 +1,14 @@
-import 'dart:io';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mini_campus/src/drawer_module_pages.dart';
 import 'package:mini_campus/src/shared/index.dart';
+
+import '../../profile/views/detailed_profile_update.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -38,9 +36,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugLogger('== Got a message whilst in the foreground ==');
-      debugLogger('Message data: ${message.data}', name: 'onMsgListener');
-
       AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
   }
@@ -57,9 +52,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Future<void> setupInteractedMessage() async {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      debugLogger('Got a message whilst in the foreground opened app!');
-      // debugLogger('Message data: ${message.data}');
-
       AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
   }
@@ -143,62 +135,36 @@ class _HomeViewState extends ConsumerState<HomeView> {
             ),
           ],
         ),
-        drawer: Drawer(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 10),
-                SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          _scaffoldKey.currentState?.openEndDrawer();
-                        },
-                        icon: const Icon(Icons.cancel_outlined),
-                      ),
-                      themeMode == ThemeMode.light
-                          ? SvgPicture.asset('assets/images/logo.svg')
-                          : SvgPicture.asset('assets/images/logo_dm.svg'),
-                    ],
-                  ),
-                ),
-                const Divider(height: 30),
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (_, index) => GestureDetector(
-                        onTap: () {
-                          // ref.read(currentModuleIndexProvider) = index;
-                          setState(() {
-                            _currentModuleIndex = index;
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: drawerModulePages[index].drawerItem),
-                    itemCount: drawerModulePages.length,
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                  ),
-                ),
-                const SizedBox(height: 30),
-
-                const DrawerMiniProfileCard(),
-                const Divider(height: 30),
-                //const DrawerHelpStarted(),
-                const DrawerThemeSwitcher(),
-              ],
-            ),
-          ),
+        drawer: HomeDrawer(
+          logo: themeMode == ThemeMode.light
+              ? SvgPicture.asset('assets/images/logo.svg')
+              : SvgPicture.asset('assets/images/logo_dm.svg'),
+          onDrawerItemTap: (index) {
+            setState(() {
+              _currentModuleIndex = index;
+            });
+          },
+          onCloseIconTap: () {
+            _scaffoldKey.currentState?.openEndDrawer();
+          },
+          onProfileCardTap: () {
+            setState(() {
+              _currentModuleIndex = -1;
+            });
+          },
         ),
-        body: drawerModulePages[_currentModuleIndex].page,
-        //body: const DetaView(),
+        body: _currentModuleIndex == -1
+            ? const DetailedProfileView()
+            : drawerModulePages[_currentModuleIndex].page,
       ),
     );
   }
 }
 
+
+
+
+/*
 final loaderProvider = StateProvider((_) => false);
 
 class DetaView extends ConsumerWidget {
@@ -311,3 +277,53 @@ class DetaView extends ConsumerWidget {
     );
   }
 }
+
+// ===============================================================
+Drawer(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          _scaffoldKey.currentState?.openEndDrawer();
+                        },
+                        icon: const Icon(Icons.cancel_outlined),
+                      ),
+                      themeMode == ThemeMode.light
+                          ? SvgPicture.asset('assets/images/logo.svg')
+                          : SvgPicture.asset('assets/images/logo_dm.svg'),
+                    ],
+                  ),
+                ),
+                const Divider(height: 30),
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (_, index) => GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _currentModuleIndex = index;
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: drawerModulePages[index].drawerItem),
+                    itemCount: drawerModulePages.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                const DrawerMiniProfileCard(),
+                const Divider(height: 30),
+                //const DrawerHelpStarted(),
+                const DrawerThemeSwitcher(),
+              ],
+            ),
+          ),
+        ),
+*/

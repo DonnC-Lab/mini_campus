@@ -26,13 +26,14 @@ void ItemDetails(BuildContext context, LostFoundItem item) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                    child: Text(
-                  'Details',
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                      ),
-                )),
+                  child: Text(
+                    'Details',
+                    style: Theme.of(context).textTheme.headline1?.copyWith(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ),
                 const Divider(),
                 const SizedBox(height: 8),
                 Row(
@@ -78,6 +79,7 @@ void ItemDetails(BuildContext context, LostFoundItem item) {
                 Text(
                   item.description,
                   maxLines: 5,
+                  softWrap: true,
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                         fontSize: 13,
                         color: greyTextShade,
@@ -85,30 +87,7 @@ void ItemDetails(BuildContext context, LostFoundItem item) {
                 ),
                 const SizedBox(height: 20),
                 const Divider(),
-                Text(
-                  'Added By',
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const ItemImage(
-                      img: 'assets/images/product-1.png',
-                      size: 40,
-                      radius: 40,
-                    ),
-                    const SizedBox(width: 20),
-                    Text(
-                      'Admin',
-                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                            fontSize: 12,
-                          ),
-                    ),
-                  ],
-                ),
+                CustomProfileAvatar(studentId: item.uploader),
               ],
             ),
           ),

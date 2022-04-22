@@ -1,16 +1,7 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mini_campus/src/modules/learning/data/models/course.dart';
-import 'package:mini_campus/src/modules/learning/data/models/resource/file_resource.dart';
-import 'package:mini_campus/src/modules/learning/data/models/resource/resource.dart';
-import 'package:mini_campus/src/shared/components/index.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/services/deta/resource_repo.dart';
 
@@ -64,7 +55,8 @@ class _AdminAddFileState extends ConsumerState<AdminAddFile> {
 
     final course = ref.watch(_selectedCourseProvider);
 
-    //
+    return const Text('');
+    /*
     final driveRepo = ref.watch(detaStoreRepProvider);
 
     final faculty = ref.watch(_selectedFacultyProvider);
@@ -365,5 +357,7 @@ class _AdminAddFileState extends ConsumerState<AdminAddFile> {
         ),
       ),
     );
+  }
+  */
   }
 }

@@ -5,3 +5,4 @@ export 'profile/student.dart';
 export 'faculty_dpt.dart';
 export 'drawer_page.dart';
 export 'notification_payload.dart';
+export 'deta_drive_init.dart';

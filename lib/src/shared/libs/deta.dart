@@ -31,9 +31,9 @@ class Deta {
 
   late final String _projectId;
 
-  Deta({required String projectId, required String projectKey}) {
+  Deta({required String projectKey}) {
     _projectKey = projectKey;
-    _projectId = projectId;
+    _projectId  = projectKey.split('_')[0];
   }
 
   /// get deta base url
