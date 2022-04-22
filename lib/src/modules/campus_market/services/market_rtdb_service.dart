@@ -77,6 +77,20 @@ class MarketRtdbService {
     }
   }
 
+  /// get all ads once [for search page]
+  Future<List<AdService>> getAllAdService() async {
+    try {
+      final snap = await _service.getDataOnceOff(path: FirebasePaths.ads);
+
+      if (!snap.exists) return const [];
+
+      return snap.children.map((doc) => AdService.fromFbRtdb(doc)).toList();
+    } catch (e) {
+      debugLogger(e, name: 'getAllAdService');
+      return const [];
+    }
+  }
+
   Future<bool?> likeAdService(AdService adService) async {
     final appUser = read(fbAppUserProvider);
 

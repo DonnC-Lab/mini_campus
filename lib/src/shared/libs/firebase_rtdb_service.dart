@@ -25,6 +25,14 @@ class FirebaseRtdbService {
     return await ref.get();
   }
 
+  /// get data once off: first 500 items to search from
+  Future<DataSnapshot> getDataOnceOff(
+      {required String path, int limitToFirst = 500}) async {
+    final ref = _dbInstance.ref().child(path).limitToFirst(limitToFirst);
+
+    return await ref.get();
+  }
+
   /// set data: path e.g: "users" with unique auto gen id
   ///
   ///

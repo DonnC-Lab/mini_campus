@@ -9,7 +9,7 @@ import 'src/shared/services/log_console.dart';
 
 /// Connnect to the firebase emulator
 Future connectToFirebaseEmulator() async {
-  debugLogger('configuring firebase emulator..', name: 'connectToFirebaseEmulator');
+  debugLogger('configuring firebase emulator..', name: 'FirebaseEmulator');
 
   final localHostString = Platform.isAndroid ? '10.0.2.2' : 'localhost';
 

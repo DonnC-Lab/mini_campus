@@ -6,6 +6,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import '../../add-ad-service/views/add_view.dart';
 import '../../favorites/views/fav_view.dart';
 import '../../profile/views/profile_view.dart';
+import '../../search/views/search_view.dart';
 import 'market_home_view.dart';
 
 class CampusMarket extends StatefulWidget {
@@ -18,7 +19,7 @@ class CampusMarket extends StatefulWidget {
 class _CampusMarketState extends State<CampusMarket> {
   final pages = [
     const MarketHomeView(),
-    const MarketHomeView(),
+    const SearchView(),
     const AddView(),
     const FavView(),
     const MarketProfileView(),
