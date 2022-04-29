@@ -24,6 +24,7 @@ class ImageAddPreviewPad extends ConsumerWidget {
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.no_photography),
+                tooltip: 'reset image',
                 onPressed: () {
                   ref.read(pickedImgProvider.notifier).state = null;
                 },

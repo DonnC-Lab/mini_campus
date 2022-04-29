@@ -1,7 +1,6 @@
 // get student number from passed email
 
 import 'package:mini_campus/src/shared/constants/index.dart';
-import 'package:mini_campus/src/shared/services/log_console.dart';
 
 class StudentNumber {
   final String stringYear;
@@ -29,6 +28,7 @@ class StudentNumber {
 }
 
 extension GetStudentNumberFromEmail on String {
+  // TODO: consider different uni email domains
   StudentNumber get studentNumber {
     final studentNum = replaceAll(nustEmailDomain, '').trim();
 

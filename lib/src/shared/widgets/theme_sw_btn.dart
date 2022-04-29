@@ -11,7 +11,6 @@ Widget themeSwitchButton({
     onTap: callback,
     child: Container(
       height: 50,
-      //width: 200,
       
       margin: const EdgeInsets.all(3.7),
       decoration: BoxDecoration(

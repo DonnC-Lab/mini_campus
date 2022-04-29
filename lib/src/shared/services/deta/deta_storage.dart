@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/libs/index.dart';
@@ -11,27 +9,29 @@ final detaStorageProvider =
 
 final detaStorageFileDownloaderProvider =
     FutureProviderFamily<dynamic, DetaDriveInit>((ref, detaDriveInit) {
-      
   return DetaStorageRepository(detaDriveInit).download(detaDriveInit.filename!);
 });
 
 class DetaStorageRepository {
   final DetaDriveInit detaDriveInit;
 
-  DetaStorageRepository(this.detaDriveInit);
+  late final DetaRepository _detaRepository;
+
+  DetaStorageRepository(this.detaDriveInit)
+      : _detaRepository = DetaRepository(
+          driveName: detaDriveInit.drive,
+          baseName: detaDriveInit.base,
+        );
 
   Future getAllFiles({
     int limit = 1000,
     String prefix = '',
-    String last = '',
+    String? last,
   }) async {
-    final drive =
-        DetaDrive(drive: detaDriveInit.drive, deta: detaDriveInit.deta);
+    final files = await _detaRepository.listFiles(
+        last: last, limit: limit, prefix: prefix);
 
-    final files =
-        await drive.listFiles(last: last, limit: limit, prefix: prefix);
-
-    if (files is DetaException) {
+    if (files is DetaRepositoryException) {
       throw files;
     }
 
@@ -39,25 +39,19 @@ class DetaStorageRepository {
   }
 
   Future download(String filename) async {
-    final drive =
-        DetaDrive(drive: detaDriveInit.drive, deta: detaDriveInit.deta);
+    final fileByte = await _detaRepository.downloadFile(filename);
 
-    final fileByte = await drive.downloadFile(filename);
-
-    if (fileByte is DetaException) {
+    if (fileByte is DetaRepositoryException) {
       throw fileByte;
     }
 
     return fileByte;
   }
 
-  Future delete(List<String> files) async {
-    final drive =
-        DetaDrive(drive: detaDriveInit.drive, deta: detaDriveInit.deta);
+  Future delete(String file) async {
+    final resp = await _detaRepository.deleteFiles(file);
 
-    final resp = await drive.deleteFiles(files);
-
-    if (resp is DetaException) {
+    if (resp is DetaRepositoryException) {
       throw resp;
     }
 
@@ -65,18 +59,14 @@ class DetaStorageRepository {
   }
 
   Future upload(
-    String file,
-    Uint8List bytes, {
+    String file, {
     String? directory,
     String? filename,
   }) async {
-    final drive =
-        DetaDrive(drive: detaDriveInit.drive, deta: detaDriveInit.deta);
-
-    final resp = await drive.uploadFile(file, bytes,
+    final resp = await _detaRepository.uploadFile(file,
         directory: directory, filename: filename);
 
-    if (resp is DetaException) {
+    if (resp is DetaRepositoryException) {
       throw resp;
     }
 

@@ -17,6 +17,7 @@ class ProfileCheckView extends ConsumerStatefulWidget {
 
 class _ProfileCheckViewState extends ConsumerState<ProfileCheckView> {
   late bool isProfileComplete;
+
   bool isLoading = false;
 
   Future<bool?> _checkProfile() async {
@@ -49,7 +50,6 @@ class _ProfileCheckViewState extends ConsumerState<ProfileCheckView> {
 
               // e
               else {
-                // go to profile update page
                 WidgetsBinding.instance?.addPostFrameCallback((_) {
                   routeToWithClear(context, const BasicProfileUpdateView());
                 });

@@ -1,1 +1,2 @@
-// entry level app for campus trade
+// entry level app for campus market 
+// module settings

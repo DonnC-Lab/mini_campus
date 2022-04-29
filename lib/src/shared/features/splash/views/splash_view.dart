@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/libs/index.dart';
 
+// todo use native splash
 class SplashView extends ConsumerWidget {
   const SplashView({Key? key}) : super(key: key);
 
@@ -15,7 +16,6 @@ class SplashView extends ConsumerWidget {
       clockProvider,
       (int? oldValue, int? elapsed) {
         if (elapsed == 2) {
-          // check if user is already logged
           var isCurrentlyLogged = auth.checkCurrentUser;
 
           //debugLogger(isCurrentlyLogged, name: 'splashView');

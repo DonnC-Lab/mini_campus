@@ -10,12 +10,14 @@ class DrawerItem extends StatelessWidget {
 
   final IconData icon;
   final String name;
-  final VoidCallback? onTap;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap;
+      },
       child: Container(
         height: 50,
         margin: const EdgeInsets.only(bottom: 20),

@@ -11,8 +11,6 @@ import '../data/models/lost_found_item.dart';
 import '../services/data_service.dart';
 import '../services/storage_service.dart';
 
-final itemTypeProvider = StateProvider<ItemType?>((_) => null);
-
 class AddLFItemView extends ConsumerStatefulWidget {
   const AddLFItemView({Key? key}) : super(key: key);
 
@@ -27,8 +25,6 @@ class _AddLFItemViewState extends ConsumerState<AddLFItemView> {
   Widget build(BuildContext context) {
     final itemImg = ref.watch(pickedImgProvider);
     final student = ref.watch(studentProvider);
-
-    final iType = ref.watch(itemTypeProvider);
 
     final storageApi = ref.read(lostFoundStorageProvider);
 
@@ -136,10 +132,9 @@ class _AddLFItemViewState extends ConsumerState<AddLFItemView> {
 
                           if (itemImg != null) {
                             // upload img first
-                            var bytes = await itemImg.readAsBytes();
 
-                            final uploadRes = await storageApi.uploadItemImage(
-                                itemImg.path, bytes);
+                            final uploadRes =
+                                await storageApi.uploadItemImage(itemImg.path);
 
                             uploadedItemImg = uploadRes;
 
@@ -157,7 +152,6 @@ class _AddLFItemViewState extends ConsumerState<AddLFItemView> {
                             name: _data['name'],
                             location: _data['location'],
                             date: _date,
-                            //  type: iType!.id,
                             type: _data['type'].id,
                             description: _data['desc'],
                             month: DateFormat.MMM().format(_date),

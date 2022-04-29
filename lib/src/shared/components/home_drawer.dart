@@ -39,9 +39,9 @@ class HomeDrawer extends StatelessWidget {
             const Divider(height: 30),
             Expanded(
               child: ListView.builder(
-                itemBuilder: (_, index) => GestureDetector(
+                itemBuilder: (_, index) => InkWell(
                   onTap: () {
-                    onDrawerItemTap(index);
+                  onDrawerItemTap(index);
                     Navigator.pop(context);
                   },
                   child: drawerModulePages[index].drawerItem,

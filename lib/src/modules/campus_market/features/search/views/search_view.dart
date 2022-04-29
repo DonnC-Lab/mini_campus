@@ -73,7 +73,7 @@ class _SearchViewState extends ConsumerState<SearchView> {
           ? Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height * 0.25,
+                    vertical: MediaQuery.of(context).size.height * 0.15,
                     horizontal: 20),
                 child: Column(
                   children: const [
@@ -89,7 +89,7 @@ class _SearchViewState extends ConsumerState<SearchView> {
           : Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingSearchAppBar(
-                 alwaysOpened: true,
+                alwaysOpened: true,
                 controller: searchBarController,
                 automaticallyImplyBackButton: false,
                 automaticallyImplyDrawerHamburger: false,
@@ -123,12 +123,12 @@ class _SearchViewState extends ConsumerState<SearchView> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical:
-                                  MediaQuery.of(context).size.height * 0.25,
+                                  MediaQuery.of(context).size.height * 0.15,
                               horizontal: 20),
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(3.0),
                                 child: Text(
                                   'no results found',
                                   style: _style,

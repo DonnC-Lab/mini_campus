@@ -46,18 +46,6 @@ class _BasicProfileUpdateViewState
       child: Scaffold(
         body: Column(
           children: [
-            // Align(
-            //   alignment: Alignment.topLeft,
-            //   child: IconButton(
-            //     onPressed: () {
-            //       Navigator.of(context).pop();
-            //     },
-            //     icon: const Icon(
-            //       Icons.chevron_left,
-            //       size: 40,
-            //     ),
-            //   ),
-            // ),
             const SizedBox(height: 30),
             themeMode == ThemeMode.light
                 ? SvgPicture.asset(
@@ -93,7 +81,6 @@ class _BasicProfileUpdateViewState
               child: Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  //  color: fadeGreenColor,
                   borderRadius: BorderRadius.only(
                     topLeft: _radius,
                     topRight: _radius,
@@ -208,7 +195,6 @@ class _BasicProfileUpdateViewState
 
                               modalLoader(context);
 
-                              // update profile
                               final _updated = studentProfile?.copyWith(
                                 gender: _data['gender'],
                                 department: dpt.dptName,

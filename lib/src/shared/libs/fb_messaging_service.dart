@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
+// TODO: perform these actions on server
 class FbMessagingService {
   FbMessagingService._();
   static final instance = FbMessagingService._();

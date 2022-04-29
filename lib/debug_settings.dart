@@ -5,4 +5,4 @@ const bool VALIDATE_STUDENT_EMAIL = false;
 
 const bool BYPASS_EMAIL_VALIDATION_CHECK = true;
 
-const bool USE_EMULATOR = true;
+const bool USE_EMULATOR = false;

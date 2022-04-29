@@ -29,6 +29,7 @@ class MainAppEntry extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               home: const SplashView(),
+              // home: const AdminAddFile(),
             );
           },
         );

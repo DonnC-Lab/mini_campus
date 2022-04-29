@@ -64,55 +64,31 @@ class _HomeViewState extends ConsumerState<HomeView> {
     checkForInitialMessage();
     setupInteractedMessage();
 
-    AwesomeNotifications().createdStream.listen((receivedNotification) {
-      // String? createdSourceText =
-      //     AssertUtils.toSimpleEnumString(receivedNotification.createdSource);
-      // debugLogger('=== createdStream ===');
-      // debugLogger(createdSourceText);
-      // nothing happens when created
-    });
+    AwesomeNotifications().createdStream.listen((receivedNotification) {});
 
-    AwesomeNotifications().displayedStream.listen((receivedNotification) {
-      // String? createdSourceText = AssertUtils.toSimpleEnumString(
-      //     receivedNotification.displayedLifeCycle);
-      // debugLogger('=== displayedStream ===');
-      // debugLogger(createdSourceText);
-      // nothing happens when displayed
-    });
+    AwesomeNotifications().displayedStream.listen((receivedNotification) {});
 
-    AwesomeNotifications().dismissedStream.listen((receivedNotification) {
-      // nothing happens when dismissed
-    });
+    AwesomeNotifications().dismissedStream.listen((receivedNotification) {});
 
     AwesomeNotifications().actionStream.listen((receivedNotification) {
-      // debugLogger('=== actionStream ===');
-      // debugLogger(receivedNotification.toMap());
-      // perform action here when button is pressed
-      if (receivedNotification.buttonKeyPressed == 'VIEW') {
-        // goto profile page
-        // take interested buyer id from payload
-        // final String? _uid = receivedNotification.payload!['buyerId'];
-        // final String? _name = receivedNotification.payload!['buyerName'];
+      debugLogger(receivedNotification.toMap(),
+          name: 'notification-action-stream');
 
+      // ? use switch..case check received button key type
+      if (receivedNotification.buttonKeyPressed == 'VIEW') {
+        // * can take necessary custom payload info send here
+        // final String? _name = receivedNotification.payload!['argName'];
+
+        // * route to appropriate page or do something
         // routeTo(
         //   context,
-        //   StudentProfileView(interestedBuyerId: _uid!),
+        //   PageView(notificationMapPayload: receivedNotification.payload!),
         // );
       }
 
       // e
       else {
-        try {
-          // goto profile page
-          // take interested buyer id from payload
-          // final String? _uid = receivedNotification.payload!['buyerId'];
-          // final String? _name = receivedNotification.payload!['buyerName'];
-
-          // routeTo(
-          //   context,
-          //   StudentProfileView(interestedBuyerId: _uid!),
-          // );
-        } catch (e) {}
+        // ? anything to do here
       }
     });
   }
