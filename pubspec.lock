@@ -183,13 +183,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.5"
-  client_deta_api:
-    dependency: transitive
-    description:
-      name: client_deta_api
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   clock:
     dependency: transitive
     description:
@@ -288,13 +281,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.6"
-  deta:
-    dependency: "direct main"
-    description:
-      name: deta
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3+1"
   dio:
     dependency: "direct main"
     description:
@@ -302,13 +288,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.4"
-  dio_client_deta_api:
-    dependency: "direct main"
-    description:
-      name: dio_client_deta_api
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   email_validator:
     dependency: transitive
     description:
@@ -511,7 +490,7 @@ packages:
     source: hosted
     version: "0.6.6"
   flutter_cache_manager:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"

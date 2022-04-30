@@ -54,10 +54,6 @@ dependencies:
   flash: ^2.0.3+2
   awesome_notifications: ^0.6.21
 
-  # deta
-  deta: ^0.0.3+1
-  dio_client_deta_api: ^0.0.1
-
   # utilities
   dio: ^4.0.4
   freezed_annotation: ^1.1.0
@@ -81,6 +77,7 @@ dependencies:
   cloud_firestore_odm: ^1.0.0-dev.11
   json_annotation: ^4.4.0
   fancy_shimmer_image: ^2.0.2
+  flutter_cache_manager: ^3.3.0
   
 
 dev_dependencies:

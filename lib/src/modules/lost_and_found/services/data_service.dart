@@ -1,8 +1,6 @@
-import 'package:deta/deta.dart' show Deta, DetaQuery;
-import 'package:dio/dio.dart';
-import 'package:dio_client_deta_api/dio_client_deta_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus/src/shared/index.dart';
+import 'package:mini_campus/src/shared/libs/index.dart';
 
 import '../data/models/lost_found_filter.dart';
 import '../data/models/lost_found_item.dart';
@@ -19,14 +17,12 @@ final lfFilterProvider =
 
 /// deta base, lost-found repository
 class DataService {
-  static final _detaDioClient = DioClientDetaApi(dio: Dio());
+  static final DetaRepository _detaRepository =
+      DetaRepository(baseName: DetaBases.lostFound);
 
   Future addLostFound(LostFoundItem lostFoundItem) async {
-    final _deta = Deta(projectKey: donDetaProjectKey, client: _detaDioClient);
-    final _lostFoundBase = _deta.base(DetaBases.lostFound);
-
     try {
-      final res = await _lostFoundBase.insert(lostFoundItem.toJson());
+      final res = await _detaRepository.addBaseData(lostFoundItem.toJson());
 
       debugLogger(res, name: 'addLostFound');
 
@@ -41,20 +37,16 @@ class DataService {
 
   Future<List<LostFoundItem>?> getAllItemsByMonthType(
       LostFoundFilter filter) async {
-    final _deta = Deta(projectKey: donDetaProjectKey, client: _detaDioClient);
-    final _lostFoundBase = _deta.base(DetaBases.lostFound);
-
     try {
-      final res = await _lostFoundBase.fetch(
-        query: [
-          DetaQuery('type')
-              .equalTo(filter.type)
-              .and('month')
-              .equalTo(filter.month),
-        ],
+      final res = await _detaRepository.queryBase(
+        query: DetaQuery('type')
+            .equalTo(filter.type)
+            .and('month')
+            .equalTo(filter.month)
+            .query,
       );
 
-      List items = res['items'];
+      List items = res;
 
       return items.map((e) => LostFoundItem.fromJson(e)).toList();
     }

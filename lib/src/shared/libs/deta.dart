@@ -1,14 +1,19 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:developer' show log;
 import 'dart:io' show File;
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 
+import '../services/index.dart';
+
 class DetaRepository {
   static const _detaBaseUrl = 'https://py4k7k.deta.dev';
+
+  static final _cache = _DetaDriveCache();
 
   late final Dio _dio;
 
@@ -22,8 +27,12 @@ class DetaRepository {
   DetaRepository({this.driveName, this.baseName})
       : _dio = Dio(BaseOptions(baseUrl: _detaBaseUrl));
 
-  String getFileName(File file) {
+  String _getFileName(File file) {
     return path.basename(file.path);
+  }
+
+  String _getFileExt(String filename) {
+    return path.extension(filename).replaceAll('.', '').trim();
   }
 
   Future queryBase({Map? query}) async {
@@ -136,44 +145,39 @@ class DetaRepository {
   ///
   /// filename is as received while performing [uploadFile]
   ///
-  /// return bytes as List<int> if successful
+  /// returns [File] on successful
   Future downloadFile(String fileName) async {
-    final fileBytesResp = await _dio.get(
-      '/download/',
-      queryParameters: {
-        'filename': fileName,
-        'drive_name': driveName,
-      },
-      options: Options(responseType: ResponseType.bytes),
-    );
+    // check cache first
+    final cached = await _cache.getFileCache(fileName);
 
-    return fileBytesResp.data;
+    if (cached != null) {
+      return cached;
+    }
 
-    // if (fileBytesResp.statusCode == 200) {
-    //   // List<int> file bytes
-    //   return fileBytesResp.data;
-    // }
+    try {
+      final fileBytesResp = await _dio.get(
+        '/download/',
+        queryParameters: {
+          'filename': fileName,
+          'drive_name': driveName,
+        },
+        options: Options(responseType: ResponseType.bytes),
+      );
 
-    // try {
-    //   final Response<List<int>> fileBytesResp = await _dio.get<List<int>>(
-    //     '/download/',
-    //     queryParameters: {
-    //       'filename': fileName,
-    //       'drive_name': driveName,
-    //     },
-    //     options: Options(responseType: ResponseType.bytes),
-    //   );
+      if (fileBytesResp.statusCode == 200) {
+        final fBytes = Uint8List.fromList(fileBytesResp.data);
 
-    //   if (fileBytesResp.statusCode == 200) {
-    //     // List<int> file bytes
-    //     return fileBytesResp.data;
-    //   }
-    // }
+        final cachedFile =
+            await _cache.addFileCache(fileName, fBytes, _getFileExt(fileName));
 
-    // //ee
-    // catch (e) {
-    //   return _DetaRepositoryExceptionHandler(e);
-    // }
+        return cachedFile;
+      }
+    }
+
+    //ee
+    catch (e) {
+      return _DetaRepositoryExceptionHandler(e);
+    }
   }
 
   /// list drive files
@@ -265,9 +269,30 @@ class DetaRepository {
       }
     }
 
-    log(exc.toString());
+    debugLogger(exc, name: 'deta-exception-handler');
 
     return exc;
+  }
+}
+
+/// cache manager for deta images | pdf files *prefferably
+class _DetaDriveCache {
+  static final _cacheManager = DefaultCacheManager();
+
+  Future<File> addFileCache(String fname, Uint8List bytes, String ext) async =>
+      await _cacheManager.putFile(
+        fname,
+        bytes,
+        key: fname,
+        eTag: fname,
+        fileExtension: ext,
+      );
+
+  Future<File?> getFileCache(String fname) async {
+    // key == filename
+    final res = await _cacheManager.getFileFromCache(fname);
+
+    return res?.file;
   }
 }
 

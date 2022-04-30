@@ -8,3 +8,4 @@ export 'providers/shared_providers.dart';
 export 'widgets/index.dart';
 export 'providers/fake_data.dart';
 export 'components/index.dart';
+export 'extensions/index.dart';

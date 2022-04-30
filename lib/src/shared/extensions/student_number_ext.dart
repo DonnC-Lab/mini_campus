@@ -95,7 +95,7 @@ StudentNumber _computeSn(String studentNumber) {
         _studentY = 'undefined';
     }
 
-    sn = sn.copyWith(stringYear: _studentY, intYear: diff);
+    sn = sn.copyWith(stringYear: _studentY.toLowerCase(), intYear: diff);
   }
 
   // error

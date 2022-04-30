@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus/src/modules/learning/data/models/course.dart';
 import 'package:mini_campus/src/shared/index.dart';
-
-import '../../libs/index.dart';
+import 'package:mini_campus/src/shared/libs/index.dart';
 
 final courseRepProvider = Provider((_) => CourseRepository());
 
