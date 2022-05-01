@@ -17,6 +17,9 @@ class DetaBases {
 
   // lost and found
   static const String lostFound = 'lostFoundDB';
+
+  // feedback
+  static const String feedback = 'feedbackDB';
 }
 
 // deta drives

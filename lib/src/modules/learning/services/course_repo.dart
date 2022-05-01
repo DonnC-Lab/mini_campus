@@ -21,7 +21,9 @@ class CourseRepository {
 
       final res = await _detaRepository.addBaseData(payload, key: course.code);
 
-      debugLogger(res.toString());
+      if (res is DetaRepositoryException) {
+        throw res;
+      }
 
       return res;
     }
@@ -32,7 +34,7 @@ class CourseRepository {
     }
   }
 
-  Future<List<Course>?> getAllCoursesByDpt(String dptCode, String part) async {
+  Future<List<Course>> getAllCoursesByDpt(String dptCode, String part) async {
     try {
       final res = await _detaRepository.queryBase(
           query: DetaQuery('dpt')
@@ -41,35 +43,39 @@ class CourseRepository {
               .equalTo(part)
               .query);
 
+      if (res is DetaRepositoryException) {
+        throw res;
+      }
+
       List items = res;
 
-      var i = items.map((e) => Course.fromJson(e)).toList();
-      debugLogger(i.toString());
-      return i;
+      return items.map((e) => Course.fromJson(e)).toList();
     }
 
     // er
     catch (e) {
       debugLogger(e.toString());
     }
-    return null;
+    return const [];
   }
 
-  Future<List<Course>?> getAllCourses() async {
+  Future<List<Course>> getAllCourses() async {
     try {
       final res = await _detaRepository.queryBase();
 
+      if (res is DetaRepositoryException) {
+        throw res;
+      }
+
       List items = res;
 
-      var i = items.map((e) => Course.fromJson(e)).toList();
-      debugLogger(i.toString());
-      return i;
+      return items.map((e) => Course.fromJson(e)).toList();
     }
 
     // er
     catch (e) {
       debugLogger(e.toString());
     }
-    return null;
+    return const [];
   }
 }

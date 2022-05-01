@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,8 +23,8 @@ class ItemImage extends ConsumerWidget {
 
   final bool isNetwork;
 
-  // 'assets/images/lost_n_found.png'
-  final String dummyImg = 'assets/images/profile.png';
+  // 'assets/images/profile.png'
+  final String dummyImg = 'assets/images/lost_n_found.png';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,11 +47,11 @@ class ItemImage extends ConsumerWidget {
                 ),
               ),
             )
-          : FutureBuilder(
+          : FutureBuilder<File?>(
               future: api.downloadItemImageFuture(img!),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  Uint8List? data = snapshot.data as Uint8List?;
+                  File? data = snapshot.data;
 
                   return data == null
                       ? Container(
@@ -73,7 +73,7 @@ class ItemImage extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(radius),
                             color: Colors.white,
                             image: DecorationImage(
-                              image: MemoryImage(data),
+                              image: FileImage(data),
                               fit: BoxFit.cover,
                               scale: 0.3,
                             ),

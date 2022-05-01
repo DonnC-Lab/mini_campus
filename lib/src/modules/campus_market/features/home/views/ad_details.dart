@@ -20,6 +20,7 @@ class AdDetailsView extends ConsumerWidget {
     final adApi = ref.read(marketDbProvider);
 
     return Scaffold(
+      appBar: AppBar(centerTitle: true, title: const Text('Ad Details')),
       body: ref.watch(studentProfileProvider(ad.student!)).when(
             data: (advertiser) {
               return advertiser == null

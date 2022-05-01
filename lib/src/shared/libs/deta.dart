@@ -27,10 +27,6 @@ class DetaRepository {
   DetaRepository({this.driveName, this.baseName})
       : _dio = Dio(BaseOptions(baseUrl: _detaBaseUrl));
 
-  String _getFileName(File file) {
-    return path.basename(file.path);
-  }
-
   String _getFileExt(String filename) {
     return path.extension(filename).replaceAll('.', '').trim();
   }
@@ -38,14 +34,11 @@ class DetaRepository {
   Future queryBase({Map? query}) async {
     try {
       final res = await _dio.post(
-        '/query/',
-        data: {
-          'filter': query,
-          'base_name': baseName,
-        },
+        '/doc-api/query/?base_name=$baseName',
+        data: query,
       );
 
-      if (res.statusCode == 201) {
+      if (res.statusCode == 201 || res.statusCode == 200) {
         return res.data['message'];
       }
     }
@@ -56,19 +49,17 @@ class DetaRepository {
     }
   }
 
-  Future addBaseData(Map payload, {String? key}) async {
+  Future addBaseData(Map payload, {String key = ''}) async {
     try {
       final res = await _dio.post(
-        '/add/',
-        data: {
-          'payload': payload,
-          'base_name': baseName,
-          'key': key,
-        },
+        '/doc-api/add/?base_name=$baseName&key=$key',
+        data: payload,
       );
 
-      if (res.statusCode == 201) {
-        return res.data['message'];
+      debugLogger(res, name: 'addBase');
+
+      if (res.statusCode == 201 || res.statusCode == 200) {
+        return true;
       }
     }
 
@@ -82,15 +73,11 @@ class DetaRepository {
   Future deleteBaseData(Map payload, {String? key}) async {
     try {
       final res = await _dio.delete(
-        '/delete/',
-        data: {
-          'payload': payload,
-          'base_name': baseName,
-          'key': key,
-        },
+        '/doc-api/delete/?base_name=$baseName',
+        data: payload,
       );
 
-      if (res.statusCode == 201) {
+      if (res.statusCode == 201 || res.statusCode == 200) {
         return res.data['message'];
       }
     }
@@ -115,14 +102,11 @@ class DetaRepository {
         "file": await MultipartFile.fromFile(
           filePath,
           contentType: MediaType('application', ext),
-        ),
-        "drive_name": driveName,
-        "filename": filename,
-        "directory": directory,
+        )
       });
 
       var resp = await _dio.post(
-        '/upload/',
+        '/file-api/upload/?drive_name=$driveName&filename=$filename&directory=$directory',
         data: formData,
       );
 
@@ -156,11 +140,7 @@ class DetaRepository {
 
     try {
       final fileBytesResp = await _dio.get(
-        '/download/',
-        queryParameters: {
-          'filename': fileName,
-          'drive_name': driveName,
-        },
+        '/file-api/download/?drive_name=$driveName&filename=$fileName',
         options: Options(responseType: ResponseType.bytes),
       );
 
@@ -199,16 +179,10 @@ class DetaRepository {
     String prefix = '',
     String? last,
   }) async {
+    var _prefix = Uri.encodeComponent(prefix);
     try {
       final resp = await _dio.get(
-        '/files/',
-        queryParameters: {
-          'drive_name': driveName,
-          'limit': limit,
-          'prefix': prefix,
-          'last': last,
-        },
-      );
+          '/file-api/files/?drive_name=$driveName&limit=$limit&prefix=$_prefix&last=$last');
 
       if (resp.statusCode == 200) {
         return resp.data['message'];
@@ -224,13 +198,8 @@ class DetaRepository {
   /// delete drive file
   Future deleteFiles(String filename) async {
     try {
-      final resp = await _dio.delete(
-        '/delete/',
-        queryParameters: {
-          'filename': filename,
-          'drive_name': driveName,
-        },
-      );
+      final resp = await _dio
+          .delete('/file-api/delete/?drive_name=$driveName&filename=$filename');
 
       if (resp.statusCode == 200) {
         return resp.data;

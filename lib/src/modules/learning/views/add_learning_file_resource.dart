@@ -49,11 +49,39 @@ class _AddLearningFileResourceState
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Add Resource'),
+          actions: [
+            IconButton(
+              tooltip: 'refresh form',
+              onPressed: () {
+                formKey.currentState?.reset();
+
+                ref.refresh(courseRepProvider);
+
+                // coursesApi.getAllCoursesByDpt(
+                //   studentProfile!.departmentCode,
+                //   studentProfile.email.studentNumber.stringYear,
+                // );
+              },
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
           child: FormBuilder(
             key: formKey,
             child: Column(
               children: [
+                Text(
+                  '⚠ \nYou can only add resources that match your current stream',
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        fontSize: 13,
+                        color: greyTextShade,
+                      ),
+                ),
+                const SizedBox(height: 20),
                 CustomDDField(
                   context: context,
                   formName: 'category',

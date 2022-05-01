@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import 'modules/campus_market/features/home/views/campus_market.dart';
+import 'modules/feedback/pages/feedback_view.dart';
 import 'modules/learning/views/learning_view.dart';
 import 'modules/lost_and_found/views/lf_view.dart';
 import 'shared/index.dart';
@@ -30,11 +31,18 @@ final List<DrawerPage> drawerModulePages = [
     ),
     page: const LostFoundView(),
   ),
+  // DrawerPage(
+  //   drawerItem: const DrawerItem(
+  //     icon: Entypo.hand,
+  //     name: 'Report',
+  //   ),
+  //   page: const Center(child: Text('Report')),
+  // ),
   DrawerPage(
     drawerItem: const DrawerItem(
-      icon: Entypo.hand,
-      name: 'Report',
+      icon: MaterialCommunityIcons.cellphone_message,
+      name: 'Feedback',
     ),
-    page: const Center(child: Text('Report')),
+    page: const FeedbackView(),
   ),
 ];

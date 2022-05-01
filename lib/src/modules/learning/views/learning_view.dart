@@ -33,7 +33,7 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
 
   @override
   void initState() {
-    studentProfile = ref.watch(studentProvider)!;
+    studentProfile = ref.read(studentProvider)!;
     _setFilter();
     super.initState();
   }
