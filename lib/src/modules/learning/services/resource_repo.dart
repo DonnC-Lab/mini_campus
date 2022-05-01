@@ -5,6 +5,14 @@ import 'package:mini_campus/src/shared/libs/index.dart';
 
 final resRepProvider = Provider((_) => FileResourceRepository());
 
+final resFilterProvider =
+    AutoDisposeFutureProviderFamily<List<FileResource>, Map<String, dynamic>>(
+        (ref, filter) {
+  final api = ref.read(resRepProvider);
+
+  return api.fetchFilteredResources(filter);
+});
+
 /// deta base repository
 class FileResourceRepository {
   static final DetaRepository _detaRepository =
@@ -34,15 +42,16 @@ class FileResourceRepository {
     }
   }
 
-  // fix
-  Future<List<FileResource>> getAllFileResourcesByDpt(
-      String dptCode, String part) async {
+  Future<List<FileResource>> fetchFilteredResources(
+      Map<String, dynamic> filter) async {
     try {
       final res = await _detaRepository.queryBase(
           query: DetaQuery('dpt')
-              .equalTo(dptCode)
+              .equalTo(filter['dptCode'])
               .and('part')
-              .equalTo(part)
+              .equalTo(filter['part'])
+              .and('category')
+              .equalTo(filter['category'])
               .query);
 
       List items = res;

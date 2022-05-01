@@ -8,7 +8,7 @@ import '../data/models/lost_found_item.dart';
 final lostFoundDataProvider = Provider((_) => DataService());
 
 final lfFilterProvider =
-    AutoDisposeFutureProviderFamily<List<LostFoundItem>?, LostFoundFilter>(
+    AutoDisposeFutureProviderFamily<List<LostFoundItem>, LostFoundFilter>(
         (ref, filter) {
   final api = ref.read(lostFoundDataProvider);
 
@@ -35,7 +35,7 @@ class DataService {
     }
   }
 
-  Future<List<LostFoundItem>?> getAllItemsByMonthType(
+  Future<List<LostFoundItem>> getAllItemsByMonthType(
       LostFoundFilter filter) async {
     try {
       final res = await _detaRepository.queryBase(

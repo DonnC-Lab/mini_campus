@@ -25,7 +25,7 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
 
   late LostFoundFilter _lostFoundFilter;
 
-  void setInitialFilter() {
+  void _setFilter() {
     String type = isLostItems ? 'lost' : 'found';
 
     var month = _selectedMonth ?? DateFormat.MMM().format(DateTime.now());
@@ -37,7 +37,7 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
 
   @override
   void initState() {
-    setInitialFilter();
+    _setFilter();
     super.initState();
   }
 
@@ -111,7 +111,7 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
                       setState(() {
                         _selectedMonth = val;
                       });
-                      setInitialFilter();
+                      _setFilter();
                     },
                   ),
                 ),
@@ -136,7 +136,7 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
                         setState(() {
                           isLostItems = true;
                         });
-                        setInitialFilter();
+                        _setFilter();
                       },
                       child: Container(
                         height: itemHeight,
@@ -169,7 +169,7 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
                         setState(() {
                           isLostItems = false;
                         });
-                        setInitialFilter();
+                        _setFilter();
                       },
                       child: Container(
                         height: itemHeight,
@@ -203,14 +203,7 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
           Expanded(
             child: ref.watch(lfFilterProvider(_lostFoundFilter)).when(
                   data: (items) {
-                    return items == null
-                        ? Center(
-                            child: Padding(
-                            padding: const EdgeInsets.all(30.0),
-                            child: Text('🙁 failed to fetch Lost & Found Items',
-                                style: _style),
-                          ))
-                        : items.isEmpty
+                    return items.isEmpty
                             ? Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(30.0),

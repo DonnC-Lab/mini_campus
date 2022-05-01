@@ -22,7 +22,7 @@ part 'file_resource.g.dart';
         /// tee5122
         required String courseCode,
 
-        /// part5, part2
+        /// part 5, part 2
         required String part,
 
         /// resource year e.g 2017 for 2017 exam paper

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
+import '../services/resource_repo.dart';
 import 'add_learning_file_resource.dart';
 
 class LearningHomeView extends ConsumerStatefulWidget {
@@ -18,21 +19,34 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
 
   late Student? studentProfile;
 
-  void _setDefaultYear(String yy) {
+  late Map<String, dynamic> _learningFilter;
+
+  void _setFilter() {
     setState(() {
-      _selectedPart = yy;
+      _learningFilter = {
+        'dptCode': studentProfile!.departmentCode,
+        'part': _selectedPart ?? studentProfile!.email.studentNumber.stringYear,
+        'category': '',
+      };
     });
   }
 
   @override
   void initState() {
     studentProfile = ref.watch(studentProvider)!;
-    _setDefaultYear(studentProfile!.email.studentNumber.stringYear);
+    _setFilter();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final _style = Theme.of(context).textTheme.subtitle2?.copyWith(
+          fontSize: 12,
+          color: greyTextShade,
+          fontWeight: FontWeight.w400,
+          fontStyle: FontStyle.italic,
+        );
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: bluishColor,
@@ -101,6 +115,8 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
                               setState(() {
                                 _selectedPart = val;
                               });
+
+                              _setFilter();
                             },
                           ),
                         ],
@@ -109,135 +125,146 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
                   ],
                 ),
                 const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Recent Files',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ),
-                SizedBox(
-                  height: 150,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return SizedBox(
-                        width: 150,
-                        child: Card(
-                          elevation: 6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: Icon(
-                                  FontAwesome.file_pdf_o,
-                                  size: 50,
-                                ),
-                              ),
-                              const Text('TCW5201.pdf'),
-                              Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  color: bluishColorShade,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  'exam-paper',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      ?.copyWith(fontSize: 10),
-                                ),
-                              ),
-                              // Chip(
-                              //   label: const
-                              //   backgroundColor: bluishColorShade,
-                              //   labelStyle:
-                              // ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (_, x) => const SizedBox(width: 25),
-                    itemCount: 4,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Folders',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ),
                 Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.all(8),
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        tileColor: Theme.of(context).cardColor,
-                        title: Text(
-                          'Videos',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                              ?.copyWith(fontSize: 17),
-                        ),
-                        subtitle: const Text('17 files'),
-                        leading: const CircleAvatar(
-                            radius: 35,
-                            child: Icon(
-                                MaterialCommunityIcons.folder_google_drive)),
-                      );
-                    },
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 30),
-                    itemCount: 4,
-                  ),
+                  child: ref.watch(resFilterProvider(_learningFilter)).when(
+                        data: (items) {
+                          final _groupedResources =
+                              items.groupBy((res) => res.category);
+
+                          return items.isEmpty
+                              ? Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: Text(
+                                        "no ${_learningFilter['dptCode']} learning resources found for ${_learningFilter['part']}. You can add your resources",
+                                        style: _style),
+                                  ),
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'Recent Files',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 150,
+                                      child: ListView.separated(
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context, index) {
+                                          final recentFile = items[index];
+
+                                          return SizedBox(
+                                            width: 150,
+                                            child: Card(
+                                              elevation: 6,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(2.0),
+                                                    child: Icon(
+                                                        FontAwesome.file_pdf_o,
+                                                        size: 50),
+                                                  ),
+                                                  Text(recentFile
+                                                      .resource.filename),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.all(3),
+                                                    decoration: BoxDecoration(
+                                                      color: bluishColorShade,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                    child: Text(
+                                                      recentFile.category,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText2
+                                                          ?.copyWith(
+                                                              fontSize: 10),
+                                                    ),
+                                                  ),
+                                                  // Chip(
+                                                  //   label: const
+                                                  //   backgroundColor: bluishColorShade,
+                                                  //   labelStyle:
+                                                  // ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        separatorBuilder: (_, x) =>
+                                            const SizedBox(width: 25),
+                                        itemCount: items.take(4).length,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'Folders',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    ListView.separated(
+                                      padding: const EdgeInsets.all(8),
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          tileColor:
+                                              Theme.of(context).cardColor,
+                                          title: Text(
+                                            _groupedResources.keys
+                                                .elementAt(index),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle2
+                                                ?.copyWith(fontSize: 17),
+                                          ),
+                                          subtitle: Text(_groupedResources[
+                                                  _groupedResources.keys
+                                                      .elementAt(index)]!
+                                              .length
+                                              .toString()),
+                                          leading: const CircleAvatar(
+                                              radius: 35,
+                                              child: Icon(MaterialCommunityIcons
+                                                  .folder_google_drive)),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(height: 30),
+                                      itemCount: _groupedResources.length,
+                                    ),
+                                  ],
+                                );
+                        },
+                        error: (e, st) => Center(
+                            child: Text(
+                                '🙁 failed to fetch Learning Resource Items',
+                                style: _style)),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                      ),
                 ),
               ],
             ),
     );
   }
 }
-
-
-/*
-Column(
-                children: [
-                  Expanded(
-                    child: FutureBuilder<List<FileResource>?>(
-                      future: resApi.getAllFileResources(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          final data = snapshot.data!;
-
-                          return data.isEmpty
-                              ? const Center(child: Text('no results'))
-                              : ListView.separated(
-                                  itemBuilder: (_, index) {
-                                    return ListTile(
-                                      leading: const CircleAvatar(),
-                                      title:
-                                          Text(data[index].resource.filename),
-                                      subtitle: Text(
-                                          '${data[index].year.toString()} | ${data[index].part}'),
-                                    );
-                                  },
-                                  separatorBuilder: (_, x) =>
-                                      const SizedBox(height: 10),
-                                  itemCount: data.length,
-                                );
-                        } else {
-                          return const CircularProgressIndicator();
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-*/
