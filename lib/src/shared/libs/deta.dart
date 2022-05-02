@@ -110,8 +110,10 @@ class DetaRepository {
         data: formData,
       );
 
-      if (resp.statusCode == 201) {
-        return resp.data['name'];
+      debugLogger(resp, name: 'upload-file');
+
+      if (resp.statusCode == 201 || resp.statusCode == 200) {
+        return resp.data['message'];
       }
 
       if (resp.statusCode == 413) {

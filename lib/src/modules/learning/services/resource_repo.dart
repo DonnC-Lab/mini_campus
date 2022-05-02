@@ -50,20 +50,20 @@ class FileResourceRepository {
               .equalTo(filter['dptCode'])
               .and('part')
               .equalTo(filter['part'])
-              .and('category')
-              .equalTo(filter['category'])
+              // .and('category')
+              // .equalTo(filter['category'])
               .query);
 
       List items = res;
 
       var i = items.map((e) => FileResource.fromJson(e)).toList();
-      debugLogger(i.toString());
+      debugLogger(i.toString(), name: 'fetchFilteredResources');
       return i;
     }
 
     // er
     catch (e) {
-      debugLogger(e.toString());
+      debugLogger(e, name: 'fetchFilteredResources-err');
     }
     return const [];
   }

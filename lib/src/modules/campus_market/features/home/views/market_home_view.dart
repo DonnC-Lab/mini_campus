@@ -37,17 +37,3 @@ class MarketHomeView extends StatelessWidget {
     );
   }
 }
-
-
-    // return FirebaseDatabaseListView(
-    //   query: categoryAdsQuery,
-    //   pageSize: 20,
-    //   itemBuilder: (context, snapshot) {
-    //     print(snapshot.toString());
-    //     final ad = AdService.fromFbRtdb(snapshot);
-
-    //     debugLogger(ad, name: 'tabContentView');
-
-    //     return Text('Ad name is ${ad.name}');
-    //   },
-    // );

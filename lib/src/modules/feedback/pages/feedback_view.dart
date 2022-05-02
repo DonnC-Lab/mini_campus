@@ -123,7 +123,7 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                   ),
                   const SizedBox(height: 20),
                   CustomFormField(
-                    autoFocus: false,
+                    unfocus: true,
                     context: context,
                     formName: 'message',
                     title: 'Feedback',

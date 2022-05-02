@@ -9,3 +9,4 @@ export 'resource_categories.dart';
 export 'uni_part.dart';
 export 'faculties.dart';
 export 'months.dart';
+export 'placeholders.dart';

@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:linkable/linkable.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:relative_scale/relative_scale.dart';
 
@@ -143,9 +144,9 @@ class AdDetailsView extends ConsumerWidget {
                                 width: double.infinity,
                                 child: Card(
                                   child: ad.images.isEmpty
-                                      ? Image.asset(
-                                          'assets/images/market_ad.png')
+                                      ? Image.asset(campusMarketPlaceholder)
                                       : FittedBox(
+                                          // TODO: use carousel slider if imgs are many
                                           child: FancyShimmerImage(
                                               imageUrl: ad.images.first),
                                           fit: BoxFit.fill,
@@ -186,8 +187,10 @@ class AdDetailsView extends ConsumerWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 20),
-                                    Text(
-                                      ad.description,
+                                    Linkable(
+                                      text: ad.description,
+                                      linkColor: Colors.blueAccent,
+                                      textColor: greyTextShade,
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle2

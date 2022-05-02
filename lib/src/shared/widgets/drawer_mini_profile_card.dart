@@ -36,6 +36,7 @@ class DrawerMiniProfileCard extends ConsumerWidget {
             ),
             const SizedBox(width: 10),
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   studentProfile.name ?? 'Student',
@@ -45,10 +46,11 @@ class DrawerMiniProfileCard extends ConsumerWidget {
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  studentProfile.department,
+                  studentProfile.email.studentNumber.studentNumber
+                      .toUpperCase(),
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: greyTextShade,
-                        fontStyle: FontStyle.italic,
+                        // fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w400,
                       ),
                 ),

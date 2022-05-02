@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:linkable/linkable.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:relative_scale/relative_scale.dart';
@@ -76,10 +77,11 @@ void ItemDetails(BuildContext context, LostFoundItem item) {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  item.description,
+                Linkable(
+                  text: item.description,
+                  linkColor: Colors.blueAccent,
                   maxLines: 5,
-                  softWrap: true,
+                  textColor: greyTextShade,
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                         fontSize: 13,
                         color: greyTextShade,

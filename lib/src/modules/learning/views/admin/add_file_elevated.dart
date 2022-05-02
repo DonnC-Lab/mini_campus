@@ -1,3 +1,5 @@
+// elevated rights, student can add any general file
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -5,13 +7,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
-import '../data/models/course.dart';
-import '../data/models/resource/file_resource.dart';
-import '../data/models/resource/resource.dart';
-import '../services/course_repo.dart';
-import '../services/resource_repo.dart';
-import '../services/storage_service.dart';
-import 'admin/add_file_elevated.dart';
+import '../../data/models/course.dart';
+import '../../data/models/resource/file_resource.dart';
+import '../../data/models/resource/resource.dart';
+import '../../services/course_repo.dart';
+import '../../services/resource_repo.dart';
+import '../../services/storage_service.dart';
+
+final dptsProvider = FutureProviderFamily<List<FacultyDpt>?, Faculty>((ref, f) {
+  final deptFs = ref.read(fDptRepProvider);
+
+  return deptFs.getFacultyDptByFaculty(f);
+});
 
 final coursesProvider =
     FutureProviderFamily<List<Course>?, Map>((ref, filters) {
@@ -20,57 +27,63 @@ final coursesProvider =
   return cP.getAllCoursesByDpt(filters['code'], filters['part']);
 });
 
-class AddLearningFileResource extends ConsumerStatefulWidget {
-  const AddLearningFileResource({Key? key}) : super(key: key);
+final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
+
+final _selectedDptProvider = StateProvider<FacultyDpt?>((_) => null);
+
+final _selectedPartProvider = StateProvider<String?>((_) => null);
+
+final _selectedCourseProvider = StateProvider<Course?>((_) => null);
+
+class AddFileElevated extends ConsumerStatefulWidget {
+  const AddFileElevated({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AddLearningFileResourceState();
+      _AddFileElevatedState();
 }
 
-class _AddLearningFileResourceState
-    extends ConsumerState<AddLearningFileResource> {
+class _AddFileElevatedState extends ConsumerState<AddFileElevated> {
   final formKey = GlobalKey<FormBuilderState>();
-
-  Course? _selectedCourse;
 
   @override
   Widget build(BuildContext context) {
+    final deptFs = ref.read(fDptRepProvider);
+
     final dialog = ref.watch(dialogProvider);
 
     final coursesApi = ref.read(courseRepProvider);
 
     final resourceApi = ref.read(resRepProvider);
 
-    // final course = ref.watch(_selectedCourseProvider);
-
     final driveRepo = ref.watch(learningStorageProvider);
 
     final studentProfile = ref.watch(studentProvider);
 
+    // ----------- selected items ----------------------
+    final faculty = ref.watch(_selectedFacultyProvider);
+
+    final dpt = ref.watch(_selectedDptProvider);
+
+    final part = ref.watch(_selectedPartProvider);
+
+    final course = ref.watch(_selectedCourseProvider);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Resource'),
+          title: const Text('Add Resource File'),
           actions: [
             IconButton(
               tooltip: 'refresh form',
               onPressed: () {
                 formKey.currentState?.reset();
 
-                ref.refresh(courseRepProvider);
+                ref.read(_selectedCourseProvider.notifier).state = null;
 
-                setState(() {
-                  _selectedCourse = null;
-                });
+                ref.refresh(courseRepProvider);
               },
               icon: const Icon(Icons.refresh),
-            ),
-            GestureDetector(
-              onLongPressEnd: (details) {
-                routeTo(context, const AddFileElevated());
-              },
-              child: const Icon(Icons.shield, color: Colors.transparent),
             ),
           ],
         ),
@@ -79,16 +92,46 @@ class _AddLearningFileResourceState
           child: FormBuilder(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '⚠ \nYou can only add resources that match your current stream',
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        fontSize: 13,
-                        color: greyTextShade,
-                      ),
+                CustomDDField(
+                  context: context,
+                  formName: 'faculty',
+                  title: 'Faculty',
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
+                  ]),
+                  items: faculties
+                      .map(
+                        (e) => DropdownMenuItem(
+                          child: Text(e.name),
+                          value: e,
+                          onTap: () {
+                            ref.watch(_selectedFacultyProvider.notifier).state =
+                                e;
+                          },
+                        ),
+                      )
+                      .toList(),
                 ),
-                const SizedBox(height: 20),
+                CustomDDField(
+                  context: context,
+                  formName: 'part',
+                  title: 'Part',
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
+                  ]),
+                  items: uniParts
+                      .map(
+                        (e) => DropdownMenuItem(
+                          child: Text(e),
+                          value: e,
+                          onTap: () {
+                            ref.watch(_selectedPartProvider.notifier).state = e;
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
                 CustomDDField(
                   context: context,
                   formName: 'category',
@@ -100,11 +143,41 @@ class _AddLearningFileResourceState
                       .map((e) => DropdownMenuItem(child: Text(e), value: e))
                       .toList(),
                 ),
-                studentProfile!.departmentCode.isNotEmpty
+                faculty != null
+                    ? FutureBuilder<List<FacultyDpt>?>(
+                        future: deptFs.getFacultyDptByFaculty(faculty),
+                        builder: (context, snapshot) {
+                          return snapshot.hasData
+                              ? CustomDDField(
+                                  context: context,
+                                  formName: 'dpt',
+                                  title: 'Department',
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(context),
+                                  ]),
+                                  items: snapshot.data!
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          child: Text(e.dptName),
+                                          value: e,
+                                          onTap: () {
+                                            ref
+                                                .watch(_selectedDptProvider
+                                                    .notifier)
+                                                .state = e;
+                                          },
+                                        ),
+                                      )
+                                      .toList(),
+                                )
+                              : const CircularProgressIndicator();
+                        })
+                    : const SizedBox.shrink(),
+                dpt != null
                     ? FutureBuilder<List<Course>?>(
                         future: coursesApi.getAllCoursesByDpt(
-                          studentProfile.departmentCode,
-                          studentProfile.email.studentNumber.stringYear,
+                          dpt.dptCode,
+                          part!,
                         ),
                         builder: ((context, snapshot) {
                           if (snapshot.hasData) {
@@ -123,9 +196,10 @@ class _AddLearningFileResourceState
                                       child: Text(e.name),
                                       value: e,
                                       onTap: () {
-                                        setState(() {
-                                          _selectedCourse = e;
-                                        });
+                                        ref
+                                            .watch(_selectedCourseProvider
+                                                .notifier)
+                                            .state = e;
                                       },
                                     ),
                                   )
@@ -135,19 +209,20 @@ class _AddLearningFileResourceState
 
                           // loader
                           else {
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return const CircularProgressIndicator();
                           }
                         }),
                       )
                     : const SizedBox.shrink(),
-                _selectedCourse == null
+                course == null
                     ? const SizedBox.shrink()
                     : Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 16, bottom: 10),
-                          child: Text(_selectedCourse!.code),
+                          child: Text(
+                            course.code,
+                          ),
                         ),
                       ),
                 CustomFormField(
@@ -171,9 +246,7 @@ class _AddLearningFileResourceState
                         formKey.currentState!.save();
                         final _data = formKey.currentState!.value;
 
-                        var courseCode = _selectedCourse!.code;
-
-                        debugLogger(_data.toString());
+                        var courseCode = course!.code;
 
                         modalLoader(context);
 
@@ -197,7 +270,7 @@ class _AddLearningFileResourceState
                         final uploadRes = await driveRepo.uploadFileResource(
                           fp.files.first.path!,
                           directory:
-                              '${studentProfile.departmentCode}/${studentProfile.email.studentNumber.stringYear}/${_data['category']}/${_data['year']}/$courseCode',
+                              '${studentProfile!.departmentCode}/${studentProfile.email.studentNumber.stringYear}/${_data['category']}/${_data['year']}/$courseCode',
                           filename: '$courseCode.pdf',
                         );
 
@@ -205,9 +278,8 @@ class _AddLearningFileResourceState
                           Navigator.of(context, rootNavigator: true).pop();
 
                           // reset course provider
-                          setState(() {
-                            _selectedCourse = null;
-                          });
+                          ref.read(_selectedCourseProvider.notifier).state =
+                              null;
 
                           dialog.showTopFlash(context,
                               title: 'Upload File',
@@ -247,9 +319,9 @@ class _AddLearningFileResourceState
                         if (result != null) {
                           formKey.currentState?.reset();
 
-                          setState(() {
-                            _selectedCourse = null;
-                          });
+                          // reset course provider
+                          ref.read(_selectedCourseProvider.notifier).state =
+                              null;
 
                           dialog.showTopFlash(context,
                               title: 'File Resource',

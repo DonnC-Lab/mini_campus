@@ -30,7 +30,7 @@ class CustomInnerCard extends StatelessWidget {
             height: isEven ? 130 : 150,
             width: double.infinity,
             child: ad.images.isEmpty
-                ? Image.asset('assets/images/market_ad.png')
+                ? Image.asset(campusMarketPlaceholder)
                 : FittedBox(
                     child: FancyShimmerImage(imageUrl: ad.images.first),
                     fit: BoxFit.fill,

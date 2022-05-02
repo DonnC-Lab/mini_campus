@@ -27,12 +27,14 @@ class StorageService {
         filename: filename,
       );
 
+      debugLogger(resp, name: 'uploadFileResource-Res');
+
       return resp;
     }
 
     // err
     catch (e) {
-      debugLogger(e, error: e, name: 'fetchLearningFiles');
+      debugLogger(e, error: e, name: 'uploadFileResource');
     }
   }
 
