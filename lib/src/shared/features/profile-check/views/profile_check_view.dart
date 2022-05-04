@@ -51,7 +51,7 @@ class _ProfileCheckViewState extends ConsumerState<ProfileCheckView> {
               // e
               else {
                 WidgetsBinding.instance?.addPostFrameCallback((_) {
-                  routeToWithClear(context, const BasicProfileUpdateView());
+                  routeToWithClear(context, BasicProfileUpdateView());
                 });
               }
             }

@@ -82,7 +82,7 @@ class _AddLearningFileResourceState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '⚠ \nYou can only add resources that match your current stream',
+                  '⚠ \nYou can only add files that match your current part & stream',
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 13,
                         color: greyTextShade,
@@ -217,8 +217,6 @@ class _AddLearningFileResourceState
                           return;
                         }
 
-                        debugLogger(uploadRes.toString());
-
                         dialog.showToast('file uploaded');
 
                         dialog.showToast('saving resource..');
@@ -254,7 +252,7 @@ class _AddLearningFileResourceState
                           dialog.showTopFlash(context,
                               title: 'File Resource',
                               mesg:
-                                  'Your file resource has been added successfully.\nWe appreciate your help');
+                                  'Your file resource has been added successfully 😃.\nWe appreciate your help');
                         }
 
                         //

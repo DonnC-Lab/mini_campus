@@ -1,3 +1,6 @@
+// copied from [deta-dart] 
+
+
 /// {@template deta_query}
 /// Create a query for search elements in the databese.
 /// {@endtemplate}

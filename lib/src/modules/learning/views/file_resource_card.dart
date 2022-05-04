@@ -4,6 +4,7 @@ import 'package:mini_campus/src/shared/index.dart';
 
 import '../data/models/resource/file_resource.dart';
 import 'file_resource_viewer_online.dart';
+import 'resource_details_modal.dart';
 
 class FileResourceCard extends StatelessWidget {
   const FileResourceCard({
@@ -17,7 +18,6 @@ class FileResourceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // go to pdf view
         routeTo(context, FileResourceViewerOnline(fileResource: recentFile));
       },
       child: SizedBox(
@@ -27,25 +27,55 @@ class FileResourceCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(2.0),
-                child: Icon(FontAwesome.file_pdf_o, size: 50),
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: InkWell(
+                        child: const Icon(
+                          Icons.info,
+                          color: greyTextShade,
+                        ),
+                        onTap: () {
+                          ResourceDetailsModal(context, recentFile);
+                        },
+                      ),
+                    ),
+                  ),
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Icon(FontAwesome.file_pdf_o, size: 50),
+                    ),
+                  ),
+                ],
               ),
               Text(recentFile.resource.filename),
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  color: bluishColorShade,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Text(
-                  recentFile.category,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      ?.copyWith(fontSize: 10),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      recentFile.category,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.copyWith(fontSize: 10),
+                    ),
+                    const VerticalDivider(color: greyTextShade),
+                    Text(
+                      recentFile.year.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.copyWith(fontSize: 10),
+                    ),
+                  ],
                 ),
               ),
+        
             ],
           ),
         ),

@@ -93,7 +93,6 @@ class _ItemImageContainer extends StatelessWidget {
               ? FileImage(fileSource) as ImageProvider
               : AssetImage(fileSource),
           fit: fileSource is File ? BoxFit.cover : BoxFit.contain,
-          scale: 0.3,
         ),
       ),
     );

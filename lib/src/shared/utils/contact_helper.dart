@@ -3,7 +3,7 @@ import 'package:localregex/localregex.dart';
 import 'package:phone_number/phone_number.dart';
 
 /// helper to try validate contact passed and return formatted international number
-/// 
+///
 /// return formatted number or null if invalid
 Future<String?> contactHelper(String? number) async {
   if (number != null) {
@@ -26,6 +26,8 @@ Future<String?> contactHelper(String? number) async {
         return LocalRegex.formatNumber(value: number, type: FormatTypes.common);
       }
     }
+
+    return null;
   }
 
   return number;

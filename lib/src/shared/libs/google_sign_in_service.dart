@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mini_campus/debug_settings.dart';
-import 'package:mini_campus/src/shared/extensions/index.dart';
 
 import '../index.dart';
 
@@ -19,9 +18,9 @@ class GoogleSignInService {
 
     try {
       if (googleUser != null) {
-        // todo verify student email here
+        // todo: verify student email here
 
-        final bool _proceed = googleUser.email.isValidStudentEmail;
+        final bool _proceed = googleUser.email.isValidStudentEmailAddress;
 
         if (_proceed) {
           final GoogleSignInAuthentication googleAuth =
@@ -34,9 +33,9 @@ class GoogleSignInService {
               accessToken: googleAuth.accessToken,
             ));
 
-            if (BYPASS_EMAIL_VALIDATION_CHECK) {
-              return AppFbUser.fromFirebaseUser(userCredential.user!);
-            }
+            // if (BYPASS_EMAIL_VALIDATION_CHECK) {
+            //   return AppFbUser.fromFirebaseUser(userCredential.user!);
+            // }
 
             await userCredential.user?.reload();
 

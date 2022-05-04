@@ -152,8 +152,6 @@ class _AddProductState extends ConsumerState<AddProduct> {
                       // save ad
                       final res = await api.addAdService(ad);
 
-                      debugLogger(res);
-
                       if (res != null) {
                         if (res) {
                           _dialog.showTopFlash(context,

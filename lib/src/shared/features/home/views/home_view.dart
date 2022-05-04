@@ -56,11 +56,21 @@ class _HomeViewState extends ConsumerState<HomeView> {
     });
   }
 
+  // set current student to cache
+  void _setStudentCache() async {
+    final _sharedPref = ref.read(sharedPreferencesServiceProvider);
+
+    await _sharedPref.setCurrentStudent(ref.read(studentProvider)!);
+  }
+
   @override
   void initState() {
     super.initState();
 
+    _setStudentCache();
+
     initializeFirebaseService();
+
     checkForInitialMessage();
     setupInteractedMessage();
 
@@ -103,11 +113,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
         appBar: AppBar(
           title: const Text('Mini Campus'),
           centerTitle: true,
-          actions: const [
+          actions: [
             IconButton(
               tooltip: 'about MiniCampus app',
-              onPressed: null,
-              icon: Icon(Entypo.info_with_circle),
+              onPressed: () {
+                // todo: go to about page
+              },
+              icon: const Icon(Entypo.info_with_circle),
             ),
           ],
         ),
@@ -130,176 +142,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
           },
         ),
         body: _currentModuleIndex == -1
-            ? const DetailedProfileView()
+            ? const DetailedProfileView(showAppbar: false)
             : drawerModulePages[_currentModuleIndex].page,
       ),
     );
   }
 }
-
-
-
-
-/*
-final loaderProvider = StateProvider((_) => false);
-
-class DetaView extends ConsumerWidget {
-  const DetaView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final repo = ref.watch(detaStoreRepProvider);
-    final deta = ref.watch(detaStorageRepProvider);
-    final isLoading = ref.watch(loaderProvider);
-
-    return Column(
-      children: [
-        Expanded(
-          child: deta.when(
-            data: (data) {
-              var fnames = data['names'] as List;
-
-              return RefreshIndicator(
-                onRefresh: () async {
-                  ref.refresh(detaStorageRepProvider);
-                },
-                child: ListView.builder(
-                  itemCount: fnames.length,
-                  itemBuilder: (_, x) {
-                    return ListTile(
-                      leading: SizedBox(
-                        height: 80,
-                        width: 50,
-                        child: ref
-                            .read(detaFileDownloaderProvider(fnames[x]))
-                            .when(
-                              data: (data) {
-                                return CircleAvatar(
-                                    backgroundImage: MemoryImage(data));
-                              },
-                              error: (error, st) {
-                                return Text(error.toString());
-                              },
-                              loading: () => const Center(
-                                  child: CircularProgressIndicator()),
-                            ),
-                      ),
-                      title: Text(fnames[x]),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () async {
-                          await repo.delete([fnames[x]]);
-                          Fluttertoast.showToast(
-                              msg: 'file ${fnames[x]} deleted successfully');
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-            error: (error, st) {
-              return Text(error.toString());
-            },
-            loading: () => const Center(child: CircularProgressIndicator()),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: isLoading
-              ? const CircularProgressIndicator()
-              : ElevatedButton(
-                  onPressed: () async {
-                    var fp = await FilePicker.platform.pickFiles(
-                      type: FileType.image,
-                    );
-
-                    var bytes = await File(fp!.files.first.path!).readAsBytes();
-
-                    ref.read(loaderProvider.notifier).state = true;
-
-                    await repo.upload(
-                      fp.files.first.path!,
-                      bytes,
-                      filename: fp.files.first.name,
-                    );
-
-                    Fluttertoast.showToast(msg: 'file uploaded');
-                    ref.read(loaderProvider.notifier).state = false;
-
-                    // var img = await ImagePicker()
-                    //     .pickImage(source: ImageSource.gallery);
-
-                    // if (img != null) {
-                    //   ref.read(loaderProvider.notifier).state = true;
-
-                    //   //final btyes = file.readAsBytesSync();
-                    //   final fileBytes = await img.readAsBytes();
-
-                    //   await repo.upload(
-                    //     img.path,
-                    //     fileBytes,
-                    //     // filename: 'test-upload.jpg',
-                    //   );
-
-                    //   Fluttertoast.showToast(msg: 'file uploaded');
-                    //   ref.read(loaderProvider.notifier).state = false;
-                    // }
-                  },
-                  child: const Text('Upload Image'),
-                ),
-        ),
-      ],
-    );
-  }
-}
-
-// ===============================================================
-Drawer(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 10),
-                SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          _scaffoldKey.currentState?.openEndDrawer();
-                        },
-                        icon: const Icon(Icons.cancel_outlined),
-                      ),
-                      themeMode == ThemeMode.light
-                          ? SvgPicture.asset('assets/images/logo.svg')
-                          : SvgPicture.asset('assets/images/logo_dm.svg'),
-                    ],
-                  ),
-                ),
-                const Divider(height: 30),
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (_, index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _currentModuleIndex = index;
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: drawerModulePages[index].drawerItem),
-                    itemCount: drawerModulePages.length,
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                const DrawerMiniProfileCard(),
-                const Divider(height: 30),
-                //const DrawerHelpStarted(),
-                const DrawerThemeSwitcher(),
-              ],
-            ),
-          ),
-        ),
-*/

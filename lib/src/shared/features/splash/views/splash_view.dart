@@ -18,8 +18,6 @@ class SplashView extends ConsumerWidget {
         if (elapsed == 2) {
           var isCurrentlyLogged = auth.checkCurrentUser;
 
-          //debugLogger(isCurrentlyLogged, name: 'splashView');
-
           if (isCurrentlyLogged == null) {
             routeToWithClear(context, const LogInView());
           } else {

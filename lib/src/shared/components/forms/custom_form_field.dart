@@ -28,8 +28,6 @@ Widget CustomFormField({
   TextInputType? keyboardType = TextInputType.text,
   Color? titleColor,
   Function? customOnChangeCallback,
-
-  /// determine if this is a custom phone input field or general textfield. Text by default
   String labelText = '',
   Widget suffixIcon = const SizedBox.shrink(),
   Widget? prefixIcon,

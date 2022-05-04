@@ -23,9 +23,7 @@ class SocialBtn extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              asset,
-            ),
+            SvgPicture.asset(asset),
             const SizedBox(width: 8),
             Text(
               name,

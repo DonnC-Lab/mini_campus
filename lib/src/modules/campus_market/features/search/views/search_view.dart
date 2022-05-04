@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:mini_campus/src/shared/index.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+
+import 'package:mini_campus/src/shared/index.dart';
 
 import '../../../models/ad_service.dart';
 import '../../../services/market_rtdb_service.dart';

@@ -5,15 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../index.dart';
 
-final dialogProvider = Provider((_) => FlashDialog(_.read));
+final dialogProvider = Provider((_) => FlashDialog());
 
 class FlashDialog {
-  final Reader read;
-
-  ThemeMode mode = ThemeMode.system;
-
-  FlashDialog(this.read) : mode = read(themeNotifierProvider).value;
-
   void customSnackBar(BuildContext context, String mesg, {Color? bgColor}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(mesg),

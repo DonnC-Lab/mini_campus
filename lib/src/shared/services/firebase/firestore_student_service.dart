@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mini_campus/src/shared/extensions/index.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/libs/index.dart';
 
@@ -136,7 +135,7 @@ class FirestoreStudentService {
         else {
           final _profile = await getStudentProfile();
 
-         // debugLogger(_profile, name: 'isStudentProfileComplete');
+          // debugLogger(_profile, name: 'isStudentProfileComplete');
 
           if (_profile != null) {
             bool isComplete = _profile.name!.isNotEmpty &&
@@ -213,6 +212,11 @@ class FirestoreStudentService {
       );
       var s = await getStudentProfile(studentId: student.id);
       read(studentProvider.notifier).state = s;
+
+      // update cache too
+      final _sharedPref = read(sharedPreferencesServiceProvider);
+
+      await _sharedPref.setCurrentStudent(s!);
 
       return s;
     } catch (e) {

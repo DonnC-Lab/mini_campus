@@ -4,9 +4,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:relative_scale/relative_scale.dart';
+
 import 'package:mini_campus/src/drawer_module_pages.dart';
 import 'package:mini_campus/src/shared/index.dart';
-import 'package:relative_scale/relative_scale.dart';
 
 import '../models/feedback_model.dart';
 import '../services/fdbk_service.dart';

@@ -30,8 +30,6 @@ class FileResourceRepository {
         key: _key,
       );
 
-      debugLogger(res.toString());
-
       return res;
     }
 
@@ -57,7 +55,6 @@ class FileResourceRepository {
       List items = res;
 
       var i = items.map((e) => FileResource.fromJson(e)).toList();
-      debugLogger(i.toString(), name: 'fetchFilteredResources');
       return i;
     }
 
@@ -75,7 +72,6 @@ class FileResourceRepository {
       List items = res;
 
       var i = items.map((e) => FileResource.fromJson(e)).toList();
-      debugLogger(i.toString());
       return i;
     }
 

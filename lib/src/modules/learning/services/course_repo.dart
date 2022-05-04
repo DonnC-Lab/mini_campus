@@ -59,6 +59,25 @@ class CourseRepository {
     return const [];
   }
 
+  Future<Course?> getSingleCourse(String courseCode) async {
+    try {
+      final res = await _detaRepository.queryBase(
+          query: DetaQuery('code').equalTo(courseCode).query);
+
+      if (res is DetaRepositoryException) {
+        throw res;
+      }
+
+      return Course.fromJson(res.first);
+    }
+
+    // er
+    catch (e) {
+      debugLogger(e.toString());
+    }
+    return null;
+  }
+
   Future<List<Course>> getAllCourses() async {
     try {
       final res = await _detaRepository.queryBase();

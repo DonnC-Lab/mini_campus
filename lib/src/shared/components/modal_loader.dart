@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 modalLoader(BuildContext context) {
   // ? add a loader message
   showDialog(
-      context: context,
-      builder: (_) {
-        return const Center(child: CircularProgressIndicator());
-      });
+    context: context,
+    builder: (_) => const Center(child: CircularProgressIndicator()),
+  );
 }

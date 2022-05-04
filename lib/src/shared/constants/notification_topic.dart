@@ -5,6 +5,8 @@ import '../models/profile/student.dart';
 const String notifyMsgApiKey = '';
 
 /// get all relevent student topic based on student profile
+/// 
+/// todo: consider adding student uni / tertiary name as topic too
 
 /// proper topics
 ///
@@ -13,7 +15,7 @@ const String notifyMsgApiKey = '';
 ///   all
 ///   dptCode,
 ///   faculty,
-///   enrollment year - Part 1 Part 2...
+///   enrollment year - part 1 part 2...
 /// ]
 ///
 class NotificationTopic {

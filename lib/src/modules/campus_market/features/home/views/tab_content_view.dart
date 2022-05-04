@@ -40,7 +40,14 @@ class TabContentView extends StatelessWidget {
               child: Text('Something went wrong!\n\n${snapshot.error}'));
         }
 
-        return snapshot.docs.isEmpty
+        final _ads = snapshot.docs.map((e) => AdService.fromFbRtdb(e)).toList();
+
+        // sort by date, newest first
+        if (_ads.isNotEmpty) {
+          _ads.sort((a, b) => b.createdOn.compareTo(a.createdOn));
+        }
+
+        return _ads.isEmpty
             ? Center(
                 child: Text(
                     'no Ads found matching `${marketCategory.name}`\n\nAdd your Ads to share with friends'),
@@ -50,15 +57,13 @@ class TabContentView extends StatelessWidget {
                 mainAxisSpacing: 35,
                 crossAxisSpacing: 20,
                 padding: const EdgeInsets.all(16),
-                itemCount: snapshot.docs.length,
+                itemCount: _ads.length,
                 itemBuilder: (context, index) {
                   if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
                     snapshot.fetchMore();
                   }
 
-                  final ad = AdService.fromFbRtdb(snapshot.docs[index]);
-
-                  return CustomHomeCard(ad: ad, isEven: index.isEven);
+                  return CustomHomeCard(ad: _ads[index], isEven: index.isEven);
                 },
                 staggeredTileBuilder: (int index) =>
                     StaggeredTile.count(1, index.isEven ? 1.4 : 1.5),

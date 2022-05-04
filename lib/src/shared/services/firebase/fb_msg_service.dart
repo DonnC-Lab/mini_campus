@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/libs/index.dart';
-import 'package:mini_campus/src/shared/providers/shared_providers.dart';
 
-import '../index.dart';
 
 final fbMsgProvider = Provider((_) => FbMsgService(_.read));
 

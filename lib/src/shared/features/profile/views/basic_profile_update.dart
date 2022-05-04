@@ -10,20 +10,13 @@ final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
 
 final _selectedDptProvider = StateProvider<FacultyDpt?>((_) => null);
 
-class BasicProfileUpdateView extends ConsumerStatefulWidget {
-  const BasicProfileUpdateView({Key? key}) : super(key: key);
+class BasicProfileUpdateView extends ConsumerWidget {
+   BasicProfileUpdateView({Key? key}) : super(key: key);
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _BasicProfileUpdateViewState();
-}
-
-class _BasicProfileUpdateViewState
-    extends ConsumerState<BasicProfileUpdateView> {
   final formKey = GlobalKey<FormBuilderState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const _radius = Radius.circular(30);
 
     final studentProfile = ref.watch(studentProvider);

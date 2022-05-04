@@ -29,8 +29,6 @@ Widget CustomDDField({
   ),
   TextInputType? keyboardType = TextInputType.text,
   Color? titleColor,
-
-  /// determine if this is a custom phone input field or general textfield. Text by default
   String labelText = '',
   Widget suffixIcon = const SizedBox.shrink(),
 }) {

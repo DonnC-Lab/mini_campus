@@ -1,6 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:mini_campus/src/modules/learning/data/models/resource/file_resource.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:relative_scale/relative_scale.dart';
 
@@ -65,69 +68,7 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Learning\nManager',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              ?.copyWith(fontSize: 28),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(16, 16, 0, 16),
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          color: bluishColorShade,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(25)),
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              studentProfile!.departmentCode,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: 12),
-                            ),
-                            DropdownButton<String?>(
-                              value: _selectedPart,
-                              underline: const SizedBox(),
-                              hint: Text('-part-',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      ?.copyWith(
-                                        fontSize: 12,
-                                      )),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: 12),
-                              items: uniParts
-                                  .map((e) => DropdownMenuItem(
-                                        child: Text(e),
-                                        value: e,
-                                      ))
-                                  .toList(),
-                              onChanged: (val) {
-                                setState(() {
-                                  _selectedPart = val;
-                                });
-
-                                _setFilter();
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  _ModuleHeader(context),
                   const SizedBox(height: 15),
                   Expanded(
                     child: ref.watch(resFilterProvider(_learningFilter)).when(
@@ -202,47 +143,9 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
                                         child: ListView.separated(
                                           padding: const EdgeInsets.all(8),
                                           shrinkWrap: true,
-                                          itemBuilder: (context, index) {
-                                            return ListTile(
-                                              onTap: () {
-                                                final _filter = _learningFilter;
-
-                                                _filter['category'] =
-                                                    _groupedResources.keys
-                                                        .elementAt(index);
-
-                                                routeTo(
-                                                    context,
-                                                    FolderFilesView(
-                                                        learningFilter:
-                                                            _filter));
-                                              },
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              tileColor:
-                                                  Theme.of(context).cardColor,
-                                              title: Text(
-                                                _groupedResources.keys
-                                                    .elementAt(index),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle2
-                                                    ?.copyWith(fontSize: 17),
-                                              ),
-                                              subtitle: Text(_groupedResources[
-                                                      _groupedResources.keys
-                                                          .elementAt(index)]!
-                                                  .length
-                                                  .toString()),
-                                              leading: const CircleAvatar(
-                                                  radius: 35,
-                                                  child: Icon(
-                                                      MaterialCommunityIcons
-                                                          .folder_google_drive)),
-                                            );
-                                          },
+                                          itemBuilder: (context, index) =>
+                                              _FolderTile(_groupedResources,
+                                                  index, context),
                                           separatorBuilder: (context, index) =>
                                               const SizedBox(height: 30),
                                           itemCount: _groupedResources.length,
@@ -262,6 +165,91 @@ class _LearningHomeViewState extends ConsumerState<LearningHomeView> {
                 ],
               );
             }),
+    );
+  }
+
+  // auto-gen methods
+  Widget _FolderTile(Map<String, List<FileResource>> _groupedResources,
+      int index, BuildContext context) {
+    return ListTile(
+      onTap: () {
+        final _filter = _learningFilter;
+
+        _filter['category'] = _groupedResources.keys.elementAt(index);
+
+        routeTo(context, FolderFilesView(learningFilter: _filter));
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      tileColor: Theme.of(context).cardColor,
+      title: Text(
+        _groupedResources.keys.elementAt(index),
+        style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 17),
+      ),
+      subtitle: Text(_groupedResources[_groupedResources.keys.elementAt(index)]!
+          .length
+          .toString()),
+      leading: const CircleAvatar(
+          radius: 35, child: Icon(MaterialCommunityIcons.folder_google_drive)),
+    );
+  }
+
+  Widget _ModuleHeader(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Learning\nManager',
+            style:
+                Theme.of(context).textTheme.headline1?.copyWith(fontSize: 28),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.fromLTRB(16, 16, 0, 16),
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: bluishColorShade,
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(25)),
+          ),
+          child: Column(
+            children: [
+              Text(
+                studentProfile!.departmentCode,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(fontSize: 12),
+              ),
+              DropdownButton<String?>(
+                value: _selectedPart,
+                underline: const SizedBox(),
+                hint: Text('-part-',
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: 12,
+                        )),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(fontSize: 12),
+                items: uniParts
+                    .map((e) => DropdownMenuItem(
+                          child: Text(e),
+                          value: e,
+                        ))
+                    .toList(),
+                onChanged: (val) {
+                  setState(() {
+                    _selectedPart = val;
+                  });
+
+                  _setFilter();
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

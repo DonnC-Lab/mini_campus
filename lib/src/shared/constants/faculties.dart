@@ -5,6 +5,7 @@ class Faculty {
 }
 
 final faculties = <Faculty>[
+  // NUST faculties
   Faculty('Engineering'),
   Faculty('Applied Science'),
   Faculty('Built Environment'),

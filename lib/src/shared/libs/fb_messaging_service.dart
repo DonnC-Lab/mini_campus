@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
-// TODO: perform these actions on server
 class FbMessagingService {
   FbMessagingService._();
   static final instance = FbMessagingService._();
@@ -25,6 +24,7 @@ class FbMessagingService {
     }
   }
 
+  // TODO: perform these actions on server instead
   /// send a notification to individual user [Student]
   Future sendNotification(
       NotificationPayload notificationPayload, String token) async {

@@ -1,9 +1,3 @@
-// ? secure keys, need another way to secure keys
-const String donDetaProjectKey = 'a0iayg6n_F2TSaN4MnKogj9bMW4Wj95mYG8FSr5q4';
-
-// additional deta keys per module | project need
-const String kingDetaProjectKey = '';
-
 // deta databases per module / feature
 // ! should not be changed when set and used
 class DetaBases {

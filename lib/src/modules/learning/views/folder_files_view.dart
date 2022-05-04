@@ -21,40 +21,44 @@ class FolderFilesView extends ConsumerWidget {
         );
 
     return Scaffold(
-      appBar: AppBar(title: Text(learningFilter['category'])),
-      body: Column(
-        children: [
-          Expanded(
-            child: ref.watch(resFilterProvider(learningFilter)).when(
-                  data: (items) {
-                    return items.isEmpty
-                        ? Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(30.0),
-                              child: Text(
-                                  "no ${learningFilter['category']} resources found. You can add your resources too from the previous page",
-                                  style: _style),
-                            ),
-                          )
-                        : GridView.count(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 30,
-                            crossAxisSpacing: 20,
-                            children: items
-                                .map((res) => FileResourceCard(recentFile: res))
-                                .toList(),
-                          );
-                  },
-                  error: (e, st) => Center(
-                      child: Text(
-                    '🙁 failed to fetch ${learningFilter['category']} resources',
-                    style: _style,
-                  )),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                ),
-          ),
-        ],
+      appBar: AppBar(title: Text(learningFilter['category'] + ' papers')),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ref.watch(resFilterProvider(learningFilter)).when(
+                    data: (items) {
+                      return items.isEmpty
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(30.0),
+                                child: Text(
+                                    "no ${learningFilter['category']} resources found. You can add your resources too from the previous page",
+                                    style: _style),
+                              ),
+                            )
+                          : GridView.count(
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 8,
+                              children: items
+                                  .map((res) =>
+                                      FileResourceCard(recentFile: res))
+                                  .toList(),
+                            );
+                    },
+                    error: (e, st) => Center(
+                        child: Text(
+                      '🙁 failed to fetch ${learningFilter['category']} resources',
+                      style: _style,
+                    )),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }

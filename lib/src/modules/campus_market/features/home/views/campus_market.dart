@@ -9,24 +9,23 @@ import '../../profile/views/profile_view.dart';
 import '../../search/views/search_view.dart';
 import 'market_home_view.dart';
 
-class CampusMarket extends StatefulWidget {
+class CampusMarket extends StatelessWidget {
   const CampusMarket({Key? key}) : super(key: key);
 
-  @override
-  State<CampusMarket> createState() => _CampusMarketState();
-}
-
-class _CampusMarketState extends State<CampusMarket> {
-  final pages = [
-    const MarketHomeView(),
-    const SearchView(),
-    const AddView(),
-    const FavView(),
-    const MarketProfileView(),
+  static const pages = [
+    MarketHomeView(),
+    SearchView(),
+    AddView(),
+    FavView(),
+    MarketProfileView(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final _activePrimaryColor = bluishColorShade;
+    const _activeSecondaryColor = bluishColor;
+    const _inactiveColorPrimary = Colors.grey;
+
     return PersistentTabView(
       context,
       screens: pages,
@@ -34,23 +33,23 @@ class _CampusMarketState extends State<CampusMarket> {
         PersistentBottomNavBarItem(
           icon: const Icon(Ionicons.home),
           title: 'Home',
-          activeColorPrimary: bluishColorShade,
-          activeColorSecondary: bluishColor,
-          inactiveColorPrimary: Colors.grey,
+          activeColorPrimary: _activePrimaryColor,
+          activeColorSecondary: _activeSecondaryColor,
+          inactiveColorPrimary: _inactiveColorPrimary,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Ionicons.search),
           title: 'Search',
-          activeColorPrimary: bluishColorShade,
-          activeColorSecondary: bluishColor,
-          inactiveColorPrimary: Colors.grey,
+          activeColorPrimary: _activePrimaryColor,
+          activeColorSecondary: _activeSecondaryColor,
+          inactiveColorPrimary: _inactiveColorPrimary,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Ionicons.add),
           title: 'Add',
           activeColorPrimary: bluishColor,
           activeColorSecondary: Colors.white,
-          inactiveColorPrimary: Colors.grey,
+          inactiveColorPrimary: _inactiveColorPrimary,
           onPressed: (context_) {
             pushNewScreen(
               context,
@@ -62,16 +61,16 @@ class _CampusMarketState extends State<CampusMarket> {
         PersistentBottomNavBarItem(
           icon: const Icon(Ionicons.heart),
           title: 'Favorite',
-          activeColorPrimary: bluishColorShade,
-          activeColorSecondary: bluishColor,
-          inactiveColorPrimary: Colors.grey,
+          activeColorPrimary: _activePrimaryColor,
+          activeColorSecondary: _activeSecondaryColor,
+          inactiveColorPrimary: _inactiveColorPrimary,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Ionicons.person),
           title: 'Account',
-          activeColorPrimary: bluishColorShade,
-          activeColorSecondary: bluishColor,
-          inactiveColorPrimary: Colors.grey,
+          activeColorPrimary: _activePrimaryColor,
+          activeColorSecondary: _activeSecondaryColor,
+          inactiveColorPrimary: _inactiveColorPrimary,
         ),
       ],
       decoration: const NavBarDecoration(borderRadius: BorderRadius.zero),

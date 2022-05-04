@@ -6,8 +6,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mini_campus/src/shared/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:mini_campus/src/shared/index.dart';
 
 import 'debug_settings.dart';
 import 'fb_emulator.dart';
@@ -53,7 +54,6 @@ void main() async {
         channelShowBadge: true,
       )
     ],
-    // Channel groups are only visual and are not required
     channelGroups: [
       NotificationChannelGroup(
         channelGroupkey: 'basic_channel_group',

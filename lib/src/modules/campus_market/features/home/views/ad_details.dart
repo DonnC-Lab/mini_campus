@@ -118,26 +118,26 @@ class AdDetailsView extends ConsumerWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 40),
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        routeBack(context);
-                                      },
-                                      icon: const Icon(Icons.arrow_back_ios),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text('Ad Details',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline1
-                                            ?.copyWith(fontSize: 23)),
-                                  ],
-                                ),
-                              ),
+                              // const SizedBox(height: 40),
+                              // Align(
+                              //   alignment: Alignment.topCenter,
+                              //   child: Row(
+                              //     children: [
+                              //       IconButton(
+                              //         onPressed: () {
+                              //           routeBack(context);
+                              //         },
+                              //         icon: const Icon(Icons.arrow_back_ios),
+                              //       ),
+                              //       const SizedBox(width: 8),
+                              //       Text('Ad Details',
+                              //           style: Theme.of(context)
+                              //               .textTheme
+                              //               .headline1
+                              //               ?.copyWith(fontSize: 23)),
+                              //     ],
+                              //   ),
+                              // ),
                               const SizedBox(height: 10),
                               SizedBox(
                                 height: height * 0.45,

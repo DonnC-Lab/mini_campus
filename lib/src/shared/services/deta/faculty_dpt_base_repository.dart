@@ -15,8 +15,6 @@ class FacultyDptBaseRepository {
         query: DetaQuery('faculty').equalTo(faculty.name).query,
       );
 
-      debugLogger(res.toString());
-
       List items = res;
 
       return items.map((e) => FacultyDpt.fromJson(e)).toList();
@@ -24,7 +22,7 @@ class FacultyDptBaseRepository {
 
     // er
     catch (e) {
-      debugLogger(e.toString());
+      debugLogger(e.toString(), name: 'getFacultyDptByFaculty');
     }
     return [];
   }
@@ -33,8 +31,6 @@ class FacultyDptBaseRepository {
     try {
       final res = await _detaRepository.queryBase();
 
-      debugLogger(res.toString());
-
       List items = res;
 
       return items.map((e) => FacultyDpt.fromJson(e)).toList();
@@ -42,7 +38,7 @@ class FacultyDptBaseRepository {
 
     // er
     catch (e) {
-      debugLogger(e.toString());
+      debugLogger(e.toString(), name: 'getAllFacultyDpt');
     }
     return [];
   }

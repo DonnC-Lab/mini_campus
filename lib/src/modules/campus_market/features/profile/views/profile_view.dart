@@ -87,7 +87,8 @@ class MarketProfileView extends ConsumerWidget {
               onTap: () {
                 routeTo(
                   context,
-                  DetailedProfileView(extStudent: extStudent),
+                  DetailedProfileView(
+                      extStudent: extStudent, showAppbar: false),
                 );
               },
             ),
