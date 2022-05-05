@@ -12,10 +12,10 @@ routeTo(BuildContext context, Widget routeTo,
     showTransition
         ? PageTransition(
             type: transition,
-            child: routeTo,
+            child: routeTo
           )
         : MaterialPageRoute(
-            builder: (BuildContext context) => routeTo,
+            builder: (BuildContext context) => routeTo
           ),
   );
 }

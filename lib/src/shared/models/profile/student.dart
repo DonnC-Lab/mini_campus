@@ -17,7 +17,7 @@ class Student with _$Student {
     String? id,
 
     /// student institution email
-    String? email,
+    required String email,
     String? name,
     String? alias,
     String? profilePicture,
@@ -27,21 +27,18 @@ class Student with _$Student {
     /// to use for targeted notification
     String? gender,
 
-    /// student enrollment year, 1st, 2nd..
-    String? year,
+    /// will automatically be picked on the fly from student email using extension
+    //int? year,
 
     /// student resident during campus
     @Default('') String campusLocation,
 
     /// full department name, Electronic Engineering
-    @Default('') String department,
-    @Default('') String faculty,
+    required String department,
+    required String faculty,
 
     /// tee, tcw ...
-    @Default('') String departmentCode,
-
-    /// topics to register, for notifications
-    @Default([]) List topics,
+    required String departmentCode,
 
     /// fetched from student org email
     String? studentNumber,
@@ -49,9 +46,9 @@ class Student with _$Student {
         required DateTime createdOn,
   }) = _Student;
 
-  factory Student.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> json = doc.data as Map<String, dynamic>;
-    Student st = Student.fromJson(json);
+  factory Student.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    //Map<String, dynamic>? json = doc.data;
+    Student st = Student.fromJson(doc.data()!);
     return st.copyWith(id: doc.id);
   }
 

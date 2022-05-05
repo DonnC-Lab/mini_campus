@@ -2,15 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mini_campus/src/shared/index.dart';
 import 'package:relative_scale/relative_scale.dart';
-
-import 'custom_input_decoration.dart';
-import 'form_constants.dart';
 
 Widget CustomFormField({
   String? title,
   required BuildContext context,
   required String? formName,
+  FocusNode? focusNode,
   TextEditingController? controller,
   String validateError = '',
   FormFieldValidator<String>? validator,
@@ -22,16 +21,16 @@ Widget CustomFormField({
   bool isPhoneField = false,
   bool readOnly = false,
   bool enforceLength = false,
+  int? maxLength,
   bool unfocus = false,
   bool filled = true,
   ThemeMode themeMode = ThemeMode.system,
   TextInputType? keyboardType = TextInputType.text,
   Color? titleColor,
   Function? customOnChangeCallback,
-
-  /// determine if this is a custom phone input field or general textfield. Text by default
   String labelText = '',
   Widget suffixIcon = const SizedBox.shrink(),
+  Widget? prefixIcon,
 }) {
   return RelativeBuilder(
     builder: (context, height, width, sy, sx) {
@@ -46,15 +45,18 @@ Widget CustomFormField({
               context: context,
               controller: controller,
               hintText: hintText,
+              maxLength: maxLength,
               maxLines: maxLines,
               autoFocus: autoFocus,
               obscureText: obscureText,
+              prefixIcon: prefixIcon,
               readOnly: readOnly,
               errorString: validateError,
               validator: validator,
               labelText: labelText,
               enforceLength: enforceLength,
               unfocus: unfocus,
+              focusNode: focusNode,
               suffixIcon: suffixIcon,
               keyboardType: keyboardType,
               initialText: initialText,
@@ -72,6 +74,7 @@ Widget CustomFormField({
 Widget customTextField({
   TextEditingController? controller,
   required BuildContext context,
+  FocusNode? focusNode,
   TextInputType? keyboardType,
   String? initialText,
   String hintText = '',
@@ -81,6 +84,7 @@ Widget customTextField({
   bool obscureText = false,
   bool unfocus = false,
   bool enforceLength = false,
+  int? maxLength,
   String labelText = '',
   bool autoFocus = false,
   bool filled = true,
@@ -89,35 +93,44 @@ Widget customTextField({
   FormFieldValidator<String>? validator,
   String errorString = 'this field is required',
   Widget suffixIcon = const SizedBox.shrink(),
+  Widget? prefixIcon,
 }) {
   return Padding(
     padding: const EdgeInsets.all(12),
     child: Container(
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(borderRadius)),
-      child: FormBuilderTextField(
-        name: formName!,
-        readOnly: readOnly,
-        initialValue: initialText,
-        controller: controller,
-        autofocus: autoFocus,
-        style: fieldTextStyle(context),
-        maxLines: maxLines,
-        keyboardType: keyboardType,
-        obscureText: obscureText,
-        validator: validator,
-        onEditingComplete: () => unfocus
-            ? FocusScope.of(context).unfocus()
-            : FocusScope.of(context).nextFocus(),
-        onChanged: customOnChangeCallback,
-        decoration: CustomInputDecoration(
-          radius: borderRadius,
-          themeMode: themeMode,
-          filled: filled,
-          textStyle: fieldTextStyle(context)!,
-          labelText: labelText,
-          hintText: hintText,
-          suffixIcon: suffixIcon,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ThemeData().colorScheme.copyWith(primary: greyTextShade),
+        ),
+        child: FormBuilderTextField(
+          name: formName!,
+          readOnly: readOnly,
+          focusNode: focusNode,
+          initialValue: initialText,
+          controller: controller,
+          autofocus: autoFocus,
+          style: fieldTextStyle(context),
+          maxLines: maxLines,
+          maxLength: enforceLength ? maxLength : null,
+          keyboardType: keyboardType,
+          obscureText: obscureText,
+          validator: validator,
+          onEditingComplete: () => unfocus
+              ? FocusScope.of(context).unfocus()
+              : FocusScope.of(context).nextFocus(),
+          onChanged: customOnChangeCallback,
+          decoration: CustomInputDecoration(
+            radius: borderRadius,
+            themeMode: themeMode,
+            filled: filled,
+            prefixIcon: prefixIcon,
+            textStyle: fieldTextStyle(context)!,
+            labelText: labelText,
+            hintText: hintText,
+            suffixIcon: suffixIcon,
+          ),
         ),
       ),
     ),

@@ -1,6 +1,8 @@
 // global app colors
 import 'package:flutter/material.dart';
 
+// todo: use global descriptive names
+
 const mainWhite = Color(0xFFFCFCFC);
 
 const bluishColor = Color(0xFF2A85FF);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../index.dart';
@@ -9,6 +10,10 @@ class DrawerMiniProfileCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeNotifierProvider).value;
+
+    final studentProfile = ref.watch(studentProvider);
+
+    // debugLogger(studentProfile, name: 'DrawerMiniProfileCard');
 
     return Container(
       height: 80,
@@ -24,26 +29,28 @@ class DrawerMiniProfileCard extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile.png'),
-              backgroundColor: orangishColor,
-              radius: 25,
+            AdvancedAvatar(
+              size: 40,
+              name: studentProfile!.name,
+              image: NetworkImage(studentProfile.profilePicture ?? ''),
             ),
             const SizedBox(width: 10),
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Donald Chinhuru',
+                  studentProfile.name ?? 'Student',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Electronic Engineering',
+                  studentProfile.email.studentNumber.studentNumber
+                      .toUpperCase(),
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: greyTextShade,
-                        fontStyle: FontStyle.italic,
+                        // fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w400,
                       ),
                 ),

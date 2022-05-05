@@ -14,29 +14,29 @@ InputDecoration CustomInputDecoration({
   ThemeMode themeMode = ThemeMode.system,
 }) {
   return InputDecoration(
-    filled: true,
-    labelText: labelText,
-    fillColor: themeMode == ThemeMode.light
-        ? bgColor
-        // ? fieldFillColor
-        : darkModeMainColor,
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(radius),
-      borderSide: BorderSide(
-          color: themeMode == ThemeMode.light ? mainWhite : fieldDMFillText),
-    ),
     hintText: hintText,
+    labelText: labelText,
     labelStyle: textStyle,
-    suffixIcon: suffixIcon,
+    hintStyle: const TextStyle(fontWeight: FontWeight.w400),
     prefixIcon: prefixIcon,
-    hintStyle: const TextStyle(fontWeight: FontWeight.bold),
+    suffix: suffixIcon,
+    filled: filled,
+    fillColor: greyTextShade.withOpacity(0.1),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: themeMode == ThemeMode.light
+            ? greyTextShade.withOpacity(0.1)
+            : fieldDMFillText,
+      ),
+      borderRadius: BorderRadius.circular(8),
+    ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(radius),
-      borderSide: const BorderSide(color: greyTextShade),
+      borderSide: const BorderSide(color: Colors.transparent),
+      borderRadius: BorderRadius.circular(8),
     ),
     errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(radius),
-      borderSide: const BorderSide(color: Colors.red),
+      borderSide: BorderSide(color: Colors.red.withOpacity(0.6)),
+      borderRadius: BorderRadius.circular(8),
     ),
   );
 }

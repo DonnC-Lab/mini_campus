@@ -14,7 +14,6 @@ Widget CustomDateField({
   required BuildContext context,
   required String? formName,
   TextEditingController? controller,
-  String validateError = '',
   FormFieldValidator<DateTime?>? validator,
   DateFormat? format,
   String hintText = '',
@@ -29,8 +28,6 @@ Widget CustomDateField({
   TextInputType? keyboardType = TextInputType.text,
   Color? titleColor,
   Function? customOnChangeCallback,
-
-  /// determine if this is a custom phone input field or general textfield. Text by default
   String labelText = '',
   Widget suffixIcon = const SizedBox.shrink(),
 }) {
@@ -52,7 +49,6 @@ Widget CustomDateField({
               format: format,
               obscureText: obscureText,
               readOnly: readOnly,
-              errorString: validateError,
               validator: validator,
               labelText: labelText,
               enforceLength: enforceLength,
@@ -85,7 +81,6 @@ Widget customDateField({
   bool autoFocus = false,
   var customOnChangeCallback,
   FormFieldValidator<DateTime?>? validator,
-  String errorString = 'this field is required',
   Widget suffixIcon = const SizedBox.shrink(),
   DateFormat? format,
 }) {

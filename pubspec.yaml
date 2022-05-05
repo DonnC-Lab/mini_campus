@@ -26,6 +26,7 @@ dependencies:
 
   # components
   flutter_form_builder: ^7.1.1
+  form_builder_validators: ^7.7.0
   styled_widget: ^0.4.0+3
   keyboard_actions: ^3.4.7
   animate_do: ^2.1.0
@@ -35,7 +36,10 @@ dependencies:
   phone_number: ^0.12.0+1
   persistent_bottom_nav_bar_v2: ^4.1.3
   photo_view: ^0.13.0
-  flutter_staggered_grid_view: ^0.6.1
+  staggered_grid_view_flutter: ^0.0.4
+  toggle_switch: ^1.4.0
+  argon_buttons_flutter: ^1.1.0
+  
 
   # file IO
   image_picker: ^0.8.4+11
@@ -48,7 +52,7 @@ dependencies:
   # notification
   fluttertoast: ^8.0.9
   flash: ^2.0.3+2
-
+  awesome_notifications: ^0.6.21
 
   # utilities
   dio: ^4.0.4
@@ -60,10 +64,21 @@ dependencies:
   linkable: ^3.0.1
   material_floating_search_bar: ^0.3.7
   google_fonts: ^2.3.1
-  pin_code_fields: ^7.3.0
   relative_scale: ^2.0.0
+  localregex: ^3.0.3
   timer_button:
   intl:
+  flutter_advanced_avatar: ^1.0.0+1
+  numeral: ^2.0.1
+
+  # misc
+  faker: ^2.0.0
+  intro_slider: ^3.0.4
+  cloud_firestore_odm: ^1.0.0-dev.11
+  json_annotation: ^4.4.0
+  fancy_shimmer_image: ^2.0.2
+  flutter_cache_manager: ^3.3.0
+  flutter_rating_bar: ^4.0.0
   
 
 dev_dependencies:
@@ -72,8 +87,10 @@ dev_dependencies:
   change_app_package_name: ^1.0.0
   flutter_test:
     sdk: flutter
-  freezed: ^1.1.1
+  cloud_firestore_odm_generator: ^1.0.0-dev.10
+  freezed:
   json_serializable: ^6.1.4
+  
 
 flutter:
   uses-material-design: true
