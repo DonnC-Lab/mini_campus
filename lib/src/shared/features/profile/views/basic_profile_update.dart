@@ -40,13 +40,9 @@ class BasicProfileUpdateView extends ConsumerWidget {
         body: Column(
           children: [
             const SizedBox(height: 30),
-            themeMode == ThemeMode.light
-                ? SvgPicture.asset(
-                    'assets/images/logo.svg',
-                  )
-                : SvgPicture.asset(
-                    'assets/images/logo_dm.svg',
-                  ),
+           themeMode == ThemeMode.light
+                    ? Image.asset('assets/images/logo.png')
+                    : Image.asset('assets/images/logo_dm.png'),
             const SizedBox(height: 30),
             Center(
               child: Column(

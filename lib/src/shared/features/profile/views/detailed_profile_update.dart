@@ -276,6 +276,21 @@ class _DetailedProfileViewState extends ConsumerState<DetailedProfileView> {
                                             final _data = updateFormKey
                                                 .currentState!.value;
 
+                                            // check for changes, minimize fb writes
+                                            if (_data['phone'] ==
+                                                    student.whatsappNumber &&
+                                                _data['location'] ==
+                                                    student.campusLocation) {
+                                              _dialog.showToast(
+                                                  'no changes detected');
+
+                                              setState(() {
+                                                toggleOwnerProfileEdit = true;
+                                              });
+
+                                              return;
+                                            }
+
                                             String _appNumber = '';
 
                                             // verify num

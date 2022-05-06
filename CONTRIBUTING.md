@@ -94,6 +94,64 @@ Each new module idea must be discussed and pass at least 30% upvote from all act
 
 Once a module idea is approved, the owner has the rights to the module and will be the key maintainer of the module and can give guidelines to other contributors on how to go about that module
 
+#### Imports
+For in-module (importing module files within your module) imports please consider using `relative import` e.g
+```dart
+// do
+import '../constants/my_enums.dart';
+
+// instead of 
+import 'package:mini_campus/src/modules/my_module/constants/my_enums.dart';
+```
+This will be easy if you are creating your module seperately and want to copy paste your app folder as a module inside MC
+
+### Connecting your module
+Your module should be added in [modules](/lib/src/modules/) folder as an app folder, you can follow the simplistic [Feedback](/lib/src/modules/feedback/) module structure
+
+
+All modules are connected within [drawer_module_pages](/lib/src/drawer_module_pages.dart)
+```dart
+import 'modules/my_module/views/my_module_entry_view.dart';
+
+// add your drawer item and link your created module
+[
+    // ...
+    DrawerPage(
+    drawerItem: const DrawerItem(
+      icon: YourModule.icon,
+      name: 'Module Name',
+    ),
+    page: const YourModuleEntryWidget(),
+  ),
+  // ...
+]
+
+```
+
+### Accessing *Student*
+Your module might want to get the currently logged in Student profile. If you are using `riverpod` state management you must be familiar with reactively listening to the `studentProvider`
+```dart
+final student = ref.watch(studentProvider);
+```
+
+#### Im not using riverpod..
+The project saves the same currently logged in student profile to `shared preferences`, you are guaranteed to get the updated student profile 
+```dart
+// ...
+
+// somewhere in your app do
+
+final sharedPref = await SharedPreferences.getInstance();
+
+final sharedPrefService = SharedPreferencesService(sharedPref);
+
+final Student? student = sharedPrefService.getCachedCurrentStudent();
+
+// do something with student data
+
+// ...
+```
+
 ### Design - redesigns
 Might include improving existing designs, themes, responsiveness, adaptiveness etc
 
@@ -181,8 +239,8 @@ include Setup of env, IDE and typical getting started instructions?
 ### Improving The Documentation
 <!-- TODO
 Updating, improving and correcting the documentation
-
 -->
+*link coming soon*
 
 ## Styleguides
 ### Commit Messages
@@ -192,6 +250,7 @@ Updating, improving and correcting the documentation
 
 ## Join The Project Team
 <!-- TODO -->
+*link coming soon*
 
 <!-- omit in toc -->
 ## Attribution

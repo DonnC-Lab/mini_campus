@@ -6,9 +6,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:mini_campus/src/shared/index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'debug_settings.dart';
 import 'fb_emulator.dart';
@@ -31,16 +30,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   debugLogger('Handling a background message: ${message.messageId}');
 
-  AwesomeNotifications().createNotificationFromJsonData(message.data);
+  await AwesomeNotifications().createNotificationFromJsonData(message.data);
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AwesomeNotifications().initialize(
-    // set the icon to null if you want to use the default app icon
-    // 'resource://drawable/res_app_icon',
-    null,
+    'resource://drawable/res_app_icon',
     [
       NotificationChannel(
         channelGroupKey: 'basic_channel_group',

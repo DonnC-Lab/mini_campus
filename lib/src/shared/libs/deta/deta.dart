@@ -4,16 +4,16 @@ import 'dart:io' show File;
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 
-import '../services/index.dart';
+import 'package:mini_campus/src/shared/index.dart';
+
+import '../index.dart';
+import 'exc_handler.dart';
 
 class DetaRepository {
-  static const _detaBaseUrl = 'https://py4k7k.deta.dev';
-
-  static final _cache = _DetaDriveCache();
+  static final _cache = FileCacheService();
 
   late final Dio _dio;
 
@@ -25,7 +25,7 @@ class DetaRepository {
   ///
   /// All exceptions return a [DetaRepositoryException]
   DetaRepository({this.driveName, this.baseName})
-      : _dio = Dio(BaseOptions(baseUrl: _detaBaseUrl));
+      : _dio = Dio(BaseOptions(baseUrl: detaBaseUrl));
 
   String _getFileExt(String filename) {
     return path.extension(filename).replaceAll('.', '').trim();
@@ -45,7 +45,7 @@ class DetaRepository {
 
     //ee
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
   }
 
@@ -65,7 +65,7 @@ class DetaRepository {
 
     //ee
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
   }
 
@@ -84,7 +84,7 @@ class DetaRepository {
 
     //ee
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
   }
 
@@ -121,7 +121,7 @@ class DetaRepository {
 
     // err
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
   }
 
@@ -156,7 +156,7 @@ class DetaRepository {
 
     //ee
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
   }
 
@@ -191,7 +191,7 @@ class DetaRepository {
 
     //ee
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
   }
 
@@ -208,77 +208,7 @@ class DetaRepository {
 
     //ee
     catch (e) {
-      return _DetaRepositoryExceptionHandler(e);
+      return detaRepositoryExceptionHandler(e);
     }
-  }
-
-  DetaRepositoryException _DetaRepositoryExceptionHandler(Object e) {
-    final Exception err = e as Exception;
-
-    DetaRepositoryException exc =
-        DetaRepositoryException(message: err.toString());
-
-    if (err is DioError) {
-      if (err.type == DioErrorType.response) {
-        try {
-          var errors = err.response?.data['error'] as List;
-          exc.copyWith(message: errors.join(", "));
-        } catch (e) {
-          try {
-            exc.copyWith(message: err.response?.data['detail']);
-          } catch (e) {
-            exc.copyWith(message: err.message);
-          }
-        }
-      }
-
-      // general err
-      else {
-        exc.copyWith(message: err.message);
-      }
-    }
-
-    debugLogger(exc, name: 'deta-exception-handler');
-
-    return exc;
-  }
-}
-
-/// cache manager for deta images | pdf files *prefferably
-class _DetaDriveCache {
-  static final _cacheManager = DefaultCacheManager();
-
-  Future<File> addFileCache(String fname, Uint8List bytes, String ext) async =>
-      await _cacheManager.putFile(
-        fname,
-        bytes,
-        key: fname,
-        eTag: fname,
-        fileExtension: ext,
-      );
-
-  Future<File?> getFileCache(String fname) async {
-    // key == filename
-    final res = await _cacheManager.getFileFromCache(fname);
-
-    return res?.file;
-  }
-}
-
-/// deta exception base class
-class DetaRepositoryException implements Exception {
-  String? message;
-
-  DetaRepositoryException({this.message = 'Deta: Something went wrong!'});
-
-  @override
-  String toString() => 'DetaRepositoryException(message: $message)';
-
-  DetaRepositoryException copyWith({
-    String? message,
-  }) {
-    return DetaRepositoryException(
-      message: message ?? this.message,
-    );
   }
 }
