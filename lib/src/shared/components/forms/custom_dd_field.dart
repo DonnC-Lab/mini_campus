@@ -39,10 +39,9 @@ Widget CustomDDField({
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              title ?? '',
-              style: titleTextStyle(context),
-            ),
+           title == null
+                ? const SizedBox.shrink()
+                : Text(title, style: titleTextStyle(context)),
             customDropDownField(
               formName: formName,
               context: context,

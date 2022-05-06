@@ -6,10 +6,16 @@ MiniCampus  - A virtual campus app, with 💙 for students 👨‍🎓👩‍�
 MiniCampus, **MC** - thrives to be the go to student app for both freshers and existing students on campus. It comes equipped with the tools and services to make life easy for a student.
 - It comprises of `modules` that each act as a standalone application serving a single purpose
 
+## Showcase
+Checkout the development progress under [releases](https://github.com/DonnC-Lab/mini_campus/releases) for demo builds
+
+
+*coming soon*
+
 ## Getting Started
 This project is built using Flutter, for a getting started, checkout [flutter.dev](https://flutter.dev/)
 
-After successful setup of your local flutter environment, fork this repository and run the following commands in the root folder
+After successful setup of your local flutter environment, fork this repository and run the following commands in the root folder (project uses `freezed`)
 
 ```bash
 $ flutter clean
@@ -22,8 +28,10 @@ For local development, it is recommended to use [firebase local emulator](https:
 > Currently MC is tested against Android devices only. It might work on iOS but this has not been tested yet, help us archive this goal 🙏
 
 
+For interactive long conversations around issues, new developments, announcements and progress etc, make use of our [discussions 💡 here](https://github.com/DonnC-Lab/mini_campus/discussions)
+
 ## Modules
-MC is broken down into modules [(more here)](docs/modules/), each, which serve a single purpose, they act as single mini apps within the MC framework.
+MC is broken down into modules [(more here)](docs/modules/README.md), each, which serve a single purpose, they act as single mini apps within the MC framework.
 
 It comes with the following **core** modules
 1. Campus Market

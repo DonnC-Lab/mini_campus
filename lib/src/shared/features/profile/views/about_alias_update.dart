@@ -81,6 +81,16 @@ void UpdateAboutAliasModal(
                           formKey.currentState!.save();
                           final _data = formKey.currentState!.value;
 
+                          // check for changes, minimize fb writes
+                          if (_data['alias'] == student.alias &&
+                              _data['about'] == student.about) {
+                            _dialog.showToast('no changes detected');
+
+                            Navigator.pop(context);
+
+                            return;
+                          }
+
                           modalLoader(context);
 
                           // update student

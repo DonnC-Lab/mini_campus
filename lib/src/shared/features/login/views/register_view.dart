@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mini_campus/src/shared/index.dart';
 import 'package:mini_campus/src/shared/libs/index.dart';
@@ -66,14 +65,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 30),
-                themeMode == ThemeMode.light
-                    ? SvgPicture.asset(
-                        'assets/images/logo.svg',
-                      )
-                    : SvgPicture.asset(
-                        'assets/images/logo_dm.svg',
-                      ),
+                Center(child: LogoBox(themeMode: themeMode)),
                 const SizedBox(height: 30),
                 Text(
                   'Sign up',
@@ -260,9 +252,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(
-                                    color: themeMode == ThemeMode.light
-                                        ? fieldDMFillText
-                                        : mainWhite,
+                                    color: Theme.of(context)
+                                        .appBarTheme
+                                        .backgroundColor,
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold),
                             recognizer: TapGestureRecognizer()

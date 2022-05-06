@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:mini_campus/src/drawer_module_pages.dart';
 import 'package:mini_campus/src/shared/index.dart';
@@ -35,8 +34,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
       sound: true,
     );
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      AwesomeNotifications().createNotificationFromJsonData(message.data);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      debugLogger(message.data, name: 'initializeFirebaseService');
+
+      await AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
   }
 
@@ -46,13 +47,15 @@ class _HomeViewState extends ConsumerState<HomeView> {
     RemoteMessage? message = await _messaging.getInitialMessage();
 
     if (message != null) {
-      AwesomeNotifications().createNotificationFromJsonData(message.data);
+      debugLogger(message.data, name: 'checkForInitialMessage');
+      await AwesomeNotifications().createNotificationFromJsonData(message.data);
     }
   }
 
   Future<void> setupInteractedMessage() async {
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      AwesomeNotifications().createNotificationFromJsonData(message.data);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      debugLogger(message.data, name: 'setupInteractedMessage');
+      await AwesomeNotifications().createNotificationFromJsonData(message.data);
     });
   }
 
@@ -124,9 +127,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           ],
         ),
         drawer: HomeDrawer(
-          logo: themeMode == ThemeMode.light
-              ? SvgPicture.asset('assets/images/logo.svg')
-              : SvgPicture.asset('assets/images/logo_dm.svg'),
+          logo: LogoBox(themeMode: themeMode, size: 60),
           onDrawerItemTap: (index) {
             setState(() {
               _currentModuleIndex = index;
