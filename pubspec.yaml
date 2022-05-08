@@ -79,6 +79,9 @@ dependencies:
   fancy_shimmer_image: ^2.0.2
   flutter_cache_manager: ^3.3.0
   flutter_rating_bar: ^4.0.0
+
+  # browser
+  flutter_web_browser: ^0.17.1
   
 
 dev_dependencies:

@@ -30,6 +30,7 @@ Widget CustomDateField({
   Function? customOnChangeCallback,
   String labelText = '',
   Widget suffixIcon = const SizedBox.shrink(),
+   InputType inputType = InputType.date,
 }) {
   return RelativeBuilder(
     builder: (context, height, width, sy, sx) {
@@ -49,6 +50,7 @@ Widget CustomDateField({
               maxLines: maxLines,
               autoFocus: autoFocus,
               format: format,
+              inputType: inputType,
               obscureText: obscureText,
               readOnly: readOnly,
               validator: validator,
@@ -81,6 +83,7 @@ Widget customDateField({
   bool enforceLength = false,
   String labelText = '',
   bool autoFocus = false,
+  InputType inputType = InputType.date,
   var customOnChangeCallback,
   FormFieldValidator<DateTime?>? validator,
   Widget suffixIcon = const SizedBox.shrink(),
@@ -108,7 +111,7 @@ Widget customDateField({
           );
         },
         style: fieldTextStyle(context),
-        inputType: InputType.date,
+        inputType: inputType,
         maxLines: maxLines,
         obscureText: obscureText,
         // initialValue: DateTime.now(),
