@@ -50,3 +50,13 @@ app.*.map.json
 
 scratch.json
 scratch.dart
+
+# module auto gen files
+/lib/src/modules/*/*/*.freezed.dart
+/lib/src/modules/*/*/*.g.dart
+
+/lib/src/modules/*/*/*/*.freezed.dart
+/lib/src/modules/*/*/*/*.g.dart
+
+/lib/src/modules/*/*/*/*.freezed.dart
+/lib/src/modules/*/*/*/*.g.dart

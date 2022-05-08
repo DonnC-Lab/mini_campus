@@ -14,6 +14,9 @@ class DetaBases {
 
   // feedback
   static const String feedback = 'feedbackDB';
+
+  // surveys
+  static const String survey = 'surveyDB';
 }
 
 // deta drives

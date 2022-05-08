@@ -10,3 +10,4 @@ export 'uni_part.dart';
 export 'faculties.dart';
 export 'months.dart';
 export 'placeholders.dart';
+export 'misc_constants.dart';
