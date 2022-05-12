@@ -39,13 +39,6 @@ final List<DrawerPage> drawerModulePages = [
     ),
     page: const SurveyMainView(),
   ),
-  // DrawerPage(
-  //   drawerItem: const DrawerItem(
-  //     icon: Entypo.hand,
-  //     name: 'Report',
-  //   ),
-  //   page: const Center(child: Text('Report')),
-  // ),
   DrawerPage(
     drawerItem: const DrawerItem(
       icon: MaterialCommunityIcons.cellphone_message,
