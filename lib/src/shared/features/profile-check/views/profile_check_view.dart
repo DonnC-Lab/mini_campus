@@ -2,50 +2,36 @@
 // if true -> check if base details are captured, else render complete profile page
 // if all basic details are not there, render profile complete else, proceed to home page
 
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
-class ProfileCheckView extends ConsumerStatefulWidget {
+class ProfileCheckView extends ConsumerWidget {
   const ProfileCheckView({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProfileCheckViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeNotifierProvider).value;
 
-class _ProfileCheckViewState extends ConsumerState<ProfileCheckView> {
-  late bool isProfileComplete;
-
-  bool isLoading = false;
-
-  Future<bool?> _checkProfile() async {
-    var res = await ref.watch(studentStoreProvider).isStudentProfileComplete();
-
-    return res;
-  }
-
-  Future<void> _handler() async {
-    await ref.read(fbMsgProvider).getToken();
-
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      routeToWithClear(context, const HomeView());
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<bool?>(
-          future: _checkProfile(),
+          future: ref.watch(studentStoreProvider).isStudentProfileComplete(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               bool isProfileComplete = snapshot.data ?? false;
 
               if (isProfileComplete) {
-                _handler();
+                ref.read(fbMsgProvider).getToken().then(
+                  (value) => WidgetsBinding.instance?.addPostFrameCallback((_) {
+                    routeToWithClear(context, const HomeView());
+                  }),
+                  onError: (_) {
+                    WidgetsBinding.instance?.addPostFrameCallback((_) {
+                      routeToWithClear(context, const HomeView());
+                    });
+                  },
+                );
               }
 
               // e
@@ -61,19 +47,26 @@ class _ProfileCheckViewState extends ConsumerState<ProfileCheckView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Center(
-                    child: Pulse(
-                      infinite: true,
-                      child: Text(
-                        'Mini Campus',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            ?.copyWith(color: greyTextShade),
-                      ),
+                  Center(child: LogoBox(themeMode: themeMode)),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        // todo, a bit of humour, put random funny quotes
+                        Text(
+                          'just a sec, i forgot to check something..',
+                          style:
+                              Theme.of(context).textTheme.subtitle1?.copyWith(
+                                    fontSize: 13,
+                                    fontStyle: FontStyle.italic,
+                                    color: greyTextShade,
+                                  ),
+                        ),
+                        const SizedBox(height: 20),
+                        const CircularProgressIndicator(),
+                      ],
                     ),
                   ),
-                  const CircularProgressIndicator(),
                 ],
               ),
             );

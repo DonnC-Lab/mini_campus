@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
+import 'shared/features/splash/views/onboarding_view.dart';
 import 'shared/index.dart';
 
 class MainAppEntry extends StatelessWidget {
@@ -28,7 +29,11 @@ class MainAppEntry extends StatelessWidget {
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              home: const SplashView(),
+              home: ref
+                      .watch(sharedPreferencesServiceProvider)
+                      .isOnboardingComplete()
+                  ? const SplashView()
+                  : const OnboardingView(),
             );
           },
         );

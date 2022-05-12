@@ -148,7 +148,9 @@ class AdDetailsView extends ConsumerWidget {
                                       : FittedBox(
                                           // TODO: use carousel slider if imgs are many
                                           child: FancyShimmerImage(
-                                              imageUrl: ad.images.first),
+                                            imageUrl: ad.images.first,
+                                            height: height * 0.45,
+                                          ),
                                           fit: BoxFit.fill,
                                         ),
                                 ),
