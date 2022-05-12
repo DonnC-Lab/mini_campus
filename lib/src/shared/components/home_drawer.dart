@@ -23,7 +23,7 @@ class HomeDrawer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: <Widget>[
+          children: [
             const SizedBox(height: 10),
             SizedBox(
               child: Row(
@@ -41,7 +41,7 @@ class HomeDrawer extends StatelessWidget {
               child: ListView.builder(
                 itemBuilder: (_, index) => InkWell(
                   onTap: () {
-                  onDrawerItemTap(index);
+                    onDrawerItemTap(index);
                     Navigator.pop(context);
                   },
                   child: drawerModulePages[index].drawerItem,

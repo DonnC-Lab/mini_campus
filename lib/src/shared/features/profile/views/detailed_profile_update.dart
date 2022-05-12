@@ -46,6 +46,8 @@ class _DetailedProfileViewState extends ConsumerState<DetailedProfileView> {
 
     bool _isOwner = widget.extStudent == null;
 
+    final String profPic = student?.profilePicture ?? '';
+
     return SafeArea(
       child: Scaffold(
         appBar: widget.showAppbar ? AppBar(title: const Text('Profile')) : null,
@@ -121,10 +123,15 @@ class _DetailedProfileViewState extends ConsumerState<DetailedProfileView> {
                             ),
                       decoration: BoxDecoration(
                         color: bluishColor,
-                        borderRadius: BorderRadius.circular(60),
+                        borderRadius: BorderRadius.circular(100),
                       ),
                       name: student?.name,
-                      image: NetworkImage(student?.profilePicture ?? ''),
+                      child: profPic.isEmpty
+                          ? null
+                          : CircleAvatar(
+                              radius: 120,
+                              backgroundImage: NetworkImage(profPic),
+                            ),
                     ),
                   ),
                 ),

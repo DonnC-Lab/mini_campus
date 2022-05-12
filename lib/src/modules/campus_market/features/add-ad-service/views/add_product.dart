@@ -84,7 +84,6 @@ class _AddProductState extends ConsumerState<AddProduct> {
                 formName: 'description',
                 title: 'Product Description',
                 maxLength: 250,
-                unfocus: true,
                 hintText: 'short description about your Ad',
                 keyboardType: TextInputType.multiline,
                 maxLines: 10,
@@ -170,6 +169,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
 
                       // reset img provider
                       ref.read(pickedImgProvider.notifier).state = null;
+                      // ref.invalidate(pickedImgProvider);
 
                       formKey.currentState?.reset();
                     }

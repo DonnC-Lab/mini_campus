@@ -134,6 +134,40 @@ Your module might want to get the currently logged in Student profile. If you ar
 final student = ref.watch(studentProvider);
 ```
 
+#### Firebase example rules
+[Read more](https://medium.com/@juliomacr/10-firebase-realtime-database-rule-templates-d4894a118a98)
+```
+// Only authenticated users can access/write data
+{
+ "rules": {
+ ".read": "auth != null",
+ ".write": "auth != null"
+ }
+}
+```
+
+and only match auth student
+
+```
+// Only authenticated users from a particular domain (example.com) can access/write data
+{
+ "rules": {
+ ".read": "auth.token.email.endsWith('@example.com')", // 'students.nust.ac.zw
+ ".write": "auth.token.email.endsWith('@example.com')"
+ }
+}
+
+// storage
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
+
 #### Im not using riverpod..
 The project saves the same currently logged in student profile to `shared preferences`, you are guaranteed to get the updated student profile 
 ```dart

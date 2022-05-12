@@ -2,12 +2,13 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../index.dart';
+import 'package:mini_campus/src/shared/index.dart';
 
 final dialogProvider = Provider((_) => FlashDialog());
 
 class FlashDialog {
+  static const _bgColor = Colors.black87;
+
   void customSnackBar(BuildContext context, String mesg, {Color? bgColor}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(mesg),
@@ -41,15 +42,18 @@ class FlashDialog {
           child: FlashBar(
             title: Text(
               title,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: _bgColor,
+                  ),
             ),
             content: Text(
               mesg,
-              style:
-                  Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 12),
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    fontSize: 12,
+                    color: _bgColor,
+                  ),
             ),
             //showProgressIndicator: true,
             primaryAction: TextButton(
@@ -74,17 +78,21 @@ class FlashDialog {
         constraints: const BoxConstraints(maxWidth: 300),
         persistent: persistent,
         brightness: Theme.of(context).brightness,
-        //backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: mainWhite,
         title: Text(
           title,
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1
-              ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: _bgColor,
+              ),
         ),
         content: Text(
           mesg,
-          style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 13),
+          style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                fontSize: 13,
+                color: _bgColor,
+              ),
         ),
         negativeActionBuilder: (context, controller, _) {
           return TextButton(
@@ -119,14 +127,16 @@ class FlashDialog {
           behavior: flashStyle,
           position: FlashPosition.bottom,
           brightness: Theme.of(context).brightness,
-          backgroundColor: Theme.of(context).backgroundColor,
+          // backgroundColor: Theme.of(context).backgroundColor,
           boxShadows: kElevationToShadow[4],
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(
             content: Text(
               mesg,
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 12),
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 12,
+                    color: _bgColor,
+                  ),
             ),
           ),
         );
