@@ -28,7 +28,7 @@ jobs:
     - run: flutter build apk --release --split-per-abi
     #- run: flutter build appbundle
     - name: Create pre-release
-      uses: ncipollo/release-action@v2
+      uses: ncipollo/release-action@v1
       with:
         artifacts: "build/app/outputs/apk/debug/*.apk"
         token: ${{ secrets.GH_ORG_TOKEN }}
