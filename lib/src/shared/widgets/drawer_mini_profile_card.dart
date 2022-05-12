@@ -13,7 +13,7 @@ class DrawerMiniProfileCard extends ConsumerWidget {
 
     final studentProfile = ref.watch(studentProvider);
 
-    // debugLogger(studentProfile, name: 'DrawerMiniProfileCard');
+    final String profPic = studentProfile?.profilePicture ?? '';
 
     return Container(
       height: 80,
@@ -32,7 +32,12 @@ class DrawerMiniProfileCard extends ConsumerWidget {
             AdvancedAvatar(
               size: 40,
               name: studentProfile!.name,
-              image: NetworkImage(studentProfile.profilePicture ?? ''),
+              child: profPic.isEmpty
+                  ? null
+                  : CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(profPic),
+                    ),
             ),
             const SizedBox(width: 10),
             Column(

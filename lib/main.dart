@@ -37,7 +37,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AwesomeNotifications().initialize(
-    'resource://drawable/res_app_icon',
+    null,
     [
       NotificationChannel(
         channelGroupKey: 'basic_channel_group',

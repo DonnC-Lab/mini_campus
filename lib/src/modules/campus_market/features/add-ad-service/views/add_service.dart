@@ -72,7 +72,6 @@ class _AddServiceState extends ConsumerState<AddService> {
                 formName: 'description',
                 title: 'Service Description',
                 maxLength: 250,
-                unfocus: true,
                 hintText: 'short description about the service you offer',
                 keyboardType: TextInputType.multiline,
                 maxLines: 10,

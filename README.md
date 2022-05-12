@@ -92,5 +92,12 @@ This project is licensed under the Apache License - see the [LICENSE](LICENSE) f
 * FlutterDevZW community
 * a lot more 
 
+## Onboarding attributes
+> Place the attribution on the app's credits page and on the description page on the app store. 
+- learning - <a href="https://storyset.com/people">People illustrations by Storyset</a>
+- students - <a href="https://storyset.com/education">Education illustrations by Storyset</a>
+- market - <a href="https://storyset.com/online">Online illustrations by Storyset</a>
+- survey - <a href="https://storyset.com/marketing">Marketing illustrations by Storyset</a>
+
 ## Community
 *coming soon*

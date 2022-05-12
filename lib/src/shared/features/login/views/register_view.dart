@@ -107,7 +107,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       ? const Icon(Icons.done, color: greenishColor)
                       : const SizedBox.shrink(),
                   validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
+                    FormBuilderValidators.required(context)
                   ]),
                 ),
                 CustomFormField(

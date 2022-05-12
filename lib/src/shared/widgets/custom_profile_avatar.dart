@@ -45,6 +45,8 @@ Widget _innerChild(
   String title, {
   bool fromMarket = false,
 }) {
+  final String profPic = student.profilePicture ?? '';
+
   return GestureDetector(
     onTap: () {
       routeTo(
@@ -74,7 +76,12 @@ Widget _innerChild(
                 color: bluishColor,
                 borderRadius: BorderRadius.circular(20),
               ),
-              image: NetworkImage(student.profilePicture ?? ''),
+              child: profPic.isEmpty
+                  ? null
+                  : CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(profPic),
+                    ),
             ),
             const SizedBox(width: 20),
             Text(

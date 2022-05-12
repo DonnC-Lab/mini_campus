@@ -17,6 +17,8 @@ class MarketProfileView extends ConsumerWidget {
 
     var student = extStudent ?? currentStudent;
 
+    final String profPic = student?.profilePicture ?? '';
+
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -31,7 +33,12 @@ class MarketProfileView extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(60),
                 ),
                 name: student?.name,
-                image: NetworkImage(student?.profilePicture ?? ''),
+                child: profPic.isEmpty
+                    ? null
+                    : CircleAvatar(
+                        radius: 120,
+                        backgroundImage: NetworkImage(profPic),
+                      ),
               ),
             ),
             const SizedBox(height: 15),
