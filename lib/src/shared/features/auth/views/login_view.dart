@@ -265,7 +265,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                                     fontWeight: FontWeight.bold),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                routeToWithClear(context, const RegisterView());
+                                routeTo(context, const RegisterView());
                               })
                       ]),
                 ),

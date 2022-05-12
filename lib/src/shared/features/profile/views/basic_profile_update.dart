@@ -2,7 +2,6 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
@@ -11,7 +10,7 @@ final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
 final _selectedDptProvider = StateProvider<FacultyDpt?>((_) => null);
 
 class BasicProfileUpdateView extends ConsumerWidget {
-   BasicProfileUpdateView({Key? key}) : super(key: key);
+  BasicProfileUpdateView({Key? key}) : super(key: key);
 
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -33,17 +32,14 @@ class BasicProfileUpdateView extends ConsumerWidget {
 
     final themeMode = ref.watch(themeNotifierProvider.notifier).state.value;
 
-   // debugLogger(studentProfile, name: 'basic-profile-update');
+    // debugLogger(studentProfile, name: 'basic-profile-update');
 
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            const SizedBox(height: 30),
-           themeMode == ThemeMode.light
-                    ? Image.asset('assets/images/logo.png')
-                    : Image.asset('assets/images/logo_dm.png'),
-            const SizedBox(height: 30),
+            Center(child: LogoBox(themeMode: themeMode)),
+            const SizedBox(height: 20),
             Center(
               child: Column(
                 children: [

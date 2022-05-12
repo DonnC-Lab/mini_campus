@@ -106,9 +106,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   suffixIcon: isEmailValid
                       ? const Icon(Icons.done, color: greenishColor)
                       : const SizedBox.shrink(),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context)
-                  ]),
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.required(context)]),
                 ),
                 CustomFormField(
                   context: context,
@@ -259,7 +258,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                                     fontWeight: FontWeight.bold),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                routeToWithClear(context, const LogInView());
+                                routeTo(context, const LogInView());
                               })
                       ]),
                 ),
