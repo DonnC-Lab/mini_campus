@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-
-import 'shared/features/splash/views/onboarding_view.dart';
-import 'shared/index.dart';
+import 'package:mini_campus/src/drawer_module_pages.dart';
+import 'package:mini_campus_core/mini_campus_core.dart';
 
 class MainAppEntry extends StatelessWidget {
   const MainAppEntry({Key? key}) : super(key: key);
@@ -32,8 +31,8 @@ class MainAppEntry extends StatelessWidget {
               home: ref
                       .watch(sharedPreferencesServiceProvider)
                       .isOnboardingComplete()
-                  ? const SplashView()
-                  : const OnboardingView(),
+                  ? SplashView(drawerModulePages: drawerModulePages)
+                  : OnboardingView(drawerModulePages: drawerModulePages),
             );
           },
         );

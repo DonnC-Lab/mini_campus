@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-
-import 'modules/campus_market/features/home/views/campus_market.dart';
-import 'modules/feedback/pages/feedback_view.dart';
-import 'modules/learning/views/learning_view.dart';
-import 'modules/lost_and_found/views/lf_view.dart';
-import 'modules/survey/pages/survey_main_view.dart';
-import 'shared/index.dart';
+import 'package:mc_campus_market/mc_campus_market.dart';
+import 'package:mc_feedback/mc_feedback.dart';
+import 'package:mc_learning/mc_learning.dart';
+import 'package:mc_lost_found/mc_lost_found.dart';
+import 'package:mc_survey/mc_survey.dart';
+import 'package:mini_campus_core/mini_campus_core.dart';
 
 /// all app modules connected here
-
-final List<DrawerPage> drawerModulePages = [
+final List<DrawerPage> _modules = [
   DrawerPage(
     drawerItem: const DrawerItem(
       icon: AntDesign.isv,
@@ -39,18 +37,15 @@ final List<DrawerPage> drawerModulePages = [
     ),
     page: const SurveyMainView(),
   ),
-  // DrawerPage(
-  //   drawerItem: const DrawerItem(
-  //     icon: Entypo.hand,
-  //     name: 'Report',
-  //   ),
-  //   page: const Center(child: Text('Report')),
-  // ),
+];
+
+final List<DrawerPage> drawerModulePages = [
+  ..._modules,
   DrawerPage(
     drawerItem: const DrawerItem(
       icon: MaterialCommunityIcons.cellphone_message,
       name: 'Feedback',
     ),
-    page: const FeedbackView(),
+    page: FeedbackView(drawerModulePages: _modules),
   ),
 ];

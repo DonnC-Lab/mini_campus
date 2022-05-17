@@ -79,6 +79,9 @@ There are various ways you can contribute to MC, 2 of the most major contributio
 
 You can suggest your own module to add, you are free to do
 
+
+[How to use packages](https://stackoverflow.com/questions/51238420/how-to-use-local-flutter-package-in-another-flutter-application)
+
 > **MODULE GOLDEN RULE**
 
 > If adding a module, it can have any logic and functionality ranging from architecture, state management and database you are not restricted to the default way that some core modules have </br>

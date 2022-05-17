@@ -1,3 +1,4 @@
+import 'dart:developer' show log;
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,11 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'src/shared/services/log_console.dart';
-
 /// Connnect to the firebase emulator
 Future connectToFirebaseEmulator() async {
-  debugLogger('configuring firebase emulator..', name: 'FirebaseEmulator');
+  log('configuring firebase emulator..', name: 'FirebaseEmulator');
 
   final localHostString = Platform.isAndroid ? '10.0.2.2' : 'localhost';
 
