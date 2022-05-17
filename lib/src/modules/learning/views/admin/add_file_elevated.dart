@@ -14,27 +14,6 @@ import '../../services/course_repo.dart';
 import '../../services/resource_repo.dart';
 import '../../services/storage_service.dart';
 
-final dptsProvider = FutureProviderFamily<List<FacultyDpt>?, Faculty>((ref, f) {
-  final deptFs = ref.read(fDptRepProvider);
-
-  return deptFs.getFacultyDptByFaculty(f);
-});
-
-final coursesProvider =
-    FutureProviderFamily<List<Course>?, Map>((ref, filters) {
-  final cP = ref.read(courseRepProvider);
-
-  return cP.getAllCoursesByDpt(filters['code'], filters['part']);
-});
-
-final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
-
-final _selectedDptProvider = StateProvider<FacultyDpt?>((_) => null);
-
-final _selectedPartProvider = StateProvider<String?>((_) => null);
-
-final _selectedCourseProvider = StateProvider<Course?>((_) => null);
-
 class AddFileElevated extends ConsumerStatefulWidget {
   const AddFileElevated({Key? key}) : super(key: key);
 
@@ -73,19 +52,6 @@ class _AddFileElevatedState extends ConsumerState<AddFileElevated> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Add Resource File'),
-          actions: [
-            IconButton(
-              tooltip: 'refresh form',
-              onPressed: () {
-                formKey.currentState?.reset();
-
-                ref.read(_selectedCourseProvider.notifier).state = null;
-
-                ref.refresh(courseRepProvider);
-              },
-              icon: const Icon(Icons.refresh),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -144,44 +110,66 @@ class _AddFileElevatedState extends ConsumerState<AddFileElevated> {
                       .toList(),
                 ),
                 faculty != null
-                    ? FutureBuilder<List<FacultyDpt>?>(
+                    ? FutureBuilder<List<FacultyDpt>>(
                         future: deptFs.getFacultyDptByFaculty(faculty),
                         builder: (context, snapshot) {
-                          return snapshot.hasData
-                              ? CustomDDField(
-                                  context: context,
-                                  formName: 'dpt',
-                                  title: 'Department',
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(context),
-                                  ]),
-                                  items: snapshot.data!
-                                      .map(
-                                        (e) => DropdownMenuItem(
-                                          child: Text(e.dptName),
-                                          value: e,
-                                          onTap: () {
-                                            ref
-                                                .watch(_selectedDptProvider
-                                                    .notifier)
-                                                .state = e;
-                                          },
-                                        ),
-                                      )
-                                      .toList(),
-                                )
-                              : const CircularProgressIndicator();
+                          if (snapshot.hasData || snapshot.hasError) {
+                            final _dpts = snapshot.data ?? [];
+
+                            return CustomDDField(
+                              context: context,
+                              formName: 'dpt',
+                              trailing: _dpts.isEmpty
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        formKey.currentState
+                                            ?.patchValue({'faculty': null});
+
+                                        ref.invalidate(
+                                            _selectedFacultyProvider);
+                                      },
+                                      child: const Icon(
+                                        Icons.refresh,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                  : null,
+                              title: 'Department',
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(context),
+                              ]),
+                              items: _dpts
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      child: Text(e.dptName),
+                                      value: e,
+                                      onTap: () {
+                                        ref
+                                            .watch(
+                                                _selectedDptProvider.notifier)
+                                            .state = e;
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            );
+                          }
+
+                          //
+                          else {
+                            return const CircularProgressIndicator();
+                          }
                         })
                     : const SizedBox.shrink(),
-                dpt != null
-                    ? FutureBuilder<List<Course>?>(
+                dpt != null && part != null
+                    ? FutureBuilder<List<Course>>(
                         future: coursesApi.getAllCoursesByDpt(
                           dpt.dptCode,
-                          part!,
+                          part,
                         ),
                         builder: ((context, snapshot) {
-                          if (snapshot.hasData) {
-                            final data = snapshot.data;
+                          if (snapshot.hasData || snapshot.hasError) {
+                            final data = snapshot.data ?? [];
 
                             return CustomDDField(
                               context: context,
@@ -190,7 +178,22 @@ class _AddFileElevatedState extends ConsumerState<AddFileElevated> {
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(context),
                               ]),
-                              items: data!
+                              trailing: data.isEmpty
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        formKey.currentState?.patchValue({
+                                          'dpt': null,
+                                        });
+
+                                        ref.invalidate(_selectedDptProvider);
+                                      },
+                                      child: const Icon(
+                                        Icons.refresh,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                  : null,
+                              items: data
                                   .map(
                                     (e) => DropdownMenuItem(
                                       child: Text(e.name),
@@ -293,8 +296,6 @@ class _AddFileElevatedState extends ConsumerState<AddFileElevated> {
 
                         dialog.showToast('file uploaded');
 
-                        dialog.showToast('saving resource..');
-
                         final res = FileResource(
                           dpt: studentProfile.departmentCode,
                           uploadedBy: studentProfile.id!,
@@ -348,3 +349,31 @@ class _AddFileElevatedState extends ConsumerState<AddFileElevated> {
     );
   }
 }
+
+final dptsProvider = FutureProviderFamily<List<FacultyDpt>?, Faculty>((ref, f) {
+  final deptFs = ref.read(fDptRepProvider);
+
+  return deptFs.getFacultyDptByFaculty(f);
+});
+
+final coursesProvider =
+    FutureProviderFamily<List<Course>?, Map>((ref, filters) {
+  final cP = ref.read(courseRepProvider);
+
+  return cP.getAllCoursesByDpt(filters['code'], filters['part']);
+});
+
+final facultyDptFacultiesProvider =
+    FutureProviderFamily<List<FacultyDpt>, Faculty>((ref, faculty) {
+  final deptFs = ref.read(fDptRepProvider);
+
+  return deptFs.getFacultyDptByFaculty(faculty);
+});
+
+final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
+
+final _selectedDptProvider = StateProvider<FacultyDpt?>((_) => null);
+
+final _selectedPartProvider = StateProvider<String?>((_) => null);
+
+final _selectedCourseProvider = StateProvider<Course?>((_) => null);

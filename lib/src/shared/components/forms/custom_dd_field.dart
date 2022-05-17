@@ -23,6 +23,7 @@ Widget CustomDDField({
   bool readOnly = false,
   bool enforceLength = false,
   bool unfocus = true,
+  Widget? trailing,
   Widget hint = const Text(
     '-- select --',
     style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
@@ -39,9 +40,15 @@ Widget CustomDDField({
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-           title == null
-                ? const SizedBox.shrink()
-                : Text(title, style: titleTextStyle(context)),
+            Row(
+              children: [
+                title == null
+                    ? const SizedBox.shrink()
+                    : Text(title, style: titleTextStyle(context)),
+                const Spacer(),
+                trailing ?? const SizedBox.shrink(),
+              ],
+            ),
             customDropDownField(
               formName: formName,
               context: context,
@@ -99,6 +106,11 @@ Widget customDropDownField({
         hint: hint,
         initialValue: initialText,
         autofocus: autoFocus,
+        onChanged: (val) {
+          if (controller != null) {
+            controller.text = val.toString();
+          }
+        },
         style: fieldTextStyle(context),
         validator: validator,
         items: items,
