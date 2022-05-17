@@ -2,7 +2,6 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mini_campus/src/shared/index.dart';
 
@@ -11,7 +10,7 @@ final _selectedFacultyProvider = StateProvider<Faculty?>((_) => null);
 final _selectedDptProvider = StateProvider<FacultyDpt?>((_) => null);
 
 class BasicProfileUpdateView extends ConsumerWidget {
-   BasicProfileUpdateView({Key? key}) : super(key: key);
+  BasicProfileUpdateView({Key? key}) : super(key: key);
 
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -32,8 +31,6 @@ class BasicProfileUpdateView extends ConsumerWidget {
     final dpt = ref.watch(_selectedDptProvider);
 
     final themeMode = ref.watch(themeNotifierProvider.notifier).state.value;
-
-   // debugLogger(studentProfile, name: 'basic-profile-update');
 
     return SafeArea(
       child: Scaffold(
@@ -62,7 +59,7 @@ class BasicProfileUpdateView extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -130,36 +127,56 @@ class BasicProfileUpdateView extends ConsumerWidget {
                               .toList(),
                         ),
                         faculty != null
-                            ? FutureBuilder<List<FacultyDpt>?>(
+                            ? FutureBuilder<List<FacultyDpt>>(
                                 future: deptFs.getFacultyDptByFaculty(faculty),
                                 builder: (context, snapshot) {
-                                  return snapshot.hasData
-                                      ? CustomDDField(
-                                          context: context,
-                                          formName: 'dpt',
-                                          title: 'Department',
-                                          validator:
-                                              FormBuilderValidators.compose([
-                                            FormBuilderValidators.required(
-                                                context),
-                                          ]),
-                                          items: snapshot.data!
-                                              .map(
-                                                (e) => DropdownMenuItem(
-                                                  child: Text(e.dptName),
-                                                  value: e,
-                                                  onTap: () {
-                                                    ref
-                                                        .watch(
-                                                            _selectedDptProvider
-                                                                .notifier)
-                                                        .state = e;
-                                                  },
-                                                ),
-                                              )
-                                              .toList(),
-                                        )
-                                      : const CircularProgressIndicator();
+                                  if (snapshot.hasData || snapshot.hasError) {
+                                    final _dpts = snapshot.data ?? [];
+
+                                    return CustomDDField(
+                                      context: context,
+                                      formName: 'dpt',
+                                      trailing: _dpts.isEmpty
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                formKey.currentState
+                                                    ?.patchValue(
+                                                        {'faculty': null});
+
+                                                ref.invalidate(
+                                                    _selectedFacultyProvider);
+                                              },
+                                              child: const Icon(
+                                                Icons.refresh,
+                                                color: Colors.blue,
+                                              ),
+                                            )
+                                          : null,
+                                      title: 'Department',
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(context),
+                                      ]),
+                                      items: _dpts
+                                          .map(
+                                            (e) => DropdownMenuItem(
+                                              child: Text(e.dptName),
+                                              value: e,
+                                              onTap: () {
+                                                ref
+                                                    .watch(_selectedDptProvider
+                                                        .notifier)
+                                                    .state = e;
+                                              },
+                                            ),
+                                          )
+                                          .toList(),
+                                    );
+                                  }
+
+                                  //
+                                  else {
+                                    return const CircularProgressIndicator();
+                                  }
                                 })
                             : const SizedBox.shrink(),
                         const SizedBox(height: 20),

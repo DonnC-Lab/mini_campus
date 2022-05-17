@@ -9,6 +9,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../data/models/lost_found_filter.dart';
 import '../services/data_service.dart';
 import 'add_lf_item.dart';
+import 'item_details.dart';
 import 'lf_single_item.dart';
 
 class LostFoundView extends ConsumerStatefulWidget {
@@ -179,8 +180,12 @@ class _LostFoundViewState extends ConsumerState<LostFoundView> {
                             )
                           : ListView.separated(
                               padding: const EdgeInsets.all(8),
-                              itemBuilder: (context, index) =>
-                                  LostFoundSingleItem(lfi: items[index]),
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  ItemDetails(context, items[index]);
+                                },
+                                child: LostFoundSingleItem(lfi: items[index]),
+                              ),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 30),
                               itemCount: items.length,

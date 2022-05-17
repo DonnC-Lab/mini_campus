@@ -13,13 +13,6 @@ import '../services/resource_repo.dart';
 import '../services/storage_service.dart';
 import 'admin/add_file_elevated.dart';
 
-final coursesProvider =
-    FutureProviderFamily<List<Course>?, Map>((ref, filters) {
-  final cP = ref.read(courseRepProvider);
-
-  return cP.getAllCoursesByDpt(filters['code'], filters['part']);
-});
-
 class AddLearningFileResource extends ConsumerStatefulWidget {
   const AddLearningFileResource({Key? key}) : super(key: key);
 
@@ -42,8 +35,6 @@ class _AddLearningFileResourceState
 
     final resourceApi = ref.read(resRepProvider);
 
-    // final course = ref.watch(_selectedCourseProvider);
-
     final driveRepo = ref.watch(learningStorageProvider);
 
     final studentProfile = ref.watch(studentProvider);
@@ -57,8 +48,7 @@ class _AddLearningFileResourceState
               tooltip: 'refresh form',
               onPressed: () {
                 formKey.currentState?.reset();
-
-                ref.refresh(courseRepProvider);
+                ref.invalidate(courseRepProvider);
 
                 setState(() {
                   _selectedCourse = null;
@@ -101,14 +91,14 @@ class _AddLearningFileResourceState
                       .toList(),
                 ),
                 studentProfile!.departmentCode.isNotEmpty
-                    ? FutureBuilder<List<Course>?>(
+                    ? FutureBuilder<List<Course>>(
                         future: coursesApi.getAllCoursesByDpt(
                           studentProfile.departmentCode,
                           studentProfile.email.studentNumber.stringYear,
                         ),
                         builder: ((context, snapshot) {
-                          if (snapshot.hasData) {
-                            final data = snapshot.data;
+                          if (snapshot.hasData || snapshot.hasError) {
+                            final data = snapshot.data ?? [];
 
                             return CustomDDField(
                               context: context,
@@ -117,7 +107,19 @@ class _AddLearningFileResourceState
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(context),
                               ]),
-                              items: data!
+                              trailing: data.isEmpty
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        ref.invalidate(courseRepProvider);
+                                        setState(() {});
+                                      },
+                                      child: const Icon(
+                                        Icons.refresh,
+                                        color: Colors.blue,
+                                      ),
+                                    )
+                                  : null,
+                              items: data
                                   .map(
                                     (e) => DropdownMenuItem(
                                       child: Text(e.name),

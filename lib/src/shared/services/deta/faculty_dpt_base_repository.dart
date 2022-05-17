@@ -4,6 +4,8 @@ import 'package:mini_campus/src/shared/libs/index.dart';
 
 final fDptRepProvider = Provider((_) => FacultyDptBaseRepository());
 
+
+
 /// deta base repository
 class FacultyDptBaseRepository {
   static final DetaRepository _detaRepository =
