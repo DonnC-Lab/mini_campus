@@ -28,7 +28,7 @@ jobs:
     - name: Run build command
     - run: flutter pub run build_runner build --delete-conflicting-outputs
     - name: Build split APKs
-    - run: flutter build apk --release --split-per-abi
+    - run: flutter build apk --release --flavor dev -t lib/main_dev.dart --split-per-abi
     #- run: flutter build appbundle
     - name: Create pre-release
       uses: ncipollo/release-action@v1
