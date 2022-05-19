@@ -5,23 +5,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'debug_settings.dart';
 import 'fb_emulator.dart';
-import 'firebase_options.dart';
+import 'firebase/dev/firebase_options.dart';
 import 'src/app.dart';
+import 'src/http_override.dart';
 
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          ((X509Certificate cert, String host, int port) => true);
-  }
-}
+// todo: toggle per your option
+const bool USE_EMULATOR = true;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -33,6 +28,19 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // TODO: Setup flavor config here
+  FlavorConfig(
+    name: "DEV",
+    color: Colors.red,
+    location: BannerLocation.topStart,
+    variables: {
+      "appTitle": "MiniCampus Dev",
+      "detaBaseUrl": "<url>",
+      "validateStudentEmail": true,
+      "byPassEmailVerification": true,
+    },
+  );
 
   AwesomeNotifications().initialize(
     null,
@@ -65,7 +73,7 @@ void main() async {
     }
   });
 
-  HttpOverrides.global = MyHttpOverrides();
+  HttpOverrides.global = CustomHttpOverride();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 

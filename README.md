@@ -21,9 +21,31 @@ After successful setup of your local flutter environment, fork this repository a
 $ flutter clean
 $ flutter pub get
 $ flutter pub run build_runner build --delete-conflicting-outputs
+
+# generate flavors
+$ flutter pub run flutter_flavor:main
+
+# run dev mode with flavor
+$ flutter run --flavor dev -t lib/main-dev.dart
 ```
 
-For local development, it is recommended to use [firebase local emulator](https://fireship.io/snippets/firestore-emulator-flutter/)
+For local development, it is recommended to use `dev` [flavor](https://docs.flutter.dev/deployment/flavors) mode and [firebase local emulator](https://fireship.io/snippets/firestore-emulator-flutter/)
+
+### Firebase Setup
+To setup firebase services with flavors using FlutterFire CLI [more](https://sebastien-arbogast.com/2022/05/02/multi-environment-flutter-projects-with-flavors/#Integrating_Firebase)
+```bash
+# for dev flavor
+$ flutterfire configure -i com.donnclab.mini_campus.dev \
+-a com.donnclab.mini_campus.dev \
+-o lib/firebase/dev/firebase_options.dart \
+--no-apply-gradle-plugins \
+--no-app-id-json
+```
+
+Please note the app id is per the one setup in `pubspec` following `flutter_flavor` convention
+
+### Running with Flavor
+Flavors have been configured for `vscode` but for `Android Studio` check [here](https://www.chwe.at/2020/10/flutter-flavors/#add-a-flutter-build-configuration-for-each-flavor-in-android-studio)
 
 > Currently MC is tested against Android devices only. It might work on iOS but this has not been tested yet, help us archive this goal 🙏
 
@@ -31,9 +53,9 @@ For local development, it is recommended to use [firebase local emulator](https:
 For interactive long conversations around issues, new developments, announcements and progress etc, make use of our [discussions 💡 here](https://github.com/DonnC-Lab/mini_campus/discussions)
 
 ## Modules
-MC is broken down into modules [(more here)](docs/modules/README.md), each, which serve a single purpose, they act as single mini apps within the MC framework.
+MC is broken down into modules (packages), each, which serve a single purpose, they act as single mini apps within the MC framework.
 
-It comes with the following **core** modules
+It comes with the following **core** modules and counting 😎
 1. Campus Market
 2. Learning
 3. Lost & Found

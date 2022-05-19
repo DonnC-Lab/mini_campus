@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -14,27 +15,31 @@ class MainAppEntry extends StatelessWidget {
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final _notifier = ref.watch(themeNotifierProvider);
 
-        return ValueListenableBuilder(
-          valueListenable: _notifier,
-          builder: (ctx, ThemeMode mode, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'MiniCampus',
-              theme: AppTheme.light(),
-              darkTheme: AppTheme.dark(),
-              themeMode: mode,
-              localizationsDelegates: const [
-                FormBuilderLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              home: ref
-                      .watch(sharedPreferencesServiceProvider)
-                      .isOnboardingComplete()
-                  ? SplashView(drawerModulePages: drawerModulePages)
-                  : OnboardingView(drawerModulePages: drawerModulePages),
-            );
-          },
+        return FlavorBanner(
+          color: Colors.white,
+          location: BannerLocation.topEnd,
+          child: ValueListenableBuilder(
+            valueListenable: _notifier,
+            builder: (ctx, ThemeMode mode, child) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: FlavorConfig.instance.variables["appTitle"],
+                theme: AppTheme.light(),
+                darkTheme: AppTheme.dark(),
+                themeMode: mode,
+                localizationsDelegates: const [
+                  FormBuilderLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                home: ref
+                        .watch(sharedPreferencesServiceProvider)
+                        .isOnboardingComplete()
+                    ? SplashView(drawerModulePages: drawerModulePages)
+                    : OnboardingView(drawerModulePages: drawerModulePages),
+              );
+            },
+          ),
         );
       },
     );

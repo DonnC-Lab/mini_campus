@@ -6,6 +6,8 @@ First of all, thank you 🤩 for picking interest in MiniCampus and taking time 
 All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
 
 > And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+> - Share with friends
+> - Leave a review on app store
 > - Star the project
 > - Tweet about it
 > - Refer this project in your project's readme
@@ -35,7 +37,7 @@ Follow this [comprehensive guide](https://github.com/firstcontributions/first-co
 This project and everyone participating in it is governed by the
 [Code of Conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior
-to .
+to [email](mailto:donnclab@gmail.com).
 
 
 ## I Have a Question
@@ -75,12 +77,12 @@ Depending on how large the project is, you may want to outsource the questioning
 ### How can i help
 There are various ways you can contribute to MC, 2 of the most major contributions are
 1. Code fixes and design on existing modules
-2. Suggesting new Modules
+2. Refactoring, optimization and bug fixes on core modules 
+3. Suggesting new Modules
 
-You can suggest your own module to add, you are free to do
+and much more, suggest new ways, bug fixes, typos etc
 
-
-[How to use packages](https://stackoverflow.com/questions/51238420/how-to-use-local-flutter-package-in-another-flutter-application)
+You can suggest your own module to add, you are free to do so
 
 > **MODULE GOLDEN RULE**
 
@@ -90,33 +92,37 @@ This is because each module acts like a standalone mini app, however it will be 
 > If your module has issues for some reasons or faced an exception, it should not affect the operation of other modules
 
 
-### I have a new module suggestion
+### New module suggestion
 Have a new module suggestion? Thats great, thats exactly what we are looking for, be aware that the default state management for the core modules is `riverpod` but you are not limited to this when working on your module. 
 
 Each new module idea must be discussed and pass at least 30% upvote from all active contributors
 
 Once a module idea is approved, the owner has the rights to the module and will be the key maintainer of the module and can give guidelines to other contributors on how to go about that module
 
-#### Imports
-For in-module (importing module files within your module) imports please consider using `relative import` e.g
-```dart
-// do
-import '../constants/my_enums.dart';
+The easier way to add your module is creating / converting it to a [flutter package](https://docs.flutter.dev/development/packages-and-plugins/developing-packages#step-1-create-the-package)  
 
-// instead of 
-import 'package:mini_campus/src/modules/my_module/constants/my_enums.dart';
+### Connecting your module [Import]
+For a detailed solution, check this [How to use packages](https://stackoverflow.com/questions/51238420/how-to-use-local-flutter-package-in-another-flutter-application)
+
+It is reccommended to specify `ref` in order to allow for testing and development based on your module branch
+```yaml
+  # ...
+  relative_scale: ^2.0.0
+  intl:
+
+  # add your module
+  module_name:
+    git: 
+      url: https://github.com/<username>/<module>.git
+      ref: <branch> # specify module branch e.g main or dev etc
 ```
-This will be easy if you are creating your module seperately and want to copy paste your app folder as a module inside MC
-
-### Connecting your module
-Your module should be added in [modules](/lib/src/modules/) folder as an app folder, you can follow the simplistic [Feedback](/lib/src/modules/feedback/) module structure
-
 
 All modules are connected within [drawer_module_pages](/lib/src/drawer_module_pages.dart)
 ```dart
-import 'modules/my_module/views/my_module_entry_view.dart';
+// import your module package
+import 'package:<module_name>/<module_name>.dart';
 
-// add your drawer item and link your created module
+// add your drawer item and link your imported module
 [
     // ...
     DrawerPage(
@@ -171,7 +177,7 @@ service firebase.storage {
 ```
 
 
-#### Im not using riverpod..
+### Not using riverpod 🎃
 The project saves the same currently logged in student profile to `shared preferences`, you are guaranteed to get the updated student profile 
 ```dart
 // ...
@@ -187,6 +193,16 @@ final Student? student = sharedPrefService.getCachedCurrentStudent();
 // do something with student data
 
 // ...
+```
+
+### Generate APKs
+To build release apps with [flavors](https://stackoverflow.com/questions/63134797/flutter-android-flavors-generate-apk)
+```bash
+# release apk
+$ flutter build apk --release --flavor dev -t lib/main_dev.dart
+
+# release appbundle
+$ flutter build appbundle --flavor dev -t lib/main_dev.dart
 ```
 
 ### Design - redesigns

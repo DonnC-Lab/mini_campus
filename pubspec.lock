@@ -496,6 +496,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
+  flutter_flavor:
+    dependency: "direct main"
+    description:
+      name: flutter_flavor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
   flutter_form_builder:
     dependency: transitive
     description:
@@ -549,7 +556,7 @@ packages:
       name: flutter_rating_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   flutter_riverpod:
     dependency: "direct main"
     description:
@@ -664,7 +671,7 @@ packages:
       name: google_sign_in_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.7"
+    version: "5.3.0"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
@@ -858,8 +865,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "755fbca74bf14f27d00a02c7b44bdaaeadf9e433"
+      ref: main
+      resolved-ref: "414f611a7d63ab39bb563a04a8a91a5ce18760a1"
       url: "https://github.com/DonnC-Lab/mc_campus_market.git"
     source: git
     version: "0.0.1"
@@ -867,8 +874,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "47f23469352542d0355fbde7c19285388e94770e"
+      ref: main
+      resolved-ref: "3bbf1dac1a270a730bf99e9e66be493c61fadeaf"
       url: "https://github.com/DonnC-Lab/mc_core_constants.git"
     source: git
     version: "0.0.1"
@@ -876,8 +883,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "20cc25445e8ffeca4518bf330c317eefd7077a84"
+      ref: main
+      resolved-ref: "22f5863caad02a0114b681ba88a8f32e4fa0264c"
       url: "https://github.com/DonnC-Lab/mc_feedback.git"
     source: git
     version: "0.0.1"
@@ -885,8 +892,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "6390b8a85ecc56e8fcc68794586f9435e7600803"
+      ref: main
+      resolved-ref: "5bae76ca2f381e560d669154bd302a9a018090a8"
       url: "https://github.com/DonnC-Lab/mc_learning.git"
     source: git
     version: "0.0.1"
@@ -894,8 +901,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "490abc5dd343e47cc1c843a6b2405bb7f16e5a75"
+      ref: main
+      resolved-ref: "2eb80c7986532df276d2c3b17a4b83b49711b2a3"
       url: "https://github.com/DonnC-Lab/mc_lost_found.git"
     source: git
     version: "0.0.1"
@@ -903,8 +910,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "33c5f5bb18e7ea99c4c9eb2c71286a6aa10a1a9a"
+      ref: main
+      resolved-ref: "3c885867c0b84f618ffd939f836f1f40a391a4a8"
       url: "https://github.com/DonnC-Lab/mc_survey.git"
     source: git
     version: "0.0.1"
@@ -926,8 +933,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "0e8ed2cd0ba8cd5800c033d39c0bfd9f8350c937"
+      ref: main
+      resolved-ref: "1af66c87c5c4c779c80babd19f48bb365d260db0"
       url: "https://github.com/DonnC-Lab/mini_campus_core.git"
     source: git
     version: "0.0.1"
@@ -935,8 +942,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: b769f350edf701416487d85c829bcbc1c636ac8a
+      ref: main
+      resolved-ref: e71216da9375fc0e59c31a8bc1d978c73aa43970
       url: "https://github.com/DonnC-Lab/mini_campus_core_components.git"
     source: git
     version: "0.0.1"
@@ -944,8 +951,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: dba0c62dbb6cb8aabae3cbf112dedf2a1bcade92
+      ref: main
+      resolved-ref: aacaabdcc519ef50c9d825e08eccc927495e305b
       url: "https://github.com/DonnC-Lab/mini_campus_core_libs.git"
     source: git
     version: "0.0.1"

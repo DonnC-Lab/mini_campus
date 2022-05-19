@@ -17,17 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     // ignore: missing_enum_constant_in_switch
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -40,23 +40,22 @@ class DefaultFirebaseOptions {
     );
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCSvwkP7C5SYxUWqzfADngJJht2fY1B6ro',
-    appId: '1:17596106485:web:fec7e18ecbfe5f1355a7bc',
-    messagingSenderId: '17596106485',
-    projectId: 'mini-campus-app',
-    authDomain: 'mini-campus-app.firebaseapp.com',
-    databaseURL: 'https://mini-campus-app-default-rtdb.firebaseio.com',
-    storageBucket: 'mini-campus-app.appspot.com',
-    measurementId: 'G-7G9X7THZYY',
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDdTO1Iio_5R54esvUV0nKTJE03nyZZTmU',
+    appId: '1:458171839784:android:1d26ac61f0fbbb2105cc1d',
+    messagingSenderId: '458171839784',
+    projectId: 'mini-campus-ris',
+    storageBucket: 'mini-campus-ris.appspot.com',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDQlWPrGj3Gag182x3YG9fTGdhcyML3On0',
-    appId: '1:17596106485:android:564c3739e3d8ceb255a7bc',
-    messagingSenderId: '17596106485',
-    projectId: 'mini-campus-app',
-    databaseURL: 'https://mini-campus-app-default-rtdb.firebaseio.com',
-    storageBucket: 'mini-campus-app.appspot.com',
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDOtYPNxmseuh5K7-3gmVmBkeAZrZXs0lc',
+    appId: '1:458171839784:ios:370695f018f6556505cc1d',
+    messagingSenderId: '458171839784',
+    projectId: 'mini-campus-ris',
+    storageBucket: 'mini-campus-ris.appspot.com',
+    iosClientId:
+        '458171839784-4b6he7t1p0ajek77c9vtqtdp8bt17blm.apps.googleusercontent.com',
+    iosBundleId: 'com.donnclab.ris',
   );
 }
