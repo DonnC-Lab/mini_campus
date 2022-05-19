@@ -86,7 +86,8 @@ android {
        }
    }
 
-   lintOptions {                                                           
+   lintOptions {   
+     disable 'InvalidPackage'
      checkReleaseBuilds false                                              
    }
 }
