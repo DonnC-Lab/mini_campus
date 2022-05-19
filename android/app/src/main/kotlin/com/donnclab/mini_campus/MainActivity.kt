@@ -1,4 +1,4 @@
-package com.donnclab.ris.mini_campus
+package com.donnclab.mini_campus
 
 import io.flutter.embedding.android.FlutterActivity
 
