@@ -1,6 +1,0 @@
-
-# auto gen files
-*.g.dart
-*.freezed.dart
-/**/*.g.dart
-/**/*.freezed.dart

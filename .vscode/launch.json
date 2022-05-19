@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MC-DEV-Flavor",
+      "program": "lib/main_dev.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "MC-PROD-Flavor",
+      "program": "lib/main_prod.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
+    }
+  ]
+}
