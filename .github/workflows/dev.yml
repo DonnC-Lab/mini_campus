@@ -27,11 +27,11 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
       - name: Build split APKs
-        run: flutter build apk --flavor dev -t lib/main_dev.dart --split-per-abi
+        run: flutter build apk --flavor dev -t lib/main_dev.dart --release --split-per-abi
       - name: Create pre-release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
+          artifacts: "build/app/outputs/apk/dev/release/*.apk"
           token: ${{ secrets.GH_ORG_TOKEN }}
           prerelease: true
           tag: v1.0.${{ github.run_number }}
