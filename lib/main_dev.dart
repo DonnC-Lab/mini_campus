@@ -16,7 +16,7 @@ import 'src/app.dart';
 import 'src/http_override.dart';
 
 // todo: toggle per your option
-const bool USE_EMULATOR = true;
+const bool USE_EMULATOR = false;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -32,8 +32,7 @@ void main() async {
   // TODO: Setup flavor config here
   FlavorConfig(
     name: "DEV",
-    color: Colors.red,
-    location: BannerLocation.topStart,
+    location: BannerLocation.bottomEnd,
     variables: {
       "appTitle": "MiniCampus Dev",
       "detaBaseUrl": "<url>",

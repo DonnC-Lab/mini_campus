@@ -16,8 +16,7 @@ class MainAppEntry extends StatelessWidget {
         final _notifier = ref.watch(themeNotifierProvider);
 
         return FlavorBanner(
-          color: Colors.white,
-          location: BannerLocation.topEnd,
+          location: BannerLocation.bottomEnd,
           child: ValueListenableBuilder(
             valueListenable: _notifier,
             builder: (ctx, ThemeMode mode, child) {

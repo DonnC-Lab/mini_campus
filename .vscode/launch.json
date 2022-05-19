@@ -5,13 +5,21 @@
       "name": "MC-DEV-Flavor",
       "program": "lib/main_dev.dart",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
     },
     {
       "name": "MC-PROD-Flavor",
       "program": "lib/main_prod.dart",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
     }
   ]
 }

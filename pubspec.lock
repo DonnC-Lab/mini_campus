@@ -866,7 +866,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "414f611a7d63ab39bb563a04a8a91a5ce18760a1"
+      resolved-ref: d8b032f8b1583069e2635bffd6d60a6694e4fedb
       url: "https://github.com/DonnC-Lab/mc_campus_market.git"
     source: git
     version: "0.0.1"
@@ -893,7 +893,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "5bae76ca2f381e560d669154bd302a9a018090a8"
+      resolved-ref: feaa2b935ce2964956e360f6ca7922193e644034
       url: "https://github.com/DonnC-Lab/mc_learning.git"
     source: git
     version: "0.0.1"
@@ -902,7 +902,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "2eb80c7986532df276d2c3b17a4b83b49711b2a3"
+      resolved-ref: "4121e2368691157f18fa5bca798a53d004b1bf6b"
       url: "https://github.com/DonnC-Lab/mc_lost_found.git"
     source: git
     version: "0.0.1"
@@ -911,7 +911,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "3c885867c0b84f618ffd939f836f1f40a391a4a8"
+      resolved-ref: c07c6d77c889287842cddb0779bbbe5edeed5908
       url: "https://github.com/DonnC-Lab/mc_survey.git"
     source: git
     version: "0.0.1"
@@ -934,7 +934,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "1af66c87c5c4c779c80babd19f48bb365d260db0"
+      resolved-ref: "1553602879b805e2c02a40101f3b56a8a42b5c00"
       url: "https://github.com/DonnC-Lab/mini_campus_core.git"
     source: git
     version: "0.0.1"
