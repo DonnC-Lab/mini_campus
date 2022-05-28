@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mc_core_constants/mc_core_constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:mini_campus_core/mini_campus_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase/prod/firebase_options.dart';
 import 'src/app.dart';
@@ -31,7 +29,7 @@ void main() async {
   FlavorConfig(
     variables: {
       "appTitle": "MiniCampus",
-      "detaBaseUrl": detaBaseUrl,
+      "detaBaseUrl": McAppUrls.serverDetaBaseUrl,
     },
   );
 

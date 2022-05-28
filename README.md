@@ -4,7 +4,7 @@ MiniCampus  - A virtual campus app, with 💙 for students 👨‍🎓👩‍�
 
 ## About
 MiniCampus, **MC** - thrives to be the go to student app for both freshers and existing students on campus. It comes equipped with the tools and services to make life easy for a student.
-- It comprises of `modules` that each act as a standalone application serving a single purpose
+- It comprises of [modules](docs/modules/README.md) that each act as a standalone application serving a single purpose
 
 ## Showcase
 Checkout the development progress under [releases](https://github.com/DonnC-Lab/mini_campus/releases) for demo builds
@@ -35,8 +35,8 @@ For local development, it is recommended to use `dev` [flavor](https://docs.flut
 To setup firebase services with flavors using FlutterFire CLI [more](https://sebastien-arbogast.com/2022/05/02/multi-environment-flutter-projects-with-flavors/#Integrating_Firebase)
 ```bash
 # for dev flavor
-$ flutterfire configure -i com.donnclab.mini_campus.dev \
--a com.donnclab.mini_campus.dev \
+$ flutterfire configure -i com.dcl.mc.dev \
+-a com.dcl.mc.dev \
 -o lib/firebase/dev/firebase_options.dart \
 --no-apply-gradle-plugins \
 --no-app-id-json
