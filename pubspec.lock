@@ -647,37 +647,47 @@ packages:
   mc_campus_market:
     dependency: "direct main"
     description:
-      path: "../mc_modules/mc_campus_market"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "6a64383fed262a2d1f2ec7bf31ce521de96b916a"
+      url: "https://github.com/DonnC-Lab/mc_campus_market.git"
+    source: git
     version: "0.0.1"
   mc_feedback:
     dependency: "direct main"
     description:
-      path: "../mc_modules/mc_feedback"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: af2109ec06a72f5c835e4fb36a433b3ed8cce636
+      url: "https://github.com/DonnC-Lab/mc_feedback.git"
+    source: git
     version: "0.0.1"
   mc_learning:
     dependency: "direct main"
     description:
-      path: "../mc_modules/mc_learning"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "74b6d9e72f16b18c8329f1bcbb31091cde79c59e"
+      url: "https://github.com/DonnC-Lab/mc_learning.git"
+    source: git
     version: "0.0.1"
   mc_lost_found:
     dependency: "direct main"
     description:
-      path: "../mc_modules/mc_lost_found"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: ec3956816e0073b0b46d0b68576d7cb6a6dd071c
+      url: "https://github.com/DonnC-Lab/mc_lost_found.git"
+    source: git
     version: "0.0.1"
   mc_survey:
     dependency: "direct main"
     description:
-      path: "../mc_modules/mc_survey"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: dcdb4e6fd9514d3cec76780bcee3357a73f59ca3
+      url: "https://github.com/DonnC-Lab/mc_survey.git"
+    source: git
     version: "0.0.1"
   meta:
     dependency: transitive
@@ -689,10 +699,12 @@ packages:
   mini_campus_core:
     dependency: "direct main"
     description:
-      path: "../mini_campus_core"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: main
+      resolved-ref: c88ec83cdededea5051d293ed5e67c77b3fb443c
+      url: "https://github.com/DonnC-Lab/mini_campus_core.git"
+    source: git
+    version: "1.0.0"
   modal_bottom_sheet:
     dependency: transitive
     description:
