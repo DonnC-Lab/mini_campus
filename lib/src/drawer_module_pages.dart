@@ -46,6 +46,12 @@ final List<DrawerPage> drawerModulePages = [
       icon: MaterialCommunityIcons.cellphone_message,
       name: 'Feedback',
     ),
-    page: FeedbackView(drawerModulePages: _modules),
+    page: FeedbackView(
+      drawerModulePages: [
+        ..._modules.map((e) => e.drawerItem.name).toList(),
+        'Feedback',
+        'General',
+      ],
+    ),
   ),
 ];

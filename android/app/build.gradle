@@ -39,7 +39,7 @@ android {
         dev {
             dimension "flutter-flavor"
             applicationId "com.donnclab.ris.mini_campus"
-            resValue "string", "app_name", "MiniCampus Dev"
+            resValue "string", "app_name", "[Dev] MiniCampus"
         }
         prod {
             dimension "flutter-flavor"
@@ -84,6 +84,11 @@ android {
        release {
            signingConfig signingConfigs.release
        }
+   }
+
+   lintOptions {   
+     disable 'InvalidPackage'
+     checkReleaseBuilds false                                              
    }
 }
 

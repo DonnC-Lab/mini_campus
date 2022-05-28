@@ -34,8 +34,14 @@ class MainAppEntry extends StatelessWidget {
                 home: ref
                         .watch(sharedPreferencesServiceProvider)
                         .isOnboardingComplete()
-                    ? SplashView(drawerModulePages: drawerModulePages)
-                    : OnboardingView(drawerModulePages: drawerModulePages),
+                    ? SplashView(
+                        drawerModulePages: drawerModulePages,
+                        flavorConfigs: FlavorConfig.instance.variables,
+                      )
+                    : OnboardingView(
+                        drawerModulePages: drawerModulePages,
+                        flavorConfigs: FlavorConfig.instance.variables,
+                      ),
               );
             },
           ),

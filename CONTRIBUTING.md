@@ -101,10 +101,39 @@ Once a module idea is approved, the owner has the rights to the module and will 
 
 The easier way to add your module is creating / converting it to a [flutter package](https://docs.flutter.dev/development/packages-and-plugins/developing-packages#step-1-create-the-package)  
 
-### Connecting your module [Import]
+### MiniCampus Core
+Clone the [mini campus core repository](https://github.com/DonnC-Lab/mini_campus_core.git) and add it to your pubspec, it contains the base MiniCampus functionalities
+```yaml
+flutter_flavor: ^3.0.3
+
+# ...
+
+# required
+mini_campus_core:
+  path: ../mini_campus_core                                      # dev setup folder path
+  # git: 
+  #   url: https://github.com/DonnC-Lab/mini_campus_core.git     # prod setup git
+  #   ref: main
+```
+
+### Connecting your module *Import
 For a detailed solution, check this [How to use packages](https://stackoverflow.com/questions/51238420/how-to-use-local-flutter-package-in-another-flutter-application)
 
 It is reccommended to specify `ref` in order to allow for testing and development based on your module branch
+
+**Development Setup**
+```yaml
+  # ...
+  relative_scale: ^2.0.0
+  intl:
+
+  # add your module
+  module_name:
+    path: /path/to/module/folder/module_name
+    #path: ../mc_modules/mc_feedback
+```
+
+**Production Setup**
 ```yaml
   # ...
   relative_scale: ^2.0.0
@@ -143,6 +172,25 @@ Your module might want to get the currently logged in Student profile. If you ar
 final student = ref.watch(studentProvider);
 ```
 
+
+### Not using riverpod 🎃
+The project saves the same currently logged in student profile to `shared preferences`, you are guaranteed to get the updated student profile 
+```dart
+// ...
+
+// somewhere in your app do
+
+final sharedPref = await SharedPreferences.getInstance();
+
+final sharedPrefService = SharedPreferencesService(sharedPref);
+
+final Student? student = sharedPrefService.getCachedCurrentStudent();
+
+// do something with student data
+
+// ...
+```
+
 #### Firebase example rules
 [Read more](https://medium.com/@juliomacr/10-firebase-realtime-database-rule-templates-d4894a118a98)
 ```
@@ -176,32 +224,15 @@ service firebase.storage {
 }
 ```
 
-
-### Not using riverpod 🎃
-The project saves the same currently logged in student profile to `shared preferences`, you are guaranteed to get the updated student profile 
-```dart
-// ...
-
-// somewhere in your app do
-
-final sharedPref = await SharedPreferences.getInstance();
-
-final sharedPrefService = SharedPreferencesService(sharedPref);
-
-final Student? student = sharedPrefService.getCachedCurrentStudent();
-
-// do something with student data
-
-// ...
-```
-
 ### Generate APKs
 To build release apps with [flavors](https://stackoverflow.com/questions/63134797/flutter-android-flavors-generate-apk)
 ```bash
-# release apk
+$ flutter clean
+
+# apk
 $ flutter build apk --release --flavor dev -t lib/main_dev.dart
 
-# release appbundle
+# appbundle
 $ flutter build appbundle --flavor dev -t lib/main_dev.dart
 ```
 

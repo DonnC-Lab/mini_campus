@@ -16,6 +16,7 @@ import 'src/app.dart';
 import 'src/http_override.dart';
 
 // todo: toggle per your option
+// ignore: constant_identifier_names
 const bool USE_EMULATOR = false;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -34,8 +35,9 @@ void main() async {
     name: "DEV",
     location: BannerLocation.bottomEnd,
     variables: {
-      "appTitle": "MiniCampus Dev",
-      "detaBaseUrl": "<url>",
+      "appTitle": "[Dev] MiniCampus",
+      //"detaBaseUrl": '<test-url>',
+      "detaBaseUrl": McAppUrls.serverDetaBaseUrl,
       "validateStudentEmail": true,
       "byPassEmailVerification": true,
     },
