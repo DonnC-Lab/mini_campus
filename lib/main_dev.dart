@@ -36,8 +36,7 @@ void main() async {
     location: BannerLocation.bottomEnd,
     variables: {
       "appTitle": "[Dev] MiniCampus",
-      //"detaBaseUrl": '<test-url>',
-      "detaBaseUrl": McAppUrls.serverDetaBaseUrl,
+      "detaBaseUrl": '<test-url>',
       "validateStudentEmail": true,
       "byPassEmailVerification": true,
     },
