@@ -1,88 +1,49 @@
 name: mini_campus
 description: MiniCampus - A virtual campus app for students
-publish_to: 'none' 
+publish_to: "none"
 version: 1.0.3+3
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
+  # notification
+  awesome_notifications: ^0.6.21
 
   # firebase | google
   cloud_firestore: ^3.1.10
-  firebase_auth: ^3.3.9
-  firebase_core: ^1.13.1
-  firebase_storage: ^10.2.9
-  firebase_messaging: ^11.2.8
-  firebase_database: ^9.0.8
 
   # icons
   cupertino_icons: ^1.0.2
+  firebase_auth: ^3.3.9
+  firebase_core: ^1.13.1
+  firebase_database: ^9.0.8
+  firebase_messaging: ^11.2.8
+  firebase_storage: ^10.2.9
+  flutter:
+    sdk: flutter
+
+  flutter_flavor: ^3.0.3
+
+  # state management
+  flutter_riverpod: ^2.0.0-dev.9
   flutter_vector_icons: ^1.0.0
 
   # components
   form_builder_validators: ^7.7.0
 
-  # state management
-  flutter_riverpod: ^2.0.0-dev.4
-
-  # notification
-  awesome_notifications: ^0.6.21
-
   # utilities
   shared_preferences: ^2.0.13
 
-  flutter_flavor: ^3.0.3
-
-  # custom
-  mini_campus_core:
-    # path: ../mini_campus_core
-    git: 
-      url: https://github.com/DonnC-Lab/mini_campus_core.git
-      ref: main
-
-  # mini campus modules
-  mc_campus_market:
-    # path: ../mc_modules/mc_campus_market
-    git: 
-      url: https://github.com/DonnC-Lab/mc_campus_market.git
-      ref: main
-
-  mc_feedback:
-    # path: ../mc_modules/mc_feedback
-    git: 
-      url: https://github.com/DonnC-Lab/mc_feedback.git 
-      ref: main
-
-  mc_learning:
-    # path: ../mc_modules/mc_learning
-    git: 
-      url: https://github.com/DonnC-Lab/mc_learning.git
-      ref: main
-
-  mc_lost_found:
-    # path: ../mc_modules/mc_lost_found
-    git: 
-      url: https://github.com/DonnC-Lab/mc_lost_found.git
-      ref: main
-
-  mc_survey:
-    # path: ../mc_modules/mc_survey
-    git: 
-      url: https://github.com/DonnC-Lab/mc_survey.git
-      ref: main
-       
 dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-
+  mocktail: ^0.3.0
+  very_good_analysis: ^3.0.1
 
 flutter:
   uses-material-design: true
-
   assets:
     - assets/images/
     - assets/onboarding/
@@ -95,8 +56,9 @@ flutter_flavor:
     dev:
       android:
         name: "[Dev] MiniCampus"
-        #applicationId: "com.dcl.mc.dev"
-        applicationId: "com.donnclab.ris.mini_campus"
+        # can be changed if setting up firebase emulator, should be same as app_id in setting up
+        # firebase emulator in `melos.yaml`
+        applicationId: "com.dcl.mc.dev"
         versionNameSuffix: "-dev"
 
     # SHOULD NOT BE CHANGED

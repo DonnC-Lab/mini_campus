@@ -1,0 +1,17 @@
+name: dio_client_rest_api
+description: a dio client rest api implementation, copied from https://github.com/yeikel16/deta-dart
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  client_rest_api:
+    path: ../client_rest_api
+  dio: ^4.0.6
+
+dev_dependencies:
+  mocktail: ^0.3.0
+  test: ^1.19.2
+  very_good_analysis: ^3.0.1

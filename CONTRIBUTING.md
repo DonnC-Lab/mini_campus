@@ -226,15 +226,8 @@ service firebase.storage {
 
 ### Generate APKs
 To build release apps with [flavors](https://stackoverflow.com/questions/63134797/flutter-android-flavors-generate-apk)
-```bash
-$ flutter clean
 
-# apk
-$ flutter build apk --release --flavor dev -t lib/main_dev.dart
-
-# appbundle
-$ flutter build appbundle --flavor dev -t lib/main_dev.dart
-```
+Check out the `melos` script commands available
 
 ### Design - redesigns
 Might include improving existing designs, themes, responsiveness, adaptiveness etc

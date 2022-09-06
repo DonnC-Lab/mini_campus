@@ -4,43 +4,46 @@ MiniCampus  - A virtual campus app, with 💙 for students 👨‍🎓👩‍�
 
 ## About
 MiniCampus, **MC** - thrives to be the go to student app for both freshers and existing students on campus. It comes equipped with the tools and services to make life easy for a student.
-- It comprises of [modules](docs/modules/README.md) that each act as a standalone application serving a single purpose
+- It comprises of [modules](docs/modules/README.md) as mono-repos, that each act as a standalone application serving a single purpose
+
+## Add new package
+Adding a new package or mono repo is powered by VGV [mason_cli](https://pub.dev/packages/mason_cli)
+### Dart package
+On the root folder, run
+```bash
+$ mason make very_good_dart_package --project_name "<package_name>" --description "<package description>." -o packages 
+```
+
+### Flutter package
+On the root folder, run
+```bash
+$ cd packages
+$ mason make very_good_flutter_package
+```
 
 ## Showcase
 Checkout the development progress under [releases](https://github.com/DonnC-Lab/mini_campus/releases) for demo builds
-
 
 *coming soon*
 
 ## Getting Started
 This project is built using Flutter, for a getting started, checkout [flutter.dev](https://flutter.dev/)
 
-After successful setup of your local flutter environment, fork this repository and run the following commands in the root folder (project uses `freezed`)
+After successful setup of your local flutter environment, fork this repository and run the following commands in the root folder
 
-```bash
-$ flutter clean
-$ flutter pub get
-$ flutter pub run build_runner build --delete-conflicting-outputs
+### Commands
+This project is powered by [melos](https://melos.invertase.dev/)
 
-# generate flavors
-$ flutter pub run flutter_flavor:main
+All scripts and commands are available via `melos`. For IDE Support install the [melos extension](https://melos.invertase.dev/ide-support)
 
-# run dev mode with flavor
-$ flutter run --flavor dev -t lib/main-dev.dart
-```
+Use the melos scripts to run commands
 
 For local development, it is recommended to use `dev` [flavor](https://docs.flutter.dev/deployment/flavors) mode and [firebase local emulator](https://fireship.io/snippets/firestore-emulator-flutter/)
 
 ### Firebase Setup
-To setup firebase services with flavors using FlutterFire CLI [more](https://sebastien-arbogast.com/2022/05/02/multi-environment-flutter-projects-with-flavors/#Integrating_Firebase)
-```bash
-# for dev flavor
-$ flutterfire configure -i com.dcl.mc.dev \
--a com.dcl.mc.dev \
--o lib/firebase/dev/firebase_options.dart \
---no-apply-gradle-plugins \
---no-app-id-json
-```
+Requires [flutterfire_cli](https://firebase.google.com/docs/flutter/setup?platform=ios#install-cli-tools) to be installed
+
+To setup firebase services with flavors using FlutterFire CLI [more](https://sebastien-arbogast.com/2022/05/02/multi-environment-flutter-projects-with-flavors/#Integrating_Firebase) use the melos script > `setup-firebase-emulator` to setup firebase cli for development mode
 
 Please note the app id is per the one setup in `pubspec` following `flutter_flavor` convention
 
@@ -76,8 +79,6 @@ These aim to tackle communication issues on campus to enhance announcement deliv
 > Important message from the clinic about counselling services
 
 > Broadcast announcement to all girl child about Women in Engineering event
-
- 
 <br>
 
 ## Built With
@@ -110,7 +111,6 @@ This project is licensed under the Apache License - see the [LICENSE](LICENSE) f
 
 * StackOverflow - what can we do without it
 * Dont Delete - for providing early feedback on technical tests and module ideation
-* Brighton Tanda for bringing the ideation to live
 * FlutterDevZW community
 * a lot more 
 

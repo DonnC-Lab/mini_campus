@@ -1,0 +1,125 @@
+# Melos config file
+# For IDE Support, install the melos extension at https://melos.invertase.dev/ide-support
+name: mini_campus
+
+packages:
+  - packages/**
+
+scripts:
+  setup_tuneup: >
+    flutter pub global activate tuneup
+
+  setup_melos: >
+    dart pub global activate mason_cli
+
+  pub_get:
+    description: Run dart & flutter pub get in project and packages
+    run: |
+      melos exec --flutter -- flutter pub get
+      melos exec --no-flutter -- dart pub get
+      melos exec --no-private flutter pub get
+
+  run_dev: >
+    flutter run --flavor dev -t lib/main-dev.dart
+
+  setup_flavors: >
+    flutter pub run flutter_flavor:main
+
+  lint:all:
+    run: melos run analyze && melos run format
+    description: |
+      Run all static analysis checks
+      - Analyze the project for Dart analysis issues.
+      - Requires `pub global activate tuneup`.
+      - Run `setup_tuneup` script to activate dependency
+
+  build:all:
+    run: |
+      melos bootstrap
+      melos run build:example_ios_pub --no-select
+      melos run build:example_android_pub --no-select 
+      melos run build:example_web --no-select
+    description: Build all example apps
+
+  build:example_android_pub:
+    run: |
+      melos exec -c 6 --fail-fast -- \
+        "flutter build apk"
+    description: Build a specific example app for Android.
+    select-package:
+      dir-exists:
+        - android
+      scope: "*example*"
+
+  build-dev-release-apk:
+    description: Build Android APK release with dev flavor
+    run: flutter build apk --release --flavor dev -t lib/main_dev.dart
+
+  build-dev-bundle:
+    description: Build Android appbundle release with dev flavor
+    run: flutter build appbundle --flavor dev -t lib/main_dev.dart
+
+  # avoid running this command during testing
+  # should only be run by core maintainer
+  build-live-bundle:
+    description: Build Android appbundle release with live flavor
+    run: flutter build appbundle --flavor prod -t lib/main_prod.dart
+
+  # should only be run by core maintainer
+  build-live-apk:
+    description: Build Android APK release with live flavor
+    run: flutter build apk --flavor prod -t lib/main_prod.dart
+
+  test:unit_all:
+    run: melos run test --no-select
+    description: Run all tests available on stable channel
+
+  # Coverage
+  coverage: >
+    melos exec -c 1 --fail-fast --dir-exists=test --ignore="*example*" --ignore="*web*" -- \
+      flutter test --coverage
+
+  # Additional cleanup lifecycle script, executed when `melos clean` is ran.
+  postclean: >
+    melos exec -c 6 -- "flutter clean"
+
+  localize:
+    description: 'Generate / refresh localization keys'
+    run: flutter pub run easy_localization:generate -S assets/l10n -f keys -O lib/l10n -o locale_keys.g.dart
+
+  dart-build_runner:
+    description: 'Build Runner for dart'
+    exec: dart run build_runner build --delete-conflicting-outputs
+    select-package:
+      private: true
+
+  flutter-pub:
+    description: Flutter pub get
+    exec: flutter pub get
+    select-package:
+      private: true
+
+  dart-pub:
+    description: Dart pub get
+    exec: dart pub get
+    select-package:
+      private: true
+      
+  flutter-build_runner:
+    description: 'Build Runner for flutter'
+    run: flutter pub run build_runner build --delete-conflicting-outputs
+
+  setup-vgv-packages:
+    name: setup-vgv-packages
+    description: Add very_good dart & flutter bricks via mason, Requires `mason_cli`, use `setup_melos`` script to setup
+    run: melos exec --no-private "mason add -g very_good_dart_package && mason add -g very_good_flutter_package"
+
+  setup-firebase-emulator:
+    run: flutterfire configure -i com.dcl.mc.dev \
+      -a com.dcl.mc.dev \
+      -o lib/firebase/dev/firebase_options.dart \
+      --no-apply-gradle-plugins \ 
+      --no-app-id-json
+    description: |
+      Setup firebase emulator with dev flavor
+      - Requires the flutterfire cli to be installed

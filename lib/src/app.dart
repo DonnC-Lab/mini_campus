@@ -15,12 +15,14 @@ class MainAppEntry extends StatelessWidget {
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final _notifier = ref.watch(themeNotifierProvider);
 
+        
+
         return FlavorBanner(
           location: BannerLocation.bottomEnd,
           child: ValueListenableBuilder(
             valueListenable: _notifier,
             builder: (ctx, ThemeMode mode, child) {
-              return MaterialApp(
+              return  MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: FlavorConfig.instance.variables["appTitle"],
                 theme: AppTheme.light(),
