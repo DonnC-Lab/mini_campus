@@ -1,31 +1,60 @@
 library fbmessaging_service;
 
-import 'dart:developer';
+import 'dart:developer' show log;
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+/// {@template fb_message}
+/// Firebase Message service class
+///
+/// - get user token
+///
+/// - subscribe to topics
+///
+/// - send & broadcast notifications
+/// {@endtemplate}
 class FbMessagingService {
   FbMessagingService._();
+
+  /// {@macro fb_message}
   static final instance = FbMessagingService._();
 
   static final _instance = FirebaseMessaging.instance;
 
-  Future<String?> getUserToken() async => await _instance.getToken();
+  /// get currently signed in student device token
+  Future<String?> getUserToken() async => _instance.getToken();
 
+  /// subscribe current student to all given topics
   Future<void> subscribeTopics(List<String> topics) async {
     try {
-      final _subFutures =
-          topics.map((topic) => _instance.subscribeToTopic(topic)).toList();
+      final _subFutures = topics.map(_instance.subscribeToTopic).toList();
       await Future.wait(_subFutures);
     } catch (e) {
       log('[subscribeTopics] failed to subscribe');
     }
   }
 
-  /// todo: perform on server
-  Future sendNotification(Map notificationPayload, String token) async {}
+  /// send notification to device [token]
+  ///
+  /// logic should be server side
+  Future<void> sendNotification(
+    Map<String, dynamic> notificationPayload,
+    String token,
+  ) async {
+    // todo: implement on the server side
+    throw UnimplementedError();
+  }
 
-  Future broadcastMessage(Map notificationPayload, List<String> topics) async {}
+  /// broadcast notifications to subscribed [topics]
+  ///
+  /// logic should be server side
+  Future<void> broadcastMessage(
+    Map<String, dynamic> notificationPayload,
+    List<String> topics,
+  ) async {
+    // todo: implement on the server side
+    throw UnimplementedError();
+  }
 
   // Map _getNotificationData(
   //     NotificationPayload notificationPayload, String sendTo,

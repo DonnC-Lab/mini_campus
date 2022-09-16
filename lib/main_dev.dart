@@ -7,13 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mini_campus_core/mini_campus_core.dart';
+import 'package:mini_campus/fb_emulator.dart';
+import 'package:mini_campus/firebase/dev/firebase_options.dart';
+import 'package:mini_campus/src/app.dart';
+import 'package:mini_campus/src/http_override.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'fb_emulator.dart';
-import 'firebase/dev/firebase_options.dart';
-import 'src/app.dart';
-import 'src/http_override.dart';
 
 // todo: toggle per your option
 // ignore: constant_identifier_names
@@ -32,18 +30,18 @@ void main() async {
 
   // TODO: Setup flavor config here
   FlavorConfig(
-    name: "DEV",
+    name: 'DEV',
     location: BannerLocation.bottomEnd,
     variables: {
-      "appTitle": "[Dev] MiniCampus",
+      'appTitle': '[Dev] MiniCampus',
       //"detaBaseUrl": '<test-url>',
-      "detaBaseUrl": McAppUrls.serverDetaBaseUrl,
-      "validateStudentEmail": true,
-      "byPassEmailVerification": true,
+      'detaBaseUrl': McAppUrls.serverDetaBaseUrl,
+      'validateStudentEmail': true,
+      'byPassEmailVerification': true,
     },
   );
 
-  AwesomeNotifications().initialize(
+  await AwesomeNotifications().initialize(
     null,
     [
       NotificationChannel(
@@ -64,19 +62,19 @@ void main() async {
         channelGroupName: 'MiniCampus group',
       )
     ],
-    debug: USE_EMULATOR,
   );
 
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+  await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     if (!isAllowed) {
       AwesomeNotifications().requestPermissionToSendNotifications(
-          channelKey: 'mini_campus_channel');
+        channelKey: 'mini_campus_channel',
+      );
     }
   });
 
   HttpOverrides.global = CustomHttpOverride();
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final sharedPreferences = await SharedPreferences.getInstance();
 

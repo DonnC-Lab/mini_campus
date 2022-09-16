@@ -1,4 +1,4 @@
-import 'rest_api_response.dart';
+import 'package:client_rest_api/src/rest_api_response.dart';
 
 /// {@template client_rest_api}
 /// Basic interface of requests from a client

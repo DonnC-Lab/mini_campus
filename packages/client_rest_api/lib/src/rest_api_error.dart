@@ -1,4 +1,4 @@
-import 'rest_api_response.dart';
+import 'package:client_rest_api/src/rest_api_response.dart';
 
 ///{@template rest_api_error}
 /// Class for error in the request.

@@ -1,5 +1,5 @@
 name: mini_campus_services
-description: Mini Campus library helper services
+description: Mini Campus library helper services (firebase & others)
 version: 0.1.0+1
 publish_to: none
 
@@ -7,10 +7,16 @@ environment:
   sdk: '>=2.18.0 <3.0.0'
   
 dependencies:
+  cloud_firestore: ^3.4.8
+  firebase_auth: ^3.9.0
+  firebase_database: ^9.1.4
+  firebase_messaging: ^13.0.2
+  firebase_storage: ^10.3.8
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.0
-  flutter_riverpod: ^2.0.0-dev.4
+  flutter_riverpod: ^2.0.0-dev.9
+  google_sign_in: ^5.4.1
 
 dev_dependencies:
   flutter_test:

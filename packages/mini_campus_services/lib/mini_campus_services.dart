@@ -9,3 +9,11 @@
 library mini_campus_services;
 
 export 'src/mini_campus_services.dart';
+
+
+/*
+final fbAuthProvider = Provider((_) => FirebaseAuthService());
+
+final googleAuthProvider = Provider((_) => GoogleSignInService());
+
+*/

@@ -5,14 +5,18 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'dart:typed_data';
+
 import 'package:deta_data_source/src/deta_exception_handler.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_client_rest_api/dio_client_rest_api.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:rest_data_source/rest_data_source.dart';
 
 /// {@template deta_data_source}
-/// DETA data source using deta provider
+/// DETA data source using deta provider server wrapper
+/// to abstract sensitive server credentials
 /// {@endtemplate}
 class DetaDataSource implements RestDataSource {
   /// {@macro deta_data_source}
@@ -20,21 +24,30 @@ class DetaDataSource implements RestDataSource {
     this.driveName,
     this.baseName,
     required this.baseUrl,
-  }) : _dio = Dio(BaseOptions(baseUrl: baseUrl));
+  }) {
+    _dio = Dio(BaseOptions(baseUrl: baseUrl));
+    _client = DioClientRestApi(dio: _dio);
+  }
 
   late final Dio _dio;
 
+  /// client to make requests to server
+  late final DioClientRestApi _client;
+
+  /// DETA drive name to use for storage
   final String? driveName;
 
+  /// DETA collection name for storing documents, NoSQL
   final String? baseName;
 
+  /// DETA base url to (wrapper) server using DETA as a service
   final String baseUrl;
 
   @override
-  Future add(Map<String, dynamic> payload, {String key = ''}) async {
+  Future<dynamic> add(Map<String, dynamic> payload, {String key = ''}) async {
     try {
-      final res = await _dio.post(
-        '/doc-api/add/?base_name=$baseName&key=$key',
+      final res = await _client.post(
+        Uri.parse('/doc-api/add/?base_name=$baseName&key=$key'),
         data: payload,
       );
 
@@ -50,15 +63,15 @@ class DetaDataSource implements RestDataSource {
   }
 
   @override
-  Future delete(Map<String, dynamic> payload, {String? key}) async {
+  Future<dynamic> delete(Map<String, dynamic> payload, {String? key}) async {
     try {
-      final res = await _dio.delete(
-        '/doc-api/delete/?base_name=$baseName',
+      final res = await _client.delete<Map<String, dynamic>>(
+        Uri.parse('/doc-api/delete/?base_name=$baseName'),
         data: payload,
       );
 
       if (res.statusCode == 201 || res.statusCode == 200) {
-        return res.data['message'];
+        return res.body?['message'];
       }
     }
 
@@ -69,54 +82,106 @@ class DetaDataSource implements RestDataSource {
   }
 
   @override
-  Future deleteFiles(String id) {
+  Future<dynamic> deleteFiles(String id) {
     // TODO: implement deleteFiles
     throw UnimplementedError();
   }
 
   @override
-  Future downloadFile(String id) {
-    // TODO: implement downloadFile
-    throw UnimplementedError();
+
+  /// (todo) implement downloaded file caching seperately
+  /// to reduce server requests
+  Future<dynamic> downloadFile(String id) async {
+    try {
+      final fileBytesResp = await _client.get<List<int>>(
+        Uri.parse(
+          '/file-api/download/?drive_name=$driveName&filename=$id',
+        ),
+        options: Options(responseType: ResponseType.bytes),
+      );
+
+      if (fileBytesResp.statusCode == 200) {
+        return Uint8List.fromList(fileBytesResp.body!);
+      }
+    }
+
+    // error
+    catch (e) {
+      return detaExceptionHandler(e);
+    }
   }
 
   @override
-  Future listFiles({
+  Future<dynamic> listFiles({
     int limit = 1000,
     String prefix = '',
     String? last,
     String? sort,
-  }) {
-    // TODO: implement listFiles
-    throw UnimplementedError();
-  }
+  }) async {
+    final _prefix = Uri.encodeComponent(prefix);
 
-  @override
-  Future query({Map<String, dynamic>? query}) {
-    // TODO: implement query
-    throw UnimplementedError();
-  }
-
-  @override
-  Future uploadFile(String filepath,
-      {String? directory, String? filename}) async {
     try {
-      final ext = path.extension(fileP = path).trim();
+      final resp = await _client.get<Map<String, dynamic>>(
+        Uri.parse(
+          '/file-api/files/?drive_name=$driveName&limit=$limit&prefix=$_prefix&last=$last',
+        ),
+      );
 
-      var formData = FormData.fromMap({
+      if (resp.statusCode == 200) {
+        return resp.body?['message'];
+      }
+    }
+
+    // error
+    catch (e) {
+      return detaExceptionHandler(e);
+    }
+  }
+
+  @override
+  Future<dynamic> query({Map<String, dynamic>? query}) async {
+    try {
+      final res = await _client.post<Map<String, dynamic>>(
+        Uri.parse('/doc-api/query/?base_name=$baseName'),
+        data: query,
+      );
+
+      if (res.statusCode == 201 || res.statusCode == 200) {
+        return res.body?['message'];
+      }
+    }
+
+    // error
+    catch (e) {
+      return detaExceptionHandler(e);
+    }
+  }
+
+  @override
+  Future<dynamic> uploadFile(
+    String filepath, {
+    String? directory,
+    String? filename,
+  }) async {
+    try {
+      final ext = path.extension(filepath).trim();
+
+      final formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(
           filepath,
           contentType: MediaType('application', ext),
         )
       });
 
-      final resp = await _dio.post(
-        '/file-api/upload/?drive_name=$driveName&filename=$filename&directory=$directory',
+      final resp = await _client.post<Map<String, dynamic>>(
+        Uri.parse(
+          '/file-api/upload/?drive_name=$driveName&filename=$filename&directory=$directory',
+        ),
         data: formData,
       );
 
       if (resp.statusCode == 201 || resp.statusCode == 200) {
-        return resp.data['message'];
+        return resp.body?['message'];
       }
 
       if (resp.statusCode == 413) {

@@ -10,6 +10,8 @@ dependencies:
   dio: ^4.0.6
   rest_data_source:
     path: ../rest_data_source
+  dio_client_rest_api:
+    path: ../dio_client_rest_api
 
 dev_dependencies:
   mocktail: ^0.3.0

@@ -7,7 +7,7 @@ import 'package:mini_campus/src/drawer_module_pages.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
 
 class MainAppEntry extends StatelessWidget {
-  const MainAppEntry({Key? key}) : super(key: key);
+  const MainAppEntry({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +15,14 @@ class MainAppEntry extends StatelessWidget {
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final _notifier = ref.watch(themeNotifierProvider);
 
-        
-
         return FlavorBanner(
           location: BannerLocation.bottomEnd,
           child: ValueListenableBuilder(
             valueListenable: _notifier,
             builder: (ctx, ThemeMode mode, child) {
-              return  MaterialApp(
+              return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: FlavorConfig.instance.variables["appTitle"],
+                title: FlavorConfig.instance.variables['appTitle'],
                 theme: AppTheme.light(),
                 darkTheme: AppTheme.dark(),
                 themeMode: mode,

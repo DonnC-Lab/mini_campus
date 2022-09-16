@@ -1,6 +1,3 @@
-export 'deta/deta_repository.dart';
-export 'deta/deta_query.dart';
-export 'deta/exc.dart';
 export 'fb_messaging_service.dart';
 export 'file_cache_service.dart';
 export 'firebase_auth_service.dart';
@@ -8,5 +5,3 @@ export 'firebase_rtdb_service.dart';
 export 'firebase_storage_service.dart';
 export 'firestore_service.dart';
 export 'google_sign_in_service.dart';
-export 'utilities/index.dart';
-export 'providers.dart';

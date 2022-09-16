@@ -5,10 +5,6 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-/// {@template mini_campus_services}
-/// Mini Campus library helper services
-/// {@endtemplate}
-class MiniCampusServices {
-  /// {@macro mini_campus_services}
-  const MiniCampusServices();
-}
+export 'services/services.dart';
+
+export 'utilities/index.dart';

@@ -15,13 +15,14 @@ class DioClientRestApi extends ClientRestApi {
   @override
   Future<RestApiResponse<T>> get<T>(
     Uri url, {
-    Map<String, String> headers = const {},
+    @Deprecated('use [options] instead') Map<String, String> headers = const {},
     ProgressRequestCallback? onReceiveProgress,
+    Options? options,
   }) async {
     try {
       final response = await _dio.getUri<T>(
         url,
-        options: Options(headers: headers),
+        options: options,
         onReceiveProgress: onReceiveProgress,
       );
 
@@ -37,16 +38,17 @@ class DioClientRestApi extends ClientRestApi {
   @override
   Future<RestApiResponse<T>> put<T>(
     Uri url, {
-    Map<String, String> headers = const {},
+    @Deprecated('use [options] instead') Map<String, String> headers = const {},
     Object? data,
     ProgressRequestCallback? onSendProgress,
     ProgressRequestCallback? onReceiveProgress,
+    Options? options,
   }) async {
     try {
       final response = await _dio.putUri<T>(
         url,
         data: data,
-        options: Options(headers: headers),
+        options: options,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
@@ -63,8 +65,9 @@ class DioClientRestApi extends ClientRestApi {
   @override
   Future<RestApiResponse<T>> post<T>(
     Uri url, {
-    Map<String, String> headers = const {},
+    @Deprecated('use [options] instead') Map<String, String> headers = const {},
     Object? data,
+    Options? options,
     ProgressRequestCallback? onSendProgress,
     ProgressRequestCallback? onReceiveProgress,
   }) async {
@@ -74,7 +77,7 @@ class DioClientRestApi extends ClientRestApi {
         response = await _dio.postUri<T>(
           url,
           data: Stream.fromIterable(data.toList().map((e) => [e])),
-          options: Options(headers: headers),
+          options: options,
           onSendProgress: onSendProgress,
           onReceiveProgress: onReceiveProgress,
         );
@@ -82,7 +85,7 @@ class DioClientRestApi extends ClientRestApi {
         response = await _dio.postUri<T>(
           url,
           data: data,
-          options: Options(headers: headers),
+          options: options,
           onSendProgress: onSendProgress,
           onReceiveProgress: onReceiveProgress,
         );
@@ -100,7 +103,8 @@ class DioClientRestApi extends ClientRestApi {
   @override
   Future<RestApiResponse<T>> patch<T>(
     Uri url, {
-    Map<String, String> headers = const {},
+    @Deprecated('use [options] instead') Map<String, String> headers = const {},
+    Options? options,
     Object? data,
     ProgressRequestCallback? onSendProgress,
     ProgressRequestCallback? onReceiveProgress,
@@ -109,7 +113,7 @@ class DioClientRestApi extends ClientRestApi {
       final response = await _dio.patchUri<T>(
         url,
         data: data,
-        options: Options(headers: headers),
+        options: options,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
@@ -127,13 +131,14 @@ class DioClientRestApi extends ClientRestApi {
   Future<RestApiResponse<T>> delete<T>(
     Uri url, {
     Object? data,
-    Map<String, String> headers = const {},
+    @Deprecated('use [options] instead') Map<String, String> headers = const {},
+    Options? options,
   }) async {
     try {
       final response = await _dio.deleteUri<T>(
         url,
         data: data,
-        options: Options(headers: headers),
+        options: options,
       );
 
       return RestApiResponse(

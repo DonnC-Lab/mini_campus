@@ -9,3 +9,6 @@
 library deta_data_source;
 
 export 'src/deta_data_source.dart';
+export 'src/deta_drive_init.dart';
+export 'src/deta_exception.dart';
+export 'src/deta_query.dart';
