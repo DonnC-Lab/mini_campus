@@ -8,7 +8,7 @@
 /// {@template mini_campus_components}
 /// Mini Campus general components
 /// {@endtemplate}
-class MiniCampusComponents {
-  /// {@macro mini_campus_components}
-  const MiniCampusComponents();
-}
+export 'app_dialog.dart';
+export 'forms/index.dart';
+export 'modal_loader.dart';
+export 'status_container.dart';

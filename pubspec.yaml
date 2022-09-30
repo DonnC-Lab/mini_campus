@@ -7,33 +7,16 @@ environment:
   sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
-  # notification
-  awesome_notifications: ^0.6.21
-
-  # firebase | google
-  cloud_firestore: ^3.1.10
-
-  # icons
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^3.3.9
-  firebase_core: ^1.13.1
-  firebase_database: ^9.0.8
-  firebase_messaging: ^11.2.8
-  firebase_storage: ^10.2.9
   flutter:
     sdk: flutter
 
   flutter_flavor: ^3.0.3
 
-  # state management
-  flutter_riverpod: ^2.0.0-dev.9
-  flutter_vector_icons: ^1.0.0
-
-  # components
-  form_builder_validators: ^7.7.0
-
-  # utilities
-  shared_preferences: ^2.0.13
+  flutterfire_ui: ^0.4.3+11
+  mini_campus_core:
+    path: packages/mini_campus_core
+  mini_campus_constants:
+    path: packages/mini_campus_constants
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -61,7 +44,7 @@ flutter_flavor:
         applicationId: "com.dcl.mc.dev"
         versionNameSuffix: "-dev"
 
-    # SHOULD NOT BE CHANGED
+    # ! <--- SHOULD NOT BE CHANGED --->
     prod:
       app:
         name: "MiniCampus"

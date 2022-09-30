@@ -107,7 +107,9 @@ scripts:
       
   flutter-build_runner:
     description: 'Build Runner for flutter'
-    run: flutter pub run build_runner build --delete-conflicting-outputs
+    exec: flutter pub run build_runner build --delete-conflicting-outputs
+    select-package:
+      private: true
 
   setup-vgv-packages:
     name: setup-vgv-packages

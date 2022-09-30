@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mini_campus/firebase/prod/firebase_options.dart';
+import 'package:mini_campus/src/app.dart';
+import 'package:mini_campus/src/http_override.dart';
+import 'package:mini_campus_constants/mini_campus_constants.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'firebase/prod/firebase_options.dart';
-import 'src/app.dart';
-import 'src/http_override.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -28,12 +28,12 @@ void main() async {
   // TODO: Setup flavor config here
   FlavorConfig(
     variables: {
-      "appTitle": "MiniCampus",
-      "detaBaseUrl": McAppUrls.serverDetaBaseUrl,
+      'appTitle': 'MiniCampus',
+      'detaBaseUrl': AppUrls.serverDetaBaseUrl,
     },
   );
 
-  AwesomeNotifications().initialize(
+  await AwesomeNotifications().initialize(
     null,
     [
       NotificationChannel(
@@ -56,16 +56,17 @@ void main() async {
     ],
   );
 
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+  await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     if (!isAllowed) {
       AwesomeNotifications().requestPermissionToSendNotifications(
-          channelKey: 'mini_campus_channel');
+        channelKey: 'mini_campus_channel',
+      );
     }
   });
 
   HttpOverrides.global = CustomHttpOverride();
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final sharedPreferences = await SharedPreferences.getInstance();
 

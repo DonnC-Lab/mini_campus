@@ -6,10 +6,15 @@ publish_to: none
 environment:
   sdk: '>=2.18.0 <3.0.0'
   
-
 dependencies:
+  flash: ^2.0.3+3
   flutter:
     sdk: flutter
+
+  flutter_form_builder: ^7.6.0
+  fluttertoast: ^8.0.9
+  mini_campus_constants:
+    path: ../mini_campus_constants
 
 dev_dependencies:
   flutter_test:

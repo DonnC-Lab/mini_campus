@@ -6,7 +6,9 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mini_campus/src/drawer_module_pages.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
 
+/// MC man app entry
 class MainAppEntry extends StatelessWidget {
+  ///
   const MainAppEntry({super.key});
 
   @override
@@ -22,7 +24,7 @@ class MainAppEntry extends StatelessWidget {
             builder: (ctx, ThemeMode mode, child) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: FlavorConfig.instance.variables['appTitle'],
+                title: FlavorConfig.instance.variables['appTitle'] as String,
                 theme: AppTheme.light(),
                 darkTheme: AppTheme.dark(),
                 themeMode: mode,

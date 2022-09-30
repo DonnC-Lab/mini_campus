@@ -5,10 +5,12 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-/// {@template mini_campus_core}
-/// A Mini Campus package with core project features
-/// {@endtemplate}
-class MiniCampusCore {
-  /// {@macro mini_campus_core}
-  const MiniCampusCore();
-}
+export 'components/index.dart';
+export 'extensions/index.dart';
+export 'features/index.dart';
+export 'models/index.dart';
+export 'providers/shared_providers.dart';
+export 'router/index.dart';
+export 'services/index.dart';
+export 'utils/index.dart';
+export 'widgets/index.dart';

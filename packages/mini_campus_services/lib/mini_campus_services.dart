@@ -12,7 +12,7 @@ export 'src/mini_campus_services.dart';
 
 
 /*
-final fbAuthProvider = Provider((_) => FirebaseAuthService());
+final firebaseAuthServiceProvider = Provider((_) => FirebaseAuthService());
 
 final googleAuthProvider = Provider((_) => GoogleSignInService());
 

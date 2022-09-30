@@ -11,6 +11,8 @@ import 'package:mini_campus/fb_emulator.dart';
 import 'package:mini_campus/firebase/dev/firebase_options.dart';
 import 'package:mini_campus/src/app.dart';
 import 'package:mini_campus/src/http_override.dart';
+import 'package:mini_campus_constants/mini_campus_constants.dart';
+import 'package:mini_campus_core/mini_campus_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // todo: toggle per your option
@@ -35,7 +37,7 @@ void main() async {
     variables: {
       'appTitle': '[Dev] MiniCampus',
       //"detaBaseUrl": '<test-url>',
-      'detaBaseUrl': McAppUrls.serverDetaBaseUrl,
+      'detaBaseUrl': AppUrls.serverDetaBaseUrl,
       'validateStudentEmail': true,
       'byPassEmailVerification': true,
     },

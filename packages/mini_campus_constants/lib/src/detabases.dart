@@ -3,5 +3,5 @@
 /// ! should not be changed when set and used
 class DetaBases {
   /// general faculty detabase name
-  static const String kFacultyDptCollection = 'faculty_dptDB';
+  static const String kFacultyDepartmentCollection = 'faculty_dptDB';
 }
