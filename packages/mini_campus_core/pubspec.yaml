@@ -15,7 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_advanced_avatar: ^1.1.0
-  flutter_riverpod: ^2.0.0-dev.9
+  flutter_riverpod: ^2.0.2
   flutter_svg: ^1.1.5
   flutter_vector_icons: ^2.0.0
   flutter_web_browser: ^0.17.1

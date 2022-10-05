@@ -10,7 +10,7 @@ import 'package:mini_campus_services/mini_campus_services.dart';
 final studentStoreProvider = Provider((ref) {
   final appUser = ref.watch(fbAppUserProvider);
 
-  return FirestoreStudentService(uid: appUser?.uid ?? '', read: ref.read);
+  return FirestoreStudentService(uid: appUser?.uid ?? '', ref: ref);
 });
 
 /// [Student] profile provider
@@ -26,14 +26,14 @@ class FirestoreStudentService {
   /// firestore student service
   FirestoreStudentService({
     required this.uid,
-    required this.read,
+    required this.ref,
   });
 
   /// student firebase doc id
   final String uid;
 
   /// riverpod reader to access other providers
-  final Reader read;
+  final Ref ref;
 
   final _service = FirestoreService.instance;
 
@@ -128,7 +128,7 @@ class FirestoreStudentService {
 
   /// check for basic details needed for student profile to use services
   Future<bool?> isStudentProfileComplete() async {
-    final appUser = read(fbAppUserProvider);
+    final appUser = ref.read(fbAppUserProvider);
 
     try {
       bool? res = false;
@@ -159,14 +159,14 @@ class FirestoreStudentService {
                 _profile.departmentCode.isNotEmpty &&
                 _profile.email.isNotEmpty;
 
-            read(studentProvider.notifier).state = _profile;
+            ref.read(studentProvider.notifier).state = _profile;
 
             return isComplete;
           }
         }
       }
 
-      read(studentProvider.notifier).state = Student(
+      ref.read(studentProvider.notifier).state = Student(
         id: appUser!.uid,
         email: appUser.email.toLowerCase(),
         profilePicture: appUser.photoURL,
@@ -177,7 +177,7 @@ class FirestoreStudentService {
         studentNumber: getStudentNumberFromEmail(
           appUser.email,
           UniEmailDomain.uniDomains
-              .firstWhere((uni) => uni.university == read(studentUniProvider)),
+              .firstWhere((uni) => uni.university == ref.read(studentUniProvider)),
         )?.studentNumber,
       );
 
@@ -187,7 +187,7 @@ class FirestoreStudentService {
     // err
     catch (e) {
       debugLogger(e, name: 'isStudentProfileComplete');
-      read(studentProvider.notifier).state = Student(
+      ref.read(studentProvider.notifier).state = Student(
         id: appUser!.uid,
         email: appUser.email.toLowerCase(),
         profilePicture: appUser.photoURL,
@@ -198,7 +198,7 @@ class FirestoreStudentService {
         studentNumber: getStudentNumberFromEmail(
           appUser.email,
           UniEmailDomain.uniDomains
-              .firstWhere((uni) => uni.university == read(studentUniProvider)),
+              .firstWhere((uni) => uni.university == ref.read(studentUniProvider)),
         )?.studentNumber,
       );
 
@@ -238,10 +238,10 @@ class FirestoreStudentService {
         merge: true,
       );
       final s = await getStudentProfile(studentId: student.id);
-      read(studentProvider.notifier).state = s;
+      ref.read(studentProvider.notifier).state = s;
 
       // update cache too
-      final _sharedPref = read(sharedPreferencesServiceProvider);
+      final _sharedPref = ref.read(sharedPreferencesServiceProvider);
 
       await _sharedPref.setCurrentStudent(s!);
 

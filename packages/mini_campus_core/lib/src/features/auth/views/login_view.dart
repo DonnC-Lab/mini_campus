@@ -97,7 +97,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                   ),
                   const SizedBox(height: 25),
                   Text(
-                    'MiniCampus - with students at heart',
+                    'MiniCampus - with students at heart 💝',
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1

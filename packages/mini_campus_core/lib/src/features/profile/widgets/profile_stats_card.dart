@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:mini_campus_constants/mini_campus_constants.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
-import 'package:mini_campus_core/src/features/profile/views/profile_card_item.dart';
+import 'package:mini_campus_core/src/features/profile/widgets/profile_card_item.dart';
 
 /// show statistics of student profile
 class ProfileStatsCard extends ConsumerWidget {

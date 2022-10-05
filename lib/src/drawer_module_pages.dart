@@ -1,6 +1,6 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-// import 'package:mini_campus_core/mini_campus_core.dart';
+import 'package:campus_market/campus_market.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:mini_campus_core/mini_campus_core.dart';
 
 // /// all app modules connected here
 // final List<DrawerPage> _modules = [
@@ -51,7 +51,13 @@
 //   ),
 // ];
 
-import 'package:mini_campus_core/mini_campus_core.dart';
-
 /// all modules are connected and passed here
-final List<DrawerPage> drawerModulePages = [];
+final List<DrawerPage> drawerModulePages = [
+  DrawerPage(
+    drawerItem: const DrawerItem(
+      icon: AntDesign.isv,
+      name: 'Campus Market',
+    ),
+    page: const CampusMarket(),
+  ),
+];

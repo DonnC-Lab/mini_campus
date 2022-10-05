@@ -4,19 +4,21 @@ publish_to: "none"
 version: 1.0.3+3
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
+  campus_market:
+    path: packages/campus_market
   flutter:
     sdk: flutter
 
   flutter_flavor: ^3.0.3
 
   flutterfire_ui: ^0.4.3+11
-  mini_campus_core:
-    path: packages/mini_campus_core
   mini_campus_constants:
     path: packages/mini_campus_constants
+  mini_campus_core:
+    path: packages/mini_campus_core
 
 dev_dependencies:
   flutter_lints: ^1.0.0

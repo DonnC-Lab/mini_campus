@@ -1,24 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
-import 'package:mini_campus_core/src/services/firebase/student_service.dart';
 import 'package:mini_campus_services/mini_campus_services.dart';
 
 /// [CMessageService] provider
-final cloudMessagingProvider = Provider((_) => CMessageService(_.read));
+final cloudMessagingProvider = Provider(CMessageService.new);
 
 /// a firebase Cloud Messaging service
 class CMessageService {
   /// a firebase Cloud Messaging service
-  CMessageService(this.read);
+  CMessageService(this.ref);
   static final _service = FbMessagingService.instance;
 
   /// riverpod reader to access other providers
-  final Reader read;
+  final Ref ref;
 
   /// get & set token if not present
   /// and subscribe current student to topics
   Future<void> tokenSubscribe() async {
-    final sharedPref = read(sharedPreferencesServiceProvider);
+    final sharedPref = ref.read(sharedPreferencesServiceProvider);
 
     try {
       final cachedToken = sharedPref.userCachedToken();
@@ -31,7 +30,7 @@ class CMessageService {
         }
 
         // add token
-        await read(studentStoreProvider).addNotificationToken(t);
+        await ref.read(studentStoreProvider).addNotificationToken(t);
 
         // set new
         await sharedPref.setUserFcmToken(t);
@@ -39,8 +38,8 @@ class CMessageService {
         // subscribe to topics also
         await _service.subscribeTopics(
           NotificationTopic(
-            student: read(studentProvider)!,
-            university: read(studentUniProvider),
+            student: ref.read(studentProvider)!,
+            university: ref.read(studentUniProvider),
           ).topics,
         );
       }

@@ -52,6 +52,11 @@ Flavors have been configured for `vscode` but for `Android Studio` check [here](
 
 > Currently MC is tested against Android devices only. It might work on iOS but this has not been tested yet, help us archive this goal 🙏
 
+```bash
+# run dev mode with flavor
+$ flutter run --flavor dev -t lib/main_dev.dart
+```
+
 
 For interactive long conversations around issues, new developments, announcements and progress etc, make use of our [discussions 💡 here](https://github.com/DonnC-Lab/mini_campus/discussions)
 

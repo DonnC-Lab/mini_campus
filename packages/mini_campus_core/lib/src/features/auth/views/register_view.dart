@@ -98,7 +98,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                 ),
                 const SizedBox(height: 15),
                 Text(
-                  'MiniCampus - with students at heart',
+                  'MiniCampus - with students at heart 💝',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
@@ -272,8 +272,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         AppDialog.showTopFlash(
                           context,
                           title: 'Account',
-                          mesg: 'Your MiniCampus account have been created,'
-                              ' successfully sign in to continue',
+                          mesg: 'Your MiniCampus account have been created'
+                              ' successfully 😃, sign in to continue',
                         );
 
                         routeToWithClear(

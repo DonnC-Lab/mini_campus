@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:mini_campus_components/mini_campus_components.dart';
 import 'package:mini_campus_constants/mini_campus_constants.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
-import 'package:mini_campus_core/src/features/profile/views/about_alias_update.dart';
-import 'package:mini_campus_core/src/features/profile/views/profile_stats_card.dart';
+import 'package:mini_campus_core/src/features/profile/logic/about_alias_update.dart';
+import 'package:mini_campus_core/src/features/profile/widgets/profile_stats_card.dart';
 import 'package:mini_campus_core/src/services/firebase/storage_service.dart';
 import 'package:mini_campus_core/src/services/firebase/student_service.dart';
 
