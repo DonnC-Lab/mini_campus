@@ -73,7 +73,9 @@ class HomeDrawer extends StatelessWidget {
                 onProfileCardTap();
                 Navigator.pop(context);
               },
-              child: const DrawerMiniProfileCard(),
+              child: DrawerMiniProfileCard(
+                drawerModulePages: drawerModulePages,
+              ),
             ),
             const Divider(height: 30),
             //const DrawerHelpStarted(),

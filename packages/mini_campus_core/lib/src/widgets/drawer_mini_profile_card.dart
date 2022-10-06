@@ -10,7 +10,9 @@ import 'package:mini_campus_core/mini_campus_core.dart';
 /// when drawer is opened
 class DrawerMiniProfileCard extends ConsumerWidget {
   /// card constructor
-  const DrawerMiniProfileCard({super.key});
+  const DrawerMiniProfileCard({this.drawerModulePages = const [], super.key});
+
+  final List<DrawerPage> drawerModulePages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,6 +23,8 @@ class DrawerMiniProfileCard extends ConsumerWidget {
     final studentUni = ref.watch(studentUniProvider);
 
     final profPic = studentProfile?.profilePicture ?? '';
+
+    final auth = ref.read(firebaseAuthServiceProvider);
 
     return Container(
       height: 80,
@@ -71,6 +75,27 @@ class DrawerMiniProfileCard extends ConsumerWidget {
                       ),
                 ),
               ],
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () async {
+                final res = await ref.read(dialogProvider).showDialogFlash(
+                      context,
+                      title: 'Sign Out',
+                      okButtonText: 'YES',
+                      mesg: 'Are you sure you want to logout?',
+                    );
+
+                debugLogger(res.toString(), name: 'logout');
+
+                if (res != null && res) {
+                  // logout
+                  await auth.signOut();
+
+                  routeBackWithClear(context, drawerPages: drawerModulePages);
+                }
+              },
+              icon: const Icon(Icons.logout),
             ),
           ],
         ),

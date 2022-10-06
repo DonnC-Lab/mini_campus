@@ -76,7 +76,7 @@ class AppDialog {
     String cancelButtonText = 'CANCEL',
     bool persistent = true,
   }) async {
-    await context.showFlashDialog<bool?>(
+    return context.showFlashDialog<bool?>(
       constraints: const BoxConstraints(maxWidth: 300),
       persistent: persistent,
       brightness: Theme.of(context).brightness,
@@ -113,7 +113,6 @@ class AppDialog {
         );
       },
     );
-    return null;
   }
 
   /// basic flash dialog

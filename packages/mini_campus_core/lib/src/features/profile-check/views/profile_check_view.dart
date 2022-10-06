@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mini_campus_constants/mini_campus_constants.dart';
 import 'package:mini_campus_core/mini_campus_core.dart';
-import 'package:mini_campus_core/src/services/firebase/messaging_service.dart';
-import 'package:mini_campus_core/src/services/firebase/student_service.dart';
 
 /// {@template profile_check}
 /// check if student profile exist
@@ -38,27 +36,25 @@ class ProfileCheckView extends ConsumerWidget {
             if (snapshot.hasData) {
               final isProfileComplete = snapshot.data ?? false;
 
-              // set flavor config to shared provider
-              ref.read(flavorConfigProvider.notifier).state = flavorConfigs;
-
-              debugLogger(
-                ref.watch(flavorConfigProvider),
-                name: 'set flavor config',
-              );
-
               if (isProfileComplete) {
                 ref.read(cloudMessagingProvider).tokenSubscribe().then(
                   (_) => WidgetsBinding.instance.addPostFrameCallback((_) {
                     routeToWithClear(
                       context,
-                      HomeView(drawerModulePages: drawerModulePages),
+                      HomeView(
+                        drawerModulePages: drawerModulePages,
+                        flavorConfigs: flavorConfigs,
+                      ),
                     );
                   }),
                   onError: (_) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       routeToWithClear(
                         context,
-                        HomeView(drawerModulePages: drawerModulePages),
+                        HomeView(
+                          drawerModulePages: drawerModulePages,
+                          flavorConfigs: flavorConfigs,
+                        ),
                       );
                     });
                   },

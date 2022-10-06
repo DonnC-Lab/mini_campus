@@ -17,6 +17,7 @@ class HomeView extends ConsumerStatefulWidget {
     this.logoLightMode,
     this.logoDarkMode,
     required this.drawerModulePages,
+    this.flavorConfigs = const {},
     super.key,
   });
 
@@ -24,6 +25,9 @@ class HomeView extends ConsumerStatefulWidget {
   final List<DrawerPage> drawerModulePages;
   final String? logoLightMode;
   final String? logoDarkMode;
+
+  /// app configs per current flavor
+  final Map<String, dynamic> flavorConfigs;
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -86,7 +90,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     checkForInitialMessage();
     setupInteractedMessage();
 
-    AwesomeNotifications().createdStream.listen((receivedNotification) {});
+    // AwesomeNotifications().createdStream.listen((receivedNotification) {});
 
     AwesomeNotifications().displayedStream.listen((receivedNotification) {});
 
@@ -119,11 +123,14 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    // set flavor config to shared provider
+    //ref.read(flavorConfigProvider.notifier).state = widget.flavorConfigs;
+
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text(ref.read(flavorConfigProvider)['appTitle'] as String),
+          title: Text(widget.flavorConfigs['appTitle'] as String),
           centerTitle: true,
           actions: [
             IconButton(

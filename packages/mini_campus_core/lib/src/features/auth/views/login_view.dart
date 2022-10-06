@@ -83,11 +83,8 @@ class _LogInViewState extends ConsumerState<LogInView> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const LogoBox(
-                      // logoDarkMode: widget.logoDarkMode,
-                      // logoLightMode: widget.logoLightMode,
-                      ),
-                  const SizedBox(height: 20),
+                  const LogoBox(),
+                  const SizedBox(height: 15),
                   Text(
                     'Sign in',
                     style: Theme.of(context)
@@ -146,7 +143,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                       }
                     },
                   ),
-                  Divider(color: AppColors.kGreyShadeColor, height: sy(50)),
+                  const Divider(color: AppColors.kGreyShadeColor, height: 30),
                   Text(
                     'Or continue with student email',
                     style: Theme.of(context)
@@ -197,7 +194,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   Theme(
                     data: Theme.of(context).copyWith(
                       colorScheme: ThemeData().colorScheme.copyWith(
@@ -233,11 +230,68 @@ class _LogInViewState extends ConsumerState<LogInView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: sy(30)),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: GestureDetector(
+                        onTap: () async {
+                          if (!isEmailValid) {
+                            _dialog.showBasicFlash(
+                              context,
+                              mesg: 'a valid student email is required to '
+                                  'continue\nEnter your email in the '
+                                  'email field 📧',
+                            );
+                            return;
+                          }
+
+                          // sent password reset instructions
+                          modalLoader(context);
+
+                          final result = await auth.sendPasswordResetEmail(
+                            emailCtlr.text.trim().toLowerCase(),
+                          );
+
+                          Navigator.of(context, rootNavigator: true).pop();
+
+                          if (result is CustomException) {
+                            _dialog.showBasicFlash(
+                              context,
+                              flashStyle: FlashBehavior.fixed,
+                              mesg: result.message ??
+                                  'failed to sign in to account',
+                            );
+                          }
+
+                          // success
+                          else {
+                            AppDialog.showTopFlash(
+                              context,
+                              title: 'Password Reset',
+                              mesg: 'password reset instructions sent to '
+                                  '${emailCtlr.text}. Check your student email'
+                                  ' to complete password reset process.\n'
+                                  ' Check also your SPAM folder just in case '
+                                  'you miss it before retrying 😉',
+                            );
+                          }
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: AppColors.kPrimaryColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
                   Center(
                     child: CustomRoundedButton(
                       text: 'Sign In',
                       onTap: () async {
+                        ref.read(flavorConfigProvider.notifier).state =
+                            widget.flavorConfigs;
+
                         if (emailCtlr.text.isEmpty && pwdCtlr.text.isEmpty) {
                           _dialog.showBasicFlash(
                             context,
@@ -289,7 +343,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 45),
+                  const SizedBox(height: 30),
                   RichText(
                     text: TextSpan(
                       text: "Don't have an account?",

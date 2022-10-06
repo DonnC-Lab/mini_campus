@@ -105,12 +105,21 @@ class OnboardingView extends ConsumerWidget {
         colorActiveIndicator: AppColors.kPrimaryColor,
       ),
       doneButtonStyle: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(color: AppColors.kWhiteColor),
+        ),
         backgroundColor: MaterialStateProperty.all(AppColors.kPrimaryColor),
       ),
       nextButtonStyle: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(color: AppColors.kWhiteColor),
+        ),
         backgroundColor: MaterialStateProperty.all(AppColors.kPrimaryColor),
       ),
       skipButtonStyle: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(color: AppColors.kWhiteColor),
+        ),
         backgroundColor: MaterialStateProperty.all(AppColors.kPrimaryColor),
       ),
     );
